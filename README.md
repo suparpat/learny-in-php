@@ -12,5 +12,7 @@ Learny also aims to be a template that other websites with similar concepts coul
 
 Suggestions and pull requests welcome.
 
-<!--###Details-->
+###Usage
+
+Should run fine on WAMP, MAMP, LAMP, etc.
 
