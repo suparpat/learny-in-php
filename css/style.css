@@ -1,0 +1,155 @@
+/*from http://bettermotherfuckingwebsite.com*/
+/*background color gradiant from: http://uigradients.com/#PastelOrangeattheSun*/
+
+body{
+	/*Pale Wood*/
+	/* fallback for old browsers */
+	/*background: #eacda3;*/
+	/* Chrome 10-25, Safari 5.1-6 */
+	/*background: -webkit-linear-gradient(to left, #eacda3 , #d6ae7b);*/
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	/*background: linear-gradient(to left, #eacda3 , #d6ae7b);*/
+
+	/*Cloud*/
+	/* fallback for old browsers */
+	background: #ECE9E6;
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: -webkit-linear-gradient(to left, #ECE9E6 , #FFFFFF);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: linear-gradient(to left, #ECE9E6 , #FFFFFF);
+
+	margin:40px auto;
+	max-width:800px;
+	line-height:1.6;
+	font-size:18px;
+	font-family: helvetica, sans-serif;
+	color:#444;
+	padding:0 10px;
+}
+
+h1,h2,h3,h4 {
+	line-height:1.2;
+}
+
+a {
+    text-decoration:none;
+    color:#11a;
+}
+
+/*#content {
+
+}*/
+
+/*TOP MENU PARTIAL*/
+#banner {
+	border-bottom: 1px dotted #aaa;
+	margin-bottom: 0.7em;
+	padding-bottom: 9px;
+	text-align: left;
+}
+
+#logo {
+	float: left;
+	/*width: 325px;*/
+	color: #aaa;
+}
+
+.pin_logo {
+	margin-right: 2px;
+}
+
+#top_menu {
+	margin-top: 2px;
+	float: right;
+}
+
+#top_menu a {
+	color:blue;
+}
+
+
+/*QUOTATION*/
+#page_quote {
+	text-align: center;
+	border-top: 1px dotted #aaa;
+	margin-top: 3.0em;
+	padding-top: 9px;
+}
+
+/*LOGIN PAGE & CREATE PAGE*/
+#login_form {
+	width: 50%;
+	margin: 0 auto;
+	text-align:center;
+}
+
+/*http://html-generator.weebly.com/css-textbox-style.html*/
+
+.input-default-format {
+	font-size: 20px;
+	border-radius: 3px;
+	padding: 5px 9px;
+}
+
+.form-input {
+	width: 100%;
+	margin-bottom: 15px;
+	height: 50px;
+}
+
+#post_type_select {
+	margin-top: 15px;
+	width:40%;
+	float:left;
+}
+/*#create_editor {
+
+}*/
+
+
+#create-submit-button {
+	margin-top: 15px;
+	float:right;
+}
+
+/*SUBMIT POST PAGE*/
+table {
+  border-collapse: collapse;
+	width: 100%;
+}
+
+table, th, td {
+	border: 1px solid black;
+	height: 50px;
+}
+
+th {
+    text-align: left;
+	background-color: #4CAF50;
+    color: white;
+}
+
+td {
+    height: 50px;
+    vertical-align: bottom;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+tr:hover {background-color: #f5f5f5}
+
+/*tr:nth-child(even) {background-color: #f2f2f2}*/
+
+#register-link-div {
+	margin-top: 15px;
+	text-align: center;
+	/*font-size: 14px;*/
+}
+#footer {
+	text-align: center;
+	font-size: 14px;
+}
