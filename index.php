@@ -1,6 +1,5 @@
 <?php
-	include('lib/config.php');
-	include('lib/session.php');
+	require('lib/config.php');
 ?>
 
 <html>

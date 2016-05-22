@@ -1,6 +1,6 @@
 <?php
 	$errorMsgLogin='';
-	include("lib/config.php");
+	require("lib/config.php");
 	include('lib/userClass.php');
 	$userClass = new userClass();
 

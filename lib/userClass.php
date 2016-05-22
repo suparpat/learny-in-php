@@ -5,7 +5,6 @@
 		/* User Login */
 		public function userLogin($username, $password){
 		try{
-			echo $username." ".$password;
 			$db = getDB();
 
 			$stmt = $db->prepare("SELECT uid, password FROM users WHERE username=:username"); 

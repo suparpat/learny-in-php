@@ -31,4 +31,21 @@
 		}
 	};
 
+
+	function isLoggedIn(){
+		if(empty($_SESSION['uid'])){
+			return false;
+		}
+		else{
+			$session_uid=$_SESSION['uid'];
+			include('userClass.php');
+			$userClass = new userClass();
+			global $userDetails;
+			$userDetails = $userClass->userDetails($session_uid);
+			return true;
+		}
+	}
+
+	$isLoggedIn = isLoggedIn(); 
+
 ?>
