@@ -4,7 +4,7 @@
 
 <html>
 	<head>
-		<title>Learny</title>
+		<title>Learny: About</title>
 		<?php include 'partials/header.php' ?>
 	</head>
 

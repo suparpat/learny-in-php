@@ -17,7 +17,7 @@
 		    }else{
 		    	echo "<a href='create.php'>create</a>";
 		    	echo "\n&#8231;\n";
-		    	echo "<a href='logout.php'>log out</a>";
+		    	echo "<a href='profile.php'>profile</a>";
 
 		    } 
 		?>

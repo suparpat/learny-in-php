@@ -1,11 +1,9 @@
 <?php
-	$errorMsgLogin='';
+	$errorMsgChangeEmail='';
 	require("lib/config.php");
-	include('lib/userClass.php');
-	$userClass = new userClass();
 
 	/* Login Form */
-	if (!empty($_POST['loginSubmit'])) 
+	if (!empty($_POST['changeEmailSubmit'])) 
 	{
 		$username=$_POST['username'];
 		$password=$_POST['password'];
@@ -17,7 +15,7 @@
 				header("Location: $url"); // Page redirecting to home.php 
 			}
 			else{
-				$errorMsgLogin="Please check login details.";
+				$errorMsgChangeEmail="Please check login details.";
 			}
 		}
 	}
@@ -27,7 +25,7 @@
 
  <html>
 	<head>
-		<title>Learny: Login</title>
+		<title>Learny: Change Email</title>
 		<?php include 'partials/header.php' ?>
 	</head>
 
@@ -36,16 +34,17 @@
 			<?php include 'partials/top_menu.php' ?>
 
 			<header>
-				<h3>Login</h3>
+				<h3>Change Email</h3>
 			</header>
+
             <div>
-                <form id="login_form" action="login.php" method="post">
-	                <input class="input-default-format form-input" type="text" name="username" placeholder="username">
+                <form id="login_form" action="change_email.php" method="post">
+	                <input class="input-default-format form-input" type="email" name="email" value=<?php echo $userDetails->email; ?>>
 					<input class="input-default-format form-input" type="password" name="password" placeholder="password">
                     <?php 
-	                    echo "<p>".$errorMsgLogin."</p>";
+	                    echo "<p>".$errorMsgChangeEmail."</p>";
 	                ?>
-                    <input class="input-default-format form-submit-button" type="submit" value="Login" name="loginSubmit">
+                    <input class="input-default-format form-submit-button" type="submit" value="Change" name="changeEmailSubmit">
                 </form>
             </div>
 			<?php include 'partials/quote_block.php' ?>
