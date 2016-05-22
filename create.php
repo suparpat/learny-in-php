@@ -1,3 +1,8 @@
+<?php
+	include('lib/config.php');
+	include('lib/session.php');
+?>
+
 <html>
 	<head>
 		<title>Learny</title>
@@ -7,7 +12,13 @@
 	<body>
 		<div id="content">
 			<?php include 'partials/top_menu.php' ?>
-
+			<?php
+			    if(!$isLoggedIn){
+					$url=BASE_URL.'error_not_login.php';
+					header("Location: $url"); // Page redirecting to home.php 
+			    }
+			?>
+			
 			<header>
 				<h3>Create</h3>
 			</header>

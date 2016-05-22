@@ -10,19 +10,12 @@
 	</head>
 
 	<body>
+		<!-- credit: https://pinboard.in/ -->
 		<div id="content">
 			<?php include 'partials/top_menu.php' ?>
 
 			<header>
-			<?php 
-				if(!$isLoggedIn){
-					echo "<h3>Welcome</h3>";
-				}else{
-					echo "<h3>Welcome, $userDetails->username</h3>";
-				}
-			?>
-
-				<aside>Share what you know!</aside>
+				<h3>Please register/login first.</h3>
 			</header>
 
 			<?php include 'partials/quote_block.php' ?>

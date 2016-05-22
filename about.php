@@ -1,3 +1,8 @@
+<?php
+	include('lib/config.php');
+	include('lib/session.php');
+?>
+
 <html>
 	<head>
 		<title>Learny</title>
