@@ -23,8 +23,7 @@
 			<header>
 				<h3>
 					<?php
-						echo "$post->subject";
-						echo "<code> by ".$post->uid." on ".$post->created_at."</code>";
+						echo "<code>$post->subject by ".$post->uid." on ".$post->created_at."</code>";
 					?>
 
 				</h3>

@@ -19,7 +19,7 @@
 		if(strlen(trim($subject))>1 && strlen(trim($content))>1 && strlen(trim($type))){
 			$result=$postClass->createPost($subject, $content, $type, $author);
 			if($result){
-				$url=BASE_URL.'index.php';
+				$url=BASE_URL.'post.php?id='.$lastPostId;
 				header("Location: $url"); // Page redirecting to home.php 
 			}
 			else{

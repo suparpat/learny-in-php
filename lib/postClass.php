@@ -13,6 +13,8 @@
 			$stmt->bindParam("author", $author,PDO::PARAM_STR) ;
 
 			$stmt->execute();
+			global $lastPostId;
+			$lastPostId=$db->lastInsertId(); // Last inserted row id
 			$db = null;
 
 			return true;
@@ -25,10 +27,14 @@
 
 
 		/* Fetch Posts */
-		public function fetchPosts(){
+		public function fetchPosts($limit, $page){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("SELECT id,subject,type,uid,created_at FROM posts"); 
+				$stmt = $db->prepare("SELECT id,subject,type,uid,created_at FROM posts LIMIT :limit OFFSET :offset"); 
+				$stmt->bindParam("limit", $limit,PDO::PARAM_INT);
+				$offset = ($page-1)*$limit;
+				$stmt->bindParam("offset", $offset,PDO::PARAM_INT);
+
 				$stmt->execute();
 				$data = $stmt->fetchAll(PDO::FETCH_OBJ); //User data
 				return $data;
@@ -70,6 +76,20 @@
 			}
 		}//end fetchAUsersPosts()
 
+		/* Fetch Number of Posts */
+		// http://stackoverflow.com/questions/883365/row-count-with-pdo
+		public function fetchPostsCount(){
+			try{
+				$db = getDB();
+				$stmt = $db->prepare("SELECT count(*) FROM posts"); 
+				$stmt->execute();
+				$data = $stmt->fetchColumn();
+				return $data;
+			}
+			catch(PDOException $e) {
+				echo '{"error":{"text":'. $e->getMessage() .'}}';
+			}
+		}//end fetchPostsCount()
 
 
 	}//end postClass
