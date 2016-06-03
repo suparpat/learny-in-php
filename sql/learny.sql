@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2016 at 09:10 PM
+-- Generation Time: Jun 03, 2016 at 09:30 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
 
 --
 -- Dumping data for table `comments`
@@ -63,7 +63,8 @@ INSERT INTO `comments` (`id`, `comment`, `post_id`, `uid`, `created_at`, `update
 (31, 'Good stuff!', 7, 1, '2016-06-03 18:07:03', '2016-06-03 18:07:03'),
 (32, '123', 10, 1, '2016-06-03 18:10:52', '2016-06-03 18:10:52'),
 (33, 'bababa', 24, 1, '2016-06-03 18:40:15', '2016-06-03 18:40:15'),
-(34, 'waddupp', 35, 1, '2016-06-03 19:07:28', '2016-06-03 19:07:28');
+(34, 'waddupp', 35, 1, '2016-06-03 19:07:28', '2016-06-03 19:07:28'),
+(35, '???', 36, 1, '2016-06-03 19:29:47', '2016-06-03 19:29:47');
 
 -- --------------------------------------------------------
 
@@ -81,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `author` (`uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=37 ;
 
 --
 -- Dumping data for table `posts`
@@ -123,7 +124,8 @@ INSERT INTO `posts` (`id`, `subject`, `content`, `type`, `uid`, `created_at`, `u
 (32, 'sdfsdf', '<p>BBF กลับมาอีกครั้ง ปีนี้เอาใจคนรักวรรณกรรมและหนังสือด้วยธีม Literary Weekend งานเทศกาลรื่นเริงของคนรักวรรณกรรมและหนังสือ พื้นที่แลกเปลี่ยนสังสรรค์ระหว่างนักอ่าน นักเขียน คนทำหนังสือและคนขายหนังสือ มาเปลี่ยนกิจกรรมการอ่านการเขียนที่แสนโดดเดี่ยวให้กลายเป็นวงสนทนาที่ทั้งเข้มข้นและรื่นรมย์ไปกับพวกเรา</p>\r\n\r\n<p>&bull; 400 ปีผ่านไป ทำไมชื่อของ วิลเลียม เชคสเปียร์ กวีชาวอังกฤษผู้นี้จึงไม่เคยเก่าแก่ตามเวลา<br />\r\n&bull; ร่วมต้อนรับ Jakob Hinrichs ศิลปินกราฟิกโนเวลบินตรงจากเยอรมัน เพื่อร่วมเสวนาและทำเวิร์กช็อปกับคนไทย<br />\r\n&bull; ลิขสิทธิ์หนังสือ กับความท้าทายในยุคโลกไร้พรมแดน<br />\r\n&bull; สำรวจดินแดนวรรณกรรมที่ยังไม่ถูกค้นหาจากโลกลาตินอเมริกา<br />\r\n&bull; วงการ สิ่งพิมพ์ไทย กับน้ำเสียง นักเขียนวรรณกรรมรุ่นใหม่<br />\r\n&bull; ชาติ กอบจิตติ มาพูดเรื่องคำพิพากษาและความยุติธรรม!<br />\r\n&bull; เปิดตัวหนังสือ วรรณกรรมแปลและไทย หลายปกที่ใครเห็นเป็นต้องใจสั่น สดใหม่จากสำนักพิมพ์ พิเศษเพื่องานนี้เท่านั้น!<br />\r\n&bull; ไอเท็มกระเป๋า สมุด โปสการ์ด สำหรับ คนบ้าวรรณกรรม อีกแน่นขนัด</p>\r\n\r\n<p>&bull; และ...กิจกรรมอื่นๆ อีกเพียบ!</p>\r\n\r\n<p>&bull; 15-17 กรกฎาคม 2559 Literary Weekend<br />\r\n&bull; 13-17 กรกฎาคม 2559 Dream Story Exhibition<br />\r\n&bull; ณ หอศิลปวัฒนธรรมแห่งกรุงเทพมหานคร BACC (BTS สนามกีฬาแห่งชาติ)<br />\r\n&bull;&nbsp;<em>ร่วมงานฟรี</em>&nbsp;ไม่ต้องสำรองที่นั่ง | ติดตามกิจกรรมและสิทธิพิเศษก่อนเริ่มงานได้ที่นี่ |<a href="http://bit.ly/1VrQ9AU" onclick="LinkshimAsyncLink.referrer_log(this, &quot;http:\\/\\/bit.ly\\/1VrQ9AU&quot;, &quot;\\/si\\/ajax\\/l\\/render_linkshim_log\\/?u=http\\u00253A\\u00252F\\u00252Fbit.ly\\u00252F1VrQ9AU&amp;h=1AQFcW3Kf&amp;render_verification=0&amp;enc=AZP1hEef2NNgYfBUjIQAuCNRaUwLxyt5PKfKKSJ3oV_AgQaIHMxjlFWoZoWWCtPVSyIFjjXdtFMqhizhRyJXF2aW8y0HG0ed407ZQGwpLwME-y4qu__SxqQkoJqQJiQ3108F4fhtBzMmvDI-y3HXskN_E2C-U8CHHUp1lQ0Y1T5sP88_Ea47sb2S__rpj23RHyw&amp;d&quot;);" rel="nofollow" target="_blank">http://bit.ly/1VrQ9AU</a></p>\r\n\r\n<p><a href="https://www.facebook.com/hashtag/bangkok_book_festival_2016?source=feed_text">‪#&lrm;Bangkok_Book_Festival_2016‬</a>&nbsp;<a href="https://www.facebook.com/hashtag/bbf2016?source=feed_text">‪#&lrm;BBF2016‬</a></p>\r\n', 'fact', 1, '2016-06-03 18:57:51', '2016-06-03 18:57:51'),
 (33, 'BBF กลับมาอีกครั้ง ปีนี้เอาใจคนรักวรรณกรรมและหนังสือด้วยธีม Literary Weekend งานเทศกาลรื่นเริงของคนรักวรรณกรรมและหนังสือ พื้นที่แลกเปลี่ยนสังสรรค์ระหว่างนักอ่าน นักเขียน คนทำหนังสือและคนขายหนังสือ มาเปลี่ยนกิจกรรมการอ่านการเขียนที่แสนโดดเดี่ยวให้กลายเป็นวงสนทนาที่ทั้งเข้มข้นและรื่นรมย์ไปกับพวกเรา • ', '<p>BBF กลับมาอีกครั้ง ปีนี้เอาใจคนรักวรรณกรรมและหนังสือด้วยธีม Literary Weekend งานเทศกาลรื่นเริงของคนรักวรรณกรรมและหนังสือ พื้นที่แลกเปลี่ยนสังสรรค์ระหว่างนักอ่าน นักเขียน คนทำหนังสือและคนขายหนังสือ มาเปลี่ยนกิจกรรมการอ่านการเขียนที่แสนโดดเดี่ยวให้กลายเป็นวงสนทนาที่ทั้งเข้มข้นและรื่นรมย์ไปกับพวกเรา</p>\r\n\r\n<p>&bull; 400 ปีผ่านไป ทำไมชื่อของ วิลเลียม เชคสเปียร์ กวีชาวอังกฤษผู้นี้จึงไม่เคยเก่าแก่ตามเวลา<br />\r\n&bull; ร่วมต้อนรับ Jakob Hinrichs ศิลปินกราฟิกโนเวลบินตรงจากเยอรมัน เพื่อร่วมเสวนาและทำเวิร์กช็อปกับคนไทย<br />\r\n&bull; ลิขสิทธิ์หนังสือ กับความท้าทายในยุคโลกไร้พรมแดน<br />\r\n&bull; สำรวจดินแดนวรรณกรรมที่ยังไม่ถูกค้นหาจากโลกลาตินอเมริกา<br />\r\n&bull; วงการ สิ่งพิมพ์ไทย กับน้ำเสียง นักเขียนวรรณกรรมรุ่นใหม่<br />\r\n&bull; ชาติ กอบจิตติ มาพูดเรื่องคำพิพากษาและความยุติธรรม!<br />\r\n&bull; เปิดตัวหนังสือ วรรณกรรมแปลและไทย หลายปกที่ใครเห็นเป็นต้องใจสั่น สดใหม่จากสำนักพิมพ์ พิเศษเพื่องานนี้เท่านั้น!<br />\r\n&bull; ไอเท็มกระเป๋า สมุด โปสการ์ด สำหรับ คนบ้าวรรณกรรม อีกแน่นขนัด</p>\r\n\r\n<p>&bull; และ...กิจกรรมอื่นๆ อีกเพียบ!</p>\r\n\r\n<p>&bull; 15-17 กรกฎาคม 2559 Literary Weekend<br />\r\n&bull; 13-17 กรกฎาคม 2559 Dream Story Exhibition<br />\r\n&bull; ณ หอศิลปวัฒนธรรมแห่งกรุงเทพมหานคร BACC (BTS สนามกีฬาแห่งชาติ)<br />\r\n&bull;&nbsp;<em>ร่วมงานฟรี</em>&nbsp;ไม่ต้องสำรองที่นั่ง | ติดตามกิจกรรมและสิทธิพิเศษก่อนเริ่มงานได้ที่นี่ |<a href="http://bit.ly/1VrQ9AU" onclick="LinkshimAsyncLink.referrer_log(this, &quot;http:\\/\\/bit.ly\\/1VrQ9AU&quot;, &quot;\\/si\\/ajax\\/l\\/render_linkshim_log\\/?u=http\\u00253A\\u00252F\\u00252Fbit.ly\\u00252F1VrQ9AU&amp;h=1AQFcW3Kf&amp;render_verification=0&amp;enc=AZP1hEef2NNgYfBUjIQAuCNRaUwLxyt5PKfKKSJ3oV_AgQaIHMxjlFWoZoWWCtPVSyIFjjXdtFMqhizhRyJXF2aW8y0HG0ed407ZQGwpLwME-y4qu__SxqQkoJqQJiQ3108F4fhtBzMmvDI-y3HXskN_E2C-U8CHHUp1lQ0Y1T5sP88_Ea47sb2S__rpj23RHyw&amp;d&quot;);" rel="nofollow" target="_blank">http://bit.ly/1VrQ9AU</a></p>\r\n\r\n<p><a href="https://www.facebook.com/hashtag/bangkok_book_festival_2016?source=feed_text">‪#&lrm;Bangkok_Book_Festival_2016‬</a>&nbsp;<a href="https://www.facebook.com/hashtag/bbf2016?source=feed_text">‪#&lrm;BBF2016‬</a></p>\r\n', 'idea', 1, '2016-06-03 18:58:01', '2016-06-03 18:58:01'),
 (34, 'sdfsdfsdf', '<p style="text-align:center"><strong>sdfsdffsdfsdf</strong></p>\r\n', 'thought', 1, '2016-06-03 19:07:06', '2016-06-03 19:07:06'),
-(35, 'fdfsd', '<h1>fsdfsdf</h1>\r\n', 'thought', 1, '2016-06-03 19:07:23', '2016-06-03 19:07:23');
+(35, 'fdfsd', '<h1>fsdfsdf</h1>\r\n', 'thought', 1, '2016-06-03 19:07:23', '2016-06-03 19:07:23'),
+(36, 'สวัสดี', '<p><span style="font-family:times new roman,times,serif">สวัสดี</span></p>\r\n', 'fact', 1, '2016-06-03 19:29:41', '2016-06-03 19:29:41');
 
 -- --------------------------------------------------------
 
