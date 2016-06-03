@@ -24,6 +24,8 @@
 			$dbConnection = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpassword);
 			$dbConnection->exec("set names utf8");
 			$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			//http://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php
+			$dbConnection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 			return $dbConnection;
 		}
 		catch (PDOException $e) {

@@ -22,6 +22,11 @@
 			?>
 
 				<aside>Share what you know!</aside>
+				<ol>
+					<li>Share facts, ideas, thoughts, stories, etc.</li>
+					<li>Make notes</li>
+					<li>Public or private, up to you</li>
+				</ol>
 			</header>
 
 			<?php include 'partials/quote_block.php' ?>

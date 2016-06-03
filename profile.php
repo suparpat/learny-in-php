@@ -37,7 +37,7 @@
 			<?php
 				//reddit style list
 				foreach ($posts as $post){
-					echo "<a href=post.php?id=$post->id>".$post->subject."</a> $post->created_at<br>";
+					echo "<a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a> $post->created_at<br>";
 				}
 
 			?>

@@ -14,7 +14,7 @@
 			$data=$stmt->fetch(PDO::FETCH_OBJ);
 			$db = null;
 
-			if(password_verify($password, $data->password)){
+			if(isset($data->password)&&password_verify($password, $data->password)){
 				$_SESSION['uid']=$data->uid; // Storing user session value
 				return true;
 			}
@@ -38,7 +38,7 @@
 				$db = getDB();
 				$st = $db->prepare("SELECT uid FROM users WHERE username=:username OR email=:email"); 
 				$st->bindParam("username", $username,PDO::PARAM_STR);
-				$st->bindParam("email", $email,PDO::PARAM_STR);
+				$st->bindParam("email", $email, PDO::PARAM_STR);
 				$st->execute();
 				$count=$st->rowCount();
 				if($count < 1){
