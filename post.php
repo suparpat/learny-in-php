@@ -3,6 +3,7 @@
 	require('lib/config.php');
 	require('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
 	require('lib/commentClass.php');
+	
 	$commentClass = new commentClass();
 	$config = HTMLPurifier_Config::createDefault();
 	$purifier = new HTMLPurifier($config);

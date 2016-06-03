@@ -1,5 +1,10 @@
 <?php
 	require('lib/config.php');
+	if(isset($_GET['page'])){
+		$page = $_GET['page'];
+	}else{
+		$page = 1;
+	}
 ?>
 
 <html>
@@ -28,7 +33,9 @@
 					<li>Public or private, up to you</li>
 				</ol>
 			</header>
-
+			<?php
+				include ('partials/browse.php')
+			?>
 			<?php include 'partials/quote_block.php' ?>
 			<?php include 'partials/footer.php' ?>
 			<?php include 'partials/imports.php' ?>

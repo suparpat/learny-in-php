@@ -35,7 +35,10 @@ a {
     text-decoration:none;
     color:#11a;
 }
-
+a:hover {
+    /*text-decoration:underline;*/
+    color:rgba(17, 17, 170, 0.7);
+}
 /*#content {
 
 }*/
@@ -65,6 +68,9 @@ a {
 
 #top_menu a {
 	color:blue;
+}
+#top_menu a:hover {
+	color: rgba(0, 0, 255, 0.6);
 }
 
 

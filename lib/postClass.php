@@ -30,7 +30,7 @@
 		public function fetchPosts($limit, $page){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("SELECT id,subject,type,uid,created_at FROM posts LIMIT :limit OFFSET :offset"); 
+				$stmt = $db->prepare("SELECT id,subject,type,uid,created_at FROM posts ORDER BY updated_at DESC LIMIT :limit OFFSET :offset"); 
 				$stmt->bindParam("limit", $limit,PDO::PARAM_INT);
 				$offset = ($page-1)*$limit;
 				$stmt->bindParam("offset", $offset,PDO::PARAM_INT);

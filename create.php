@@ -2,6 +2,10 @@
 	$errorPostMessage='';
 	require("lib/config.php");
 	require('lib/postClass.php');
+	require('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
+
+	$config = HTMLPurifier_Config::createDefault();
+	$purifier = new HTMLPurifier($config);
 	$postClass = new postClass();
 
 	if(!$isLoggedIn){
@@ -9,7 +13,7 @@
 		header("Location: $url"); // Page redirecting to home.php 
 	}
 
-	if (!empty($_POST['postSubmit'])) 
+	if (!empty($_POST['postSubmit'])&&isset($_POST['subject'])&&isset($_POST['editor'])&&isset($_POST['type'])&&isset($_SESSION['uid'])) 
 	{
 		$subject=$_POST['subject'];
 		$content=$_POST['editor'];
@@ -26,7 +30,11 @@
 				$errorPostMessage="Problem adding post to database...";
 			}
 		}else{
-			$errorPostMessage="Please make sure there is no empty field.";
+			$errorPostMessage="Please make sure there are no empty fields.";
+		}
+	}else{
+		if(!empty($_POST['postSubmit'])){
+			$errorPostMessage="Please make sure there are no empty fields.";
 		}
 	}
 
@@ -50,8 +58,8 @@
 	        ?>
             <div>
                 <form action="create.php" method="post">
-                    <input class="input-default-format form-input" type="text" name="subject" placeholder="Type your subject">
-                    <textarea name="editor" id="create_editor" rows="10" cols="80"></textarea>
+                    <input class="input-default-format form-input" type="text" name="subject" placeholder="Type your subject" value=<?php if(isset($_POST['subject'])) {echo htmlentities ($_POST['subject']); }?>>
+                    <textarea name="editor" id="create_editor" rows="10" cols="80"><?php if(isset($_POST['editor'])) {echo $purifier->purify($_POST['editor']); }?></textarea>
 					<div>
 						<select name="type" class="input-default-format" id="post_type_select">
 							<option value="" disabled selected>Select a type</option>
