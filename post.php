@@ -20,19 +20,24 @@
 	if(!empty($_POST['commentSubmit'])){
 		$comment = $_POST['comment'];
 		$postId = $_GET['id'];
-		$author=$_SESSION['uid'];
+		$author = $_SESSION['uid'];
 
-		if(strlen(trim($comment))>0){
-			$result = $commentClass->createComment($postId, $comment, $author);
-			if($result){
-				$commentMessage = 'Thanks! Got your comment.';
-			}else{
-				$commentMessage = 'ermm. Need to finish implementing this!';
-			}
+		if(empty($author)){
+			$commentMessage = 'Please <a href="register.php">register</a>/<a href="login.php">login</a> first before commenting.';
 		}else{
-			//nothing in $comment
-			$commentMessage = '... please enter something in the comment box';
+			if(strlen(trim($comment))>0){
+				$result = $commentClass->createComment($postId, $comment, $author);
+				if($result){
+					$commentMessage = 'Thanks! Got your comment.';
+				}else{
+					$commentMessage = 'ermm. Need to finish implementing this!';
+				}
+			}else{
+				//nothing in $comment
+				$commentMessage = '... please enter something in the comment box';
+			}			
 		}
+
 
 		//store comment in database
 	}
@@ -73,7 +78,7 @@
 			<hr>
 			<code><b>Comment</b></code>
 			<div id="commentForm">
-				<form action=<?php echo "post.php?id=".$_GET['id']; ?> method="post">
+				<form action=<?php echo "post.php?id=".$_GET['id']; ?> method="post" style="overflow:hidden;">
 	                <textarea name="comment" id="comment" rows="6" cols="80"></textarea>
 	                <div>
 			            <input class="input-default-format" id="comment-submit-button" type="submit" name="commentSubmit" value="Submit">

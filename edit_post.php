@@ -1,5 +1,5 @@
 <?php
-	$errorPostMessage='';
+	$errorEditPostMessage='';
 	require("lib/config.php");
 	require('lib/postClass.php');
 	require('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
@@ -11,37 +11,48 @@
 	if(!$isLoggedIn){
 		$url=BASE_URL.'error_not_login.php';
 		header("Location: $url"); // Page redirecting to home.php 
-	}
+	}else{
 
-	if (!empty($_POST['postSubmit'])&&isset($_POST['subject'])&&isset($_POST['editor'])&&isset($_POST['type'])&&isset($_SESSION['uid'])) 
-	{
-		$subject=$_POST['subject'];
-		$content=$_POST['editor'];
-		$type=$_POST['type'];
-		$author=$_SESSION['uid'];
+		if (!empty($_POST['postSubmit'])&&isset($_POST['subject'])&&isset($_POST['editor'])&&isset($_POST['type'])&&isset($_SESSION['uid'])) 
+		{
+			$subject=$_POST['subject'];
+			$content=$_POST['editor'];
+			$type=$_POST['type'];
+			$author=$_SESSION['uid'];
+			$postId = $_POST['id'];
 
-		if(strlen(trim($subject))>1 && strlen(trim($content))>1 && strlen(trim($type))){
-			$result=$postClass->createPost($subject, $content, $type, $author);
-			if($result){
-				$url=BASE_URL.'post.php?id='.$lastPostId;
-				header("Location: $url"); // Page redirecting to home.php 
-			}
-			else{
-				$errorPostMessage="Problem adding post to database...";
+			if(strlen(trim($subject))>1 && strlen(trim($content))>1 && strlen(trim($type))){
+				$result=$postClass->editPost($postId, $subject, $content, $type, $author);
+				if($result){
+					$url=BASE_URL.'post.php?id='.$postId;
+					header("Location: $url"); // Page redirecting to home.php 
+				}
+				else{
+					$errorEditPostMessage="Problem editing post...";
+				}
+			}else{
+				$errorEditPostMessage="Please make sure there are no empty fields.";
 			}
 		}else{
-			$errorPostMessage="Please make sure there are no empty fields.";
+			//Get post
+			if(isset($_GET['id'])){
+				$postId = $_GET['id'];
+				$post = $postClass->fetchAPost($_GET['id']);
+			}
+
+			if(!empty($_POST['postSubmit'])){
+				$errorEditPostMessage="Please make sure there are no empty fields.";
+			}
+
 		}
-	}else{
-		if(!empty($_POST['postSubmit'])){
-			$errorPostMessage="Please make sure there are no empty fields.";
-		}
+
 	}
+
 
 ?>
 <html>
 	<head>
-		<title>Learny: Create</title>
+		<title>Learny: Edit Post</title>
         <?php include 'partials/header.php' ?>
 	</head>
 
@@ -51,15 +62,16 @@
 
 			
 			<header>
-				<h3>Create</h3>
+				<h3>Edit</h3>
 			</header>
             <?php 
-	            echo "<p>".$errorPostMessage."</p>";
+	            echo "<p>".$errorEditPostMessage."</p>";
 	        ?>
             <div>
-                <form action="create.php" method="post">
-                    <input class="input-default-format form-input" type="text" name="subject" placeholder="Type your subject" value=<?php if(isset($_POST['subject'])) {echo htmlentities ($_POST['subject']); }?>>
-                    <textarea name="editor" id="create_editor" rows="10" cols="80"><?php if(isset($_POST['editor'])) {echo $purifier->purify($_POST['editor']); }?></textarea>
+                <form action="edit_post.php" method="post">
+                	<input name="id" value=<?php echo $postId; ?> hidden>
+                    <input class="input-default-format form-input" type="text" name="subject" placeholder="Type your subject" value=<?php if(isset($_POST['subject'])) {echo htmlentities ($_POST['subject']); } else{echo htmlentities($post->subject);} ?>>
+                    <textarea name="editor" id="create_editor" rows="10" cols="80"><?php if(isset($_POST['editor'])) {echo $purifier->purify($_POST['editor']); } else{echo $purifier->purify($post->content);}?></textarea>
 					<div style="width:100%; overflow:hidden; display:flex;">
 						<select name="type" class="input-default-format" id="post_type_select">
 							<option value="" disabled selected>Select a type</option>

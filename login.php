@@ -1,8 +1,13 @@
 <?php
 	$errorMsgLogin='';
-	require("lib/config.php");
-	include('lib/userClass.php');
+	require_once("lib/config.php");
+	require_once('lib/userClass.php');
 	$userClass = new userClass();
+
+	if($isLoggedIn){
+		$url=BASE_URL.'index.php';
+		header("Location: $url"); // Page redirecting to home.php 		
+	}
 
 	/* Login Form */
 	if (!empty($_POST['loginSubmit'])) 

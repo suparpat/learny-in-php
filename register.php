@@ -1,8 +1,13 @@
 <?php
 	$errorMsgReg='';
-	include("lib/config.php");
-	include('lib/userClass.php');
+	require_once("lib/config.php");
+	require_once('lib/userClass.php');
 	$userClass = new userClass();
+
+	if($isLoggedIn){
+		$url=BASE_URL.'index.php';
+		header("Location: $url"); // Page redirecting to home.php 		
+	}
 
 	/* Signup Form */
 	if (!empty($_POST['registerSubmit'])){
@@ -47,7 +52,7 @@
 			</header>
             <div>
                 <form id="login_form" action="register.php" method="post">
-                    <input class="input-default-format form-input" type="text" name="email" placeholder="email">
+                    <input class="input-default-format form-input" type="email" name="email" placeholder="email">
 	                <input class="input-default-format form-input" type="text" name="username" placeholder="username">
   					<input class="input-default-format form-input" type="password" name="password" placeholder="password">
                     <?php 

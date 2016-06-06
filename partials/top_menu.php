@@ -7,8 +7,8 @@
 		<a id="pinboard_name" href="index.php">Learny</a>
 	</div>
 	<div id="top_menu">
-		<!-- <a href="browse.php">browse</a>
-		&#8231; -->
+		<a href="browse.php">browse</a>
+		&#8231;
 		<?php
 		    if(!$isLoggedIn){
 				echo "<a href='register.php'>register</a>";
