@@ -27,20 +27,25 @@
 
 		public function editPost($postId, $subject, $content, $type, $author){
 			try{
-				$db = getDB();
-				$stmt = $db->prepare("UPDATE posts SET subject=:subject, content=:content, type=:type, uid=:author WHERE id=:id");
+				$checkOwnershipResult = $this->checkOwnership($postId, $author);
+				if($checkOwnershipResult){
+					$db = getDB();
+					$stmt = $db->prepare("UPDATE posts SET subject=:subject, content=:content, type=:type, uid=:author WHERE id=:id");
 
-				$stmt->bindParam("subject", $subject, PDO::PARAM_STR);
-				$stmt->bindParam("content", $content, PDO::PARAM_STR);
-				$stmt->bindParam("type", $type, PDO::PARAM_STR);
-				$stmt->bindParam("author", $author, PDO::PARAM_INT);
-				$stmt->bindParam("id", $postId, PDO::PARAM_INT);
+					$stmt->bindParam("subject", $subject, PDO::PARAM_STR);
+					$stmt->bindParam("content", $content, PDO::PARAM_STR);
+					$stmt->bindParam("type", $type, PDO::PARAM_STR);
+					$stmt->bindParam("author", $author, PDO::PARAM_INT);
+					$stmt->bindParam("id", $postId, PDO::PARAM_INT);
 
-				$stmt->execute();
-				$db = null;
+					$stmt->execute();
+					$db = null;
 
-				return true;
-			}
+					return true;
+				}else{
+					throw new Exception("You do not own the post you are trying to edit!");
+				}
+			}//end try
 			catch(PDOException $e) {
 				echo '{"error":{"text":'. $e->getMessage() .'}}';
 			}			
@@ -48,14 +53,9 @@
 
 		public function deletePost($postId, $uid){
 			try{
-				$db = getDB();
-				$stmt1 = $db->prepare("SELECT uid FROM posts WHERE id=:postId AND uid=:uid");
-				$stmt1->bindParam("postId", $postId);
-				$stmt1->bindParam("uid", $uid);
-				$stmt1->execute();
-				$data = $stmt1->fetchAll(PDO::FETCH_OBJ);
-
-				if(count($data) > 0){
+				$checkOwnershipResult = $this->checkOwnership($postId, $uid);
+				if($checkOwnershipResult){
+					$db = getDB();
 					$stmt = $db->prepare("DELETE FROM posts WHERE id=:id");
 					$stmt->bindParam("id", $postId, PDO::PARAM_STR);
 					$stmt->execute();
@@ -73,11 +73,30 @@
 			}				
 		}//end deletePost()
 
+		public function checkOwnership($postId, $uid){
+			try{
+				$db = getDB();
+				$stmt = $db->prepare("SELECT uid FROM posts WHERE id=:postId AND uid=:uid");
+				$stmt->bindParam("postId", $postId);
+				$stmt->bindParam("uid", $uid);
+				$stmt->execute();
+				$data = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+				if(count($data) > 0){
+					return true;
+				}else{
+					return false;
+				}
+
+			}catch(PDOException $e){
+				echo '{"error":{"text":'. $e->getMessage() .'}}';
+			}
+		}
 		/* Fetch Posts */
 		public function fetchPosts($limit, $page){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("SELECT id,subject,type,uid,created_at FROM posts ORDER BY updated_at DESC LIMIT :limit OFFSET :offset"); 
+				$stmt = $db->prepare("SELECT id, subject, type, uid, created_at FROM posts ORDER BY updated_at DESC LIMIT :limit OFFSET :offset"); 
 				$stmt->bindParam("limit", $limit,PDO::PARAM_INT);
 				$offset = ($page-1)*$limit;
 				$stmt->bindParam("offset", $offset,PDO::PARAM_INT);
@@ -97,7 +116,7 @@
 		public function fetchAPost($id){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("SELECT id,subject,content,type,uid,created_at FROM posts WHERE id=:id"); 
+				$stmt = $db->prepare("SELECT id, subject, content, type, uid, created_at FROM posts WHERE id=:id"); 
 				$stmt->bindParam("id", $id,PDO::PARAM_STR);
 				$stmt->execute();
 				$data = $stmt->fetch(PDO::FETCH_OBJ); //User data
@@ -112,7 +131,7 @@
 		public function fetchAUsersPosts($uid){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("SELECT id,subject,content,type,uid,created_at FROM posts WHERE uid=:uid"); 
+				$stmt = $db->prepare("SELECT id, subject, content, type, uid, created_at FROM posts WHERE uid=:uid"); 
 				$stmt->bindParam("uid", $uid,PDO::PARAM_STR) ;
 				$stmt->execute();
 				$data = $stmt->fetchAll(PDO::FETCH_OBJ); //User data

@@ -8,10 +8,17 @@
 	$purifier = new HTMLPurifier($config);
 	$postClass = new postClass();
 
+	//redirect to error_not_login.php if user is not logged in
 	if(!$isLoggedIn){
 		$url=BASE_URL.'error_not_login.php';
 		header("Location: $url"); // Page redirecting to home.php 
 	}else{
+
+		//redirect to index.php if user is not the owner of this post
+		if($_SESSION['uid']!=$postClass->checkOwnership($_GET['id'], $_SESSION['uid'])){
+			$url=BASE_URL.'index.php';
+			header("Location: $url");
+		}
 
 		if (!empty($_POST['postSubmit'])&&isset($_POST['subject'])&&isset($_POST['editor'])&&isset($_POST['type'])&&isset($_SESSION['uid'])) 
 		{
@@ -41,7 +48,7 @@
 			}
 
 			if(!empty($_POST['postSubmit'])){
-				$errorEditPostMessage="Please make sure there are no empty fields.";
+				$errorEditPostMessage = "Please make sure there are no empty fields.";
 			}
 
 		}
