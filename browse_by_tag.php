@@ -1,5 +1,8 @@
 <?php
 	require('lib/config.php');
+	require('lib/tagClass.php');
+	$tagClass = new tagClass();
+	$tags = $tagClass->fetchTags();
 ?>
 
 <html>
@@ -14,12 +17,16 @@
 			<?php include 'partials/top_menu.php' ?>
 
 			<header>
-				<h3>Browse</h3>
+				<h3>Browse by tag</h3>
 			</header>
 
-			<p>
-				View posts by tags here:
-			</p>
+
+			<?php
+				foreach($tags as $tag){
+					echo "<p><a href='tag.php?name=$tag->name'>$tag->name</a></p>";
+				}
+
+			?>
 			<?php include 'partials/quote_block.php' ?>
 			<?php include 'partials/footer.php' ?>
 			<?php include 'partials/imports.php' ?>

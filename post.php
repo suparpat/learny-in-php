@@ -64,7 +64,7 @@
 			<header>
 				<h3>
 					<?php
-						echo "<code>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')." by ".$post->uid." on ".$post->created_at."</code>";
+						echo "<code>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')." by ".$post->username." on ".$post->created_at."</code>";
 					?>
 
 				</h3>
@@ -74,7 +74,11 @@
 					echo "<p>".$purifier->purify($post->content)."</p>";
 				?>
 			</div>
-
+			<?php
+				if($_SESSION['uid']==$post->uid){
+					echo "[<a href='edit_post.php?id=".$post->id."'>edit post</a>]";
+				}
+			?>
 			<hr>
 			<code><b>Comment</b></code>
 			<div id="commentForm">
@@ -90,7 +94,7 @@
 
 			<?php 
 				foreach (array_reverse($comments) as $key=>$comment){
-					echo "<p>By $comment->uid on $comment->created_at <br>" . (count($comments)-($key)) . ". " . htmlspecialchars($comment->comment, ENT_QUOTES, 'UTF-8')."</p>";
+					echo "<p>By $comment->username on $comment->created_at <br>" . (count($comments)-($key)) . ". " . htmlspecialchars($comment->comment, ENT_QUOTES, 'UTF-8')."</p>";
 				};
 			?>
 			<?php include 'partials/quote_block.php' ?>

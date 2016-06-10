@@ -113,6 +113,7 @@ a:hover {
 	margin-top: 15px;
 	width:40%;
 	float:left;
+	height: 40px;
 }
 
 #tag_input{
@@ -185,3 +186,7 @@ tr:hover {background-color: #f5f5f5}
 	margin-bottom: 250px;
 }
 
+/*top, right, bottom, left*/
+ul.tagit li.tagit-choice-editable {
+	padding: 0 18px 0 .5em !important;
+}

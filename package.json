@@ -1,0 +1,25 @@
+{
+  "name": "learny",
+  "version": "1.0.0",
+  "description": "A place to share.",
+  "main": "index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suparpat/learny-in-php.git"
+  },
+  "keywords": [
+    "learny",
+    "wiki",
+    "community"
+  ],
+  "author": "suparpat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/suparpat/learny-in-php/issues"
+  },
+  "homepage": "https://github.com/suparpat/learny-in-php#readme",
+  "dependencies": {}
+}

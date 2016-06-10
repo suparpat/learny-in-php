@@ -27,9 +27,10 @@
 			$type=$_POST['type'];
 			$author=$_SESSION['uid'];
 			$postId = $_POST['id'];
+			$tags = $_POST['tags'];
 
 			if(strlen(trim($subject))>1 && strlen(trim($content))>1 && strlen(trim($type))){
-				$result=$postClass->editPost($postId, $subject, $content, $type, $author);
+				$result=$postClass->editPost($postId, $subject, $content, $type, $author, $tags);
 				if($result){
 					$url=BASE_URL.'post.php?id='.$postId;
 					header("Location: $url"); // Page redirecting to home.php 
@@ -61,6 +62,8 @@
 	<head>
 		<title>Learny: Edit Post</title>
         <?php include 'partials/header.php' ?>
+        <link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="lib/vendor/aehlke-tag-it/css/jquery.tagit.css">
 	</head>
 
 	<body>
@@ -69,7 +72,7 @@
 
 			
 			<header>
-				<h3>Edit</h3>
+				<h3>Edit Post</h3>
 			</header>
             <?php 
 	            echo "<p>".$errorEditPostMessage."</p>";
@@ -81,13 +84,18 @@
                     <textarea name="editor" id="create_editor" rows="10" cols="80"><?php if(isset($_POST['editor'])) {echo $purifier->purify($_POST['editor']); } else{echo $purifier->purify($post->content);}?></textarea>
 					<div style="width:100%; overflow:hidden; display:flex;">
 						<select name="type" class="input-default-format" id="post_type_select">
-							<option value="" disabled selected>Select a type</option>
-							<option value="fact">Fact</option>
-							<option value="idea">Idea</option>
-							<option value="insight">Insight</option>
-							<option value="thought">Thought</option>
+							<option value="" disabled <?php if($post->type==""){echo "selected";}?>>Select a type</option>
+							<option value="fact" <?php if($post->type=="fact"){echo "selected";}?>>Fact</option>
+							<option value="idea" <?php if($post->type=="idea"){echo "selected";}?>>Idea</option>
+							<option value="insight" <?php if($post->type=="insight"){echo "selected";}?>>Insight</option>
+							<option value="thought" <?php if($post->type=="thought"){echo "selected";}?>>Thought</option>
 						</select>
-						<input class="input-default-format" id="tag_input" placeholder="Enter tags (comma-separated)">
+		                <ul id="tag_input">
+		                	<?php 
+		                		//echo <li> of already existing tags
+		                	?>
+		                </ul>
+						<!-- <input class="input-default-format" id="tag_input" placeholder="Enter tags (comma-separated)"> -->
 					</div>
 	                <div style="text-align:center;">
 		                <input class="input-default-format" id="create-submit-button" type="submit" name="postSubmit" value="Submit">
@@ -102,7 +110,8 @@
 			<?php include 'partials/imports.php' ?>
 			
         </div>
-
+        	<script src="js/jquery-ui/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+        	<script src="lib/vendor/aehlke-tag-it/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
             <script src="lib/vendor/ckeditor/ckeditor.js"></script>
             <script>
                 // Replace the <textarea id="editor1"> with a CKEditor
@@ -116,6 +125,16 @@
 								'Link','TextColor','BGColor','-','Maximize']
                 ] ;
                 CKEDITOR.config.height = '55%';
+
+			    $(document).ready(function() {
+			        $("#tag_input").tagit({
+			        	placeholderText: "Enter tags here",
+			        	tagLimit: 5,
+			        	allowSpaces: true,
+			        	caseSensitive: false,
+			        	fieldName: "tags[]"
+			        });
+			    });
             </script>
 	</body>
 </html>

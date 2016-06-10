@@ -19,9 +19,10 @@
 		$content=$_POST['editor'];
 		$type=$_POST['type'];
 		$author=$_SESSION['uid'];
+		$tags = $_POST['tags'];
 
 		if(strlen(trim($subject))>1 && strlen(trim($content))>1 && strlen(trim($type))){
-			$result=$postClass->createPost($subject, $content, $type, $author);
+			$result=$postClass->createPost($subject, $content, $type, $author, $tags);
 			if($result){
 				$url=BASE_URL.'post.php?id='.$lastPostId;
 				header("Location: $url"); // Page redirecting to home.php 
@@ -43,6 +44,9 @@
 	<head>
 		<title>Learny: Create</title>
         <?php include 'partials/header.php' ?>
+        <link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="lib/vendor/aehlke-tag-it/css/jquery.tagit.css">
+
 	</head>
 
 	<body>
@@ -68,7 +72,8 @@
 							<option value="insight">Insight</option>
 							<option value="thought">Thought</option>
 						</select>
-						<input class="input-default-format" id="tag_input" placeholder="Enter tags (comma-separated)">
+		                <ul id="tag_input"></ul>
+						<!-- <input class="input-default-format" id="tag_input" placeholder="Enter tags (comma-separated)"> -->
 					</div>
 	                <div style="text-align:center;">
 		                <input class="input-default-format" id="create-submit-button" type="submit" name="postSubmit" value="Submit">
@@ -78,12 +83,14 @@
             </div>
 
 
+
 			<?php include 'partials/quote_block.php' ?>
 			<?php include 'partials/footer.php' ?>
 			<?php include 'partials/imports.php' ?>
 			
         </div>
-
+        	<script src="js/jquery-ui/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+        	<script src="lib/vendor/aehlke-tag-it/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
             <script src="lib/vendor/ckeditor/ckeditor.js"></script>
             <script>
                 // Replace the <textarea id="editor1"> with a CKEditor
@@ -97,6 +104,17 @@
 								'Link','TextColor','BGColor','-','Maximize']
                 ] ;
                 CKEDITOR.config.height = '55%';
+
+			    $(document).ready(function() {
+			        $("#tag_input").tagit({
+			        	placeholderText: "Enter tags here",
+			        	tagLimit: 5,
+			        	allowSpaces: true,
+			        	caseSensitive: false,
+			        	fieldName: "tags[]"
+			        });
+			    });
             </script>
+
 	</body>
 </html>

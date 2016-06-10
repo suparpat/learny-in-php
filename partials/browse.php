@@ -30,7 +30,7 @@
 			<?php
 				//reddit style list
 				foreach ($posts as $key=>$post){
-					echo ($page-1)*$postsPerPage+($key+1) . ". <a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a> by $post->uid on $post->created_at<br>";
+					echo ($page-1)*$postsPerPage+($key+1) . ". <a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a> by $post->username on $post->created_at<br>";
 				}
 
 			?>

@@ -1,8 +1,9 @@
 <?php
+	require_once('lib/tagClass.php');
 
 	class postClass{
 		/* Create Post */
-		public function createPost($subject, $content, $type, $author){
+		public function createPost($subject, $content, $type, $author, $tags){
 			try{
 				$db = getDB();
 				$stmt = $db->prepare("INSERT INTO posts(subject,content,type,uid) VALUES (:subject,:content,:type,:author)");
@@ -15,6 +16,12 @@
 				$stmt->execute();
 				global $lastPostId;
 				$lastPostId=$db->lastInsertId(); // Last inserted row id
+
+				if(count($tags)>0){
+					$tagClass = new tagClass();
+					$tagClass->insertPostTags($lastPostId, $tags);
+				}
+
 				$db = null;
 
 				return true;
@@ -25,7 +32,9 @@
 
 		}//end createPost()
 
-		public function editPost($postId, $subject, $content, $type, $author){
+
+
+		public function editPost($postId, $subject, $content, $type, $author, $tags){
 			try{
 				$checkOwnershipResult = $this->checkOwnership($postId, $author);
 				if($checkOwnershipResult){
@@ -39,6 +48,12 @@
 					$stmt->bindParam("id", $postId, PDO::PARAM_INT);
 
 					$stmt->execute();
+
+					if(count($tags)>0){
+						$tagClass = new tagClass();
+						$tagClass->insertPostTags($postId, $tags);
+					}
+
 					$db = null;
 
 					return true;
@@ -96,7 +111,7 @@
 		public function fetchPosts($limit, $page){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("SELECT id, subject, type, uid, created_at FROM posts ORDER BY updated_at DESC LIMIT :limit OFFSET :offset"); 
+				$stmt = $db->prepare("SELECT id, subject, type, posts.uid, username, created_at FROM posts INNER JOIN users ON posts.uid=users.uid ORDER BY updated_at DESC LIMIT :limit OFFSET :offset"); 
 				$stmt->bindParam("limit", $limit,PDO::PARAM_INT);
 				$offset = ($page-1)*$limit;
 				$stmt->bindParam("offset", $offset,PDO::PARAM_INT);
@@ -116,7 +131,7 @@
 		public function fetchAPost($id){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("SELECT id, subject, content, type, uid, created_at FROM posts WHERE id=:id"); 
+				$stmt = $db->prepare("SELECT id, subject, content, type, posts.uid, username, created_at FROM posts INNER JOIN users ON posts.uid=users.uid WHERE id=:id"); 
 				$stmt->bindParam("id", $id,PDO::PARAM_STR);
 				$stmt->execute();
 				$data = $stmt->fetch(PDO::FETCH_OBJ); //User data
