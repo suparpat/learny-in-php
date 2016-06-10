@@ -119,10 +119,11 @@
                 // Basic: http://stackoverflow.com/questions/13499025/how-to-show-ckeditor-with-basic-toolbar
                 CKEDITOR.replace( 'editor' );
                 CKEDITOR.config.toolbar = [
-                ['Format','Font','Bold','Italic','Underline','StrikeThrough','-','Undo','Redo','-',
-								'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-',
-								'Outdent','Indent','Image','Table','NumberedList','BulletedList',
-								'Link','TextColor','BGColor','-','Maximize']
+	                ['Format','Font','Bold','Italic','Underline','Strike','-',
+	                // 'Undo','Redo','-',
+					'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-',
+					'Outdent','Indent','Image','Table','NumberedList','BulletedList',
+					'Link','TextColor','BGColor','-','Maximize']
                 ] ;
                 CKEDITOR.config.height = '55%';
 
