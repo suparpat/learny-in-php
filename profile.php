@@ -31,7 +31,7 @@
 			</header>
 			<h4>Username: <?php echo $userDetails->username; ?></h4>
 			<h4>Email: <?php echo $userDetails->email; ?></h4>
-
+			<h4>Since: <?php echo date('j F Y',strtotime($userDetails->created_at)); ?></h4>
 			<hr>
 
 			<header>
@@ -42,7 +42,7 @@
 				//reddit style list
 				foreach ($posts as $post){
 					echo "<a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8').
-					"</a> $post->created_at 
+					"</a> ".date('j F Y\, h:i:s A', strtotime($post->created_at)) ."
 
 					[<a href='edit_post.php?id=".$post->id."'>Edit</a>]
 					[<a href='javascript:deletePost($post->id)'>Delete</a>]

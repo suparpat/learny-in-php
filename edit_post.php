@@ -1,12 +1,14 @@
 <?php
 	$errorEditPostMessage='';
-	require("lib/config.php");
-	require('lib/postClass.php');
-	require('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
+	require_once("lib/config.php");
+	require_once('lib/postClass.php');
+	require_once('lib/tagClass.php');
+	require_once('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
 
 	$config = HTMLPurifier_Config::createDefault();
 	$purifier = new HTMLPurifier($config);
 	$postClass = new postClass();
+	$tagClass = new tagClass();
 
 	//redirect to error_not_login.php if user is not logged in
 	if(!$isLoggedIn){
@@ -15,21 +17,29 @@
 	}else{
 
 		//redirect to index.php if user is not the owner of this post
-		if($_SESSION['uid']!=$postClass->checkOwnership($_GET['id'], $_SESSION['uid'])){
-			$url=BASE_URL.'index.php';
-			header("Location: $url");
+		if(isset($_GET['id'])){
+			if($_SESSION['uid']!=$postClass->checkOwnership($_GET['id'], $_SESSION['uid'])){
+				$url=BASE_URL.'index.php';
+				header("Location: $url");
+			}		
 		}
+
 
 		if (!empty($_POST['postSubmit'])&&isset($_POST['subject'])&&isset($_POST['editor'])&&isset($_POST['type'])&&isset($_SESSION['uid'])) 
 		{
-			$subject=$_POST['subject'];
-			$content=$_POST['editor'];
-			$type=$_POST['type'];
-			$author=$_SESSION['uid'];
+			$subject = $_POST['subject'];
+			$content = $_POST['editor'];
+			$type = $_POST['type'];
+			$author = $_SESSION['uid'];
 			$postId = $_POST['id'];
-			$tags = $_POST['tags'];
+			if(isset($_POST['tags'])){
+				$tags = $_POST['tags'];
+			}
+			else{
+				$tags = [];
+			}
 
-			if(strlen(trim($subject))>1 && strlen(trim($content))>1 && strlen(trim($type))){
+			if(strlen(trim($subject)) > 1 && strlen(trim($content)) > 1 && strlen(trim($type))){
 				$result=$postClass->editPost($postId, $subject, $content, $type, $author, $tags);
 				if($result){
 					$url=BASE_URL.'post.php?id='.$postId;
@@ -41,11 +51,15 @@
 			}else{
 				$errorEditPostMessage="Please make sure there are no empty fields.";
 			}
+			exit();
 		}else{
 			//Get post
 			if(isset($_GET['id'])){
 				$postId = $_GET['id'];
 				$post = $postClass->fetchAPost($_GET['id']);
+
+			//Get post's tags
+				$tags = $tagClass->fetchTagsByPostId($_GET['id'], false);
 			}
 
 			if(!empty($_POST['postSubmit'])){
@@ -93,6 +107,9 @@
 		                <ul id="tag_input">
 		                	<?php 
 		                		//echo <li> of already existing tags
+		                		foreach($tags as $tag){
+			                		echo "<li>$tag->name</li>";
+		                		}
 		                	?>
 		                </ul>
 						<!-- <input class="input-default-format" id="tag_input" placeholder="Enter tags (comma-separated)"> -->

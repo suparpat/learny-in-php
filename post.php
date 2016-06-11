@@ -3,8 +3,10 @@
 	require('lib/config.php');
 	require('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
 	require('lib/commentClass.php');
-	
+	require('lib/tagClass.php');
+
 	$commentClass = new commentClass();
+	$tagClass = new tagClass();
 	$config = HTMLPurifier_Config::createDefault();
 	$purifier = new HTMLPurifier($config);
 
@@ -12,6 +14,7 @@
 		require('lib/postClass.php');
 		$postClass = new postClass();
 		$post = $postClass->fetchAPost($_GET['id']);
+		$tags = $tagClass -> fetchTagsByPostId($_GET['id'], false);
 	}else{
 		$url=BASE_URL.'browse.php';
 		header("Location: $url"); // Page redirecting to home.php 
@@ -50,6 +53,14 @@
 	<head>
 		<title>Learny</title>
 		<?php include 'partials/header.php' ?>
+        <link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="lib/vendor/aehlke-tag-it/css/jquery.tagit.css">
+        <style>
+        	.ui-widget-content{
+        		border: 0px;
+        		background: transparent;
+        	}
+        </style>
 	</head>
 
 	<body>
@@ -64,9 +75,11 @@
 			<header>
 				<h3>
 					<?php
-						echo "<code>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')." by ".$post->username." on ".$post->created_at."</code>";
+						echo "<code>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')." by $post->username on ".date('j F Y\, h:i:s A', strtotime($post->created_at))."</code>";
+						if(isset($post->updated_at)){
+							echo "<br><code>last updated: ".date('j F Y\, h:i:s A', strtotime($post->created_at))."</code>";
+						}
 					?>
-
 				</h3>
 			</header>
 			<div id="postContent">
@@ -74,11 +87,18 @@
 					echo "<p>".$purifier->purify($post->content)."</p>";
 				?>
 			</div>
-			<?php
+
+				<?php
+				echo "<ul id='tags_display'>";
+					foreach($tags as $tag){
+						echo "<li>$tag->name</li>";
+					}
+				echo "</ul>";
+
 				if($_SESSION['uid']==$post->uid){
 					echo "[<a href='edit_post.php?id=".$post->id."'>edit post</a>]";
 				}
-			?>
+				?>
 			<hr>
 			<code><b>Comment</b></code>
 			<div id="commentForm">
@@ -101,5 +121,20 @@
 			<?php include 'partials/footer.php' ?>
 			<?php include 'partials/imports.php' ?>
 		</div>
+    	<script src="js/jquery-ui/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+    	<script src="lib/vendor/aehlke-tag-it/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+    	<script>
+    		
+			$(document).ready(function() {
+			    $("#tags_display").tagit({
+			    	readOnly: true,
+			    	onTagClicked: function(event, ui){
+			    		window.location.href="tag.php?name="+ui.tag[0].textContent;
+			    		// console.log(ui.tag);
+			    	}
+			    })
+			});
+
+    	</script>
 	</body>
 </html>

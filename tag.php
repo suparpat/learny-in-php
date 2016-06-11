@@ -33,7 +33,7 @@
 			<?php
 				//reddit style list
 				foreach($posts as $key=>$post){
-					echo ($key+1).". <a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a> by $post->username on $post->created_at<br>";
+					echo ($key+1).". <a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a> by $post->username on ".date('j F Y\, h:i:s A', strtotime($post->created_at))."<br>";
 				}
 
 			?>

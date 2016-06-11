@@ -24,7 +24,7 @@ class commentClass{
 	public function fetchComments($postId){
 		try{
 			$db = getDB();
-			$stmt = $db->prepare("SELECT id,comment,comments.uid,username,created_at FROM comments INNER JOIN users ON users.uid=comments.uid WHERE post_id=:postId ORDER BY updated_at DESC");
+			$stmt = $db->prepare("SELECT id,comment,comments.uid,username,comments.created_at FROM comments INNER JOIN users ON users.uid=comments.uid WHERE post_id=:postId ORDER BY updated_at DESC");
 			$stmt->bindParam("postId", $postId, PDO::PARAM_INT) ; 
 			$stmt->execute();
 

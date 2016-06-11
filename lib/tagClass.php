@@ -45,7 +45,24 @@ class tagClass{
 		}
 
 	}
-
+	public function fetchTagsByPostId($postId, $asTagNameArray){
+		try{
+			$db = getDB();
+			$stmt = $db->prepare("SELECT tags.id, tags.name FROM tags
+				INNER JOIN posts_tags ON tags.id=posts_tags.tag_id WHERE posts_tags.post_id=:postId");
+			$stmt->bindParam("postId", $postId, PDO::PARAM_INT);
+			$stmt->execute();
+			if($asTagNameArray){
+				$data = $stmt->fetchAll(PDO::FETCH_COLUMN, 1);
+			}else{
+				$data = $stmt->fetchAll(PDO::FETCH_OBJ);
+			}
+			return $data;
+		}
+		catch(PDOException $e){
+			echo '{"error":{"text":'. $e->getMessage() .'}}';
+		}
+	}
 	public function checkIfTagExists($inputTag){
 		try{
 			$db = getDB();
@@ -89,7 +106,7 @@ class tagClass{
 		//Check if each tag already exists and create one if not
 		foreach($tags as $tag){
 			$tempTagCheckResult = $this->checkIfTagExists($tag);
-			if($tempTagCheckResult > 0){
+			if($tempTagCheckResult >= 0){
 				$tagIdArray[] = $tempTagCheckResult;
 			}else{
 				$tagIdArray[] = $this->createTag($tag);
@@ -102,6 +119,84 @@ class tagClass{
 		}
 
 	}//end insertPostTags()
+
+	public function deletePostTag($postId, $tagName){
+		try{
+			$db = getDB();
+			$stmt = $db->prepare("DELETE posts_tags FROM posts_tags INNER JOIN tags ON posts_tags.tag_id=tags.id WHERE post_id=:post_id AND name=:tag_name");
+			$stmt->bindParam("post_id", $postId, PDO::PARAM_INT);
+			$stmt->bindParam("tag_name", $tagName, PDO::PARAM_STR);
+			$stmt->execute();
+
+			$db = null;
+			return true;
+		}
+		catch(PDOException $e){
+			echo '{"error":{"text":'. $e->getMessage() .'}}';
+		}
+	}
+
+	public function deleteTagIfNoPost($tagNameToDelete){
+		try{
+			$checkTagHasPosts = $this->checkIfTagHasPosts($tagNameToDelete);
+			if($checkTagHasPosts){
+				// do nothing
+			}else{
+				$db = getDB();
+				$stmt = $db->prepare("DELETE FROM tags WHERE tags.name=:tagNameToDelete");
+				$stmt->bindParam("tagNameToDelete", $tagNameToDelete, PDO::PARAM_STR);
+				$stmt->execute();
+			}
+
+			$db = null;
+			return true;
+		}
+		catch(PDOException $e){
+			echo '{"error":{"text":'. $e->getMessage() .'}}';
+		}
+	}
+
+	public function checkIfTagHasPosts($tagName){
+		try{
+			$db = getDB();
+			$stmt = $db->prepare("SELECT id FROM tags INNER JOIN posts_tags ON tags.id=posts_tags.tag_id WHERE tags.name=:tagName");
+			$stmt->bindParam("tagName", $tagName, PDO::PARAM_STR);
+			$stmt->execute();
+			$data = $stmt->fetchAll(PDO::FETCH_OBJ);
+			$db = null;
+			error_log(count($data));
+			if(count($data)>0){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		catch(PDOException $e){
+			echo '{"error":{"text":'. $e->getMessage() .'}}';
+		}
+	}
+
+	public function updatePostTags($postId, $tags){
+
+		//get post's current tags
+		$originalTags = $this->fetchTagsByPostId($postId, true);
+
+		//Find tags to add
+		$newTags = array_diff($tags, $originalTags);
+		$this->insertPostTags($postId, $newTags);
+
+		//Find tags removed
+		$deleteTags = array_diff($originalTags, $tags);
+
+		foreach($deleteTags as $tagToDelete){
+			$this->deletePostTag($postId, $tagToDelete);
+		}
+
+		//If a tag has no more post, delete tag
+		foreach($deleteTags as $tagToDelete){
+			$this->deleteTagIfNoPost($tagToDelete);
+		}		
+	}
 }
 
 ?>
