@@ -1,0 +1,4 @@
+Allow comma key to be entered (and so mor-ma in the Thai alphabet, etc.):
+
+Commented line 245 in tag-it.js
+// (event.which === $.ui.keyCode.COMMA && event.shiftKey === false) ||
