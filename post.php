@@ -23,7 +23,11 @@
 	if(!empty($_POST['commentSubmit'])){
 		$comment = $_POST['comment'];
 		$postId = $_GET['id'];
-		$author = $_SESSION['uid'];
+		if(empty($_SESSION['uid'])){
+		//do nothing
+		}else{
+			$author = $_SESSION['uid'];
+		}
 
 		if(empty($author)){
 			$commentMessage = 'Please <a href="register.php">register</a>/<a href="login.php">login</a> first before commenting.';
@@ -95,9 +99,12 @@
 					}
 				echo "</ul>";
 
-				if($_SESSION['uid']==$post->uid){
-					echo "[<a href='edit_post.php?id=".$post->id."'>edit post</a>]";
+				if(!empty($_SESSION['uid'])){
+					if($_SESSION['uid']==$post->uid){
+						echo "[<a href='edit_post.php?id=".$post->id."'>edit post</a>]";
+					}					
 				}
+
 				?>
 			<hr>
 			<code><b>Comment</b></code>
