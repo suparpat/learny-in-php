@@ -77,7 +77,7 @@
 					<?php
 						echo "<code>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')." by $post->username on ".date('j F Y\, h:i:s A', strtotime($post->created_at))."</code>";
 						if(isset($post->updated_at)){
-							echo "<br><code>last updated: ".date('j F Y\, h:i:s A', strtotime($post->created_at))."</code>";
+							echo "<br><code>last updated: ".date('j F Y\, h:i:s A', strtotime($post->updated_at))."</code>";
 						}
 					?>
 				</h3>
