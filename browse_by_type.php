@@ -17,7 +17,7 @@
 			<?php include 'partials/top_menu.php' ?>
 
 			<header>
-				<h3>Types [<a href="add_type.php">Add Type</a>]</h3>
+				<h3>Types</h3>
 			</header>
 
 

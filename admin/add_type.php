@@ -1,8 +1,8 @@
 <?php
 	$errorMsgAddType='';
-	require_once("lib/config.php");
-	require_once('lib/typeClass.php');
-	$userClass = new typeClass();
+	require_once(__DIR__."/../lib/config.php");
+	require_once(__DIR__.'/../lib/typeClass.php');
+	$typeClass = new typeClass();
 
 	if(!$isLoggedIn){
 		$url=BASE_URL.'index.php';
@@ -17,7 +17,7 @@
 		if(strlen(trim($typeName))>1){
 			$result=$typeClass->createType($typeName);
 			if($result){
-				$url=BASE_URL.'types.php';
+				$url=BASE_URL.'browse_by_type.php';
 				header("Location: $url"); // Page redirecting to home.php 
 			}
 			else{
@@ -44,9 +44,6 @@
 			</header>
             <div>
                 <form id="login_form" action="add_type.php" method="post">
-
-
-
 	                <input class="input-default-format form-input" type="text" name="typeName" placeholder="Type Name">
                     <?php 
 	                    echo "<p>".$errorMsgAddType."</p>";
@@ -54,9 +51,7 @@
                     <input class="input-default-format form-submit-button" type="submit" value="Add Type" name="addTypeSubmit">
                 </form>
             </div>
-			<?php include 'partials/quote_block.php' ?>
-			<?php include 'partials/footer.php' ?>
-			<?php include 'partials/imports.php' ?>
+
 
 
 		</div>

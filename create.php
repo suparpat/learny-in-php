@@ -9,7 +9,7 @@
 	$purifier = new HTMLPurifier($config);
 	$postClass = new postClass();
 	$typeClass = new typeClass();
-
+	$types = $typeClass->fetchTypes();
 	if(!$isLoggedIn){
 		$url=BASE_URL.'error_not_login.php';
 		header("Location: $url"); // Page redirecting to home.php 
@@ -69,10 +69,16 @@
 					<div style="width:100%; overflow:hidden; display:flex;">
 						<select name="type" class="input-default-format" id="post_type_select">
 							<option value="" disabled selected>Select a type</option>
-							<option value="fact">Fact</option>
+							<?php
+								foreach($types as $type){
+									echo "<option value='$type->name'>$type->name</option>";
+								}
+
+							?>
+							<!-- <option value="fact">Fact</option>
 							<option value="idea">Idea</option>
 							<option value="insight">Insight</option>
-							<option value="thought">Thought</option>
+							<option value="thought">Thought</option> -->
 						</select>
 		                <ul id="tag_input"></ul>
 						<!-- <input class="input-default-format" id="tag_input" placeholder="Enter tags (comma-separated)"> -->

@@ -7,6 +7,8 @@
 		<a id="pinboard_name" href="index.php">Learny Admin</a>
 	</div>
 	<div id="top_menu">
+		<a href="add_type.php">Add Type</a>
+		&#8231;
 		<a href="view_sessions.php">View Sessions</a>
 		&#8231;
 		<a href="php_info.php">PHP info</a>
