@@ -79,7 +79,7 @@
 			<header>
 				<h3>
 					<?php
-						echo "<code>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')." by $post->username on ".date('j F Y\, h:i:s A', strtotime($post->created_at))."</code>";
+						echo "<code><a href='post.php?id=$post->id'>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a> by $post->username on ".date('j F Y\, h:i:s A', strtotime($post->created_at))."</code>";
 						if(isset($post->updated_at)){
 							echo "<br><code>last updated: ".date('j F Y\, h:i:s A', strtotime($post->updated_at))."</code>";
 						}
@@ -107,21 +107,30 @@
 
 				?>
 			<hr>
+			<?php 
+				if(!empty($_SESSION['uid'])):
+			?>
 			<code><b>Comment</b></code>
 			<div id="commentForm">
 				<form action=<?php echo "post.php?id=".$_GET['id']; ?> method="post" style="overflow:hidden;">
-	                <textarea name="comment" id="comment" rows="6" cols="80"></textarea>
+	                <!-- <textarea name="comment" id="comment" rows="6" cols="80"></textarea> -->
+                    <textarea name="comment" id="create_editor" rows="6" cols="80"></textarea>
 	                <div>
 			            <input class="input-default-format" id="comment-submit-button" type="submit" name="commentSubmit" value="Submit">
 	                </div>
 				</form>
 			</div>
-
+			<?php
+				else:
+					echo "Please <a href='register.php'>register</a>/<a href='login.php'>login</a> first before commenting.";
+				endif;
+			?>
 			<hr>
 
 			<?php 
-				foreach (array_reverse($comments) as $key=>$comment){
-					echo "<p>By $comment->username on $comment->created_at <br>" . (count($comments)-($key)) . ". " . htmlspecialchars($comment->comment, ENT_QUOTES, 'UTF-8')."</p>";
+				foreach ($comments as $key=>$comment){
+					echo "<p>".(count($comments)-($key)).". by $comment->username on $comment->created_at </p>" . $purifier->purify($comment->comment);
+					echo "<hr class='style-six'>";
 				};
 			?>
 			<?php include 'partials/quote_block.php' ?>
@@ -130,6 +139,7 @@
 		</div>
     	<script src="js/jquery-ui/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
     	<script src="lib/vendor/aehlke-tag-it/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+        <script src="lib/vendor/ckeditor/ckeditor.js"></script>
     	<script>
     		
 			$(document).ready(function() {
@@ -139,7 +149,15 @@
 			    		window.location.href="tag.php?name="+ui.tag[0].textContent;
 			    		// console.log(ui.tag);
 			    	}
-			    })
+			    });
+
+                CKEDITOR.replace( 'comment' );
+                CKEDITOR.config.toolbar = [
+	                [
+	                'Format','Bold','Italic','Underline','Strike','-','Image','Table','BulletedList',	'Link'
+					]
+                ] ;
+                CKEDITOR.config.height = '35%';
 			});
 
     	</script>

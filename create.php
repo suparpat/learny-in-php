@@ -77,6 +77,7 @@
 					</div>
 	                <div style="text-align:center;">
 		                <input class="input-default-format" id="create-submit-button" type="submit" name="postSubmit" value="Submit">
+		                <input class="input-default-format" id="create-submit-button" type="submit" name="postDraftSubmit" value="Draft" disabled>
 					</div>
 				</form>
 
