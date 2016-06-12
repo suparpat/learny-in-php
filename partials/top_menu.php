@@ -7,9 +7,9 @@
 		<a id="pinboard_name" href="index.php">Learny</a>
 	</div>
 	<div id="top_menu">
-		<a href="browse_by_type.php">types</a>
-		&#8231;
 		<a href="browse_by_tag.php">tags</a>
+		&#8231;
+		<a href="browse_by_type.php">types</a>
 		&#8231;
 		<?php
 		    if(!$isLoggedIn){
