@@ -89,7 +89,7 @@
 					</div>
 	                <div style="text-align:center;">
 		                <input class="input-default-format" id="create-submit-button" type="submit" name="postSubmit" value="Share with the World">
-		                <input class="input-default-format" id="create-submit-button" type="submit" name="postDraftSubmit" value="Save as draft" disabled>
+		                <input class="input-default-format" id="create-submit-button" type="submit" name="postDraftSubmit" value="Keep it to myself" disabled>
 					</div>
 				</form>
 

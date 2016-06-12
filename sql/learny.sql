@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 12, 2016 at 10:22 AM
+-- Generation Time: Jun 12, 2016 at 04:17 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `comments`
@@ -46,7 +46,8 @@ INSERT INTO `comments` (`id`, `comment`, `post_id`, `uid`, `created_at`, `update
 (4, '<p>test</p>\r\n', 1, 1, '2016-06-12 05:19:18', '2016-06-12 05:19:18'),
 (5, '<p>good</p>\r\n\r\n<p>However, I think blahๆๆๆ</p>\r\n', 1, 1, '2016-06-12 05:22:25', '2016-06-12 05:22:25'),
 (6, '<h1><strong>Nice!</strong></h1>\r\n', 1, 1, '2016-06-12 05:30:44', '2016-06-12 05:30:44'),
-(7, '<table border="1" cellpadding="1" cellspacing="1" style="width:100%">\r\n	<tbody>\r\n		<tr>\r\n			<td>123456</td>\r\n			<td>123456</td>\r\n		</tr>\r\n		<tr>\r\n			<td>123456</td>\r\n			<td>123456</td>\r\n		</tr>\r\n		<tr>\r\n			<td>123456</td>\r\n			<td>123456</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p>&nbsp;</p>\r\n', 1, 1, '2016-06-12 05:31:07', '2016-06-12 05:31:07');
+(7, '<table border="1" cellpadding="1" cellspacing="1" style="width:100%">\r\n	<tbody>\r\n		<tr>\r\n			<td>123456</td>\r\n			<td>123456</td>\r\n		</tr>\r\n		<tr>\r\n			<td>123456</td>\r\n			<td>123456</td>\r\n		</tr>\r\n		<tr>\r\n			<td>123456</td>\r\n			<td>123456</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p>&nbsp;</p>\r\n', 1, 1, '2016-06-12 05:31:07', '2016-06-12 05:31:07'),
+(8, '<p>I think....</p>\r\n', 1, 1, '2016-06-12 11:15:59', '2016-06-12 11:15:59');
 
 -- --------------------------------------------------------
 
@@ -70,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
 --
 
 INSERT INTO `posts` (`id`, `subject`, `content`, `uid`, `created_at`, `updated_at`) VALUES
-(1, 'Learny!', '<h2>To-dos</h2>\r\n\r\n<ul>\r\n	<li><s>Allow post categorization by tag (limit one post to 5 tags?)</s></li>\r\n	<li><s>Make sure tags are retrieve and shown on the edit post page</s></li>\r\n	<li><s>Make sure tags of a post can be modified</s></li>\r\n	<li><s>Make sure page title of each page is correct</s></li>\r\n	<li><s>[View Post Page] Hide comment box if user is not logged in</s></li>\r\n	<li><s>[View Post Page] Make comment html instead of plaintext&nbsp;</s></li>\r\n	<li><strong>[Data Structure] make type of a post as table (right now any string is accepted)</strong></li>\r\n	<li><strong>[Post] Allow up/downvoting of posts</strong></li>\r\n	<li>[Post] Allow a post to be public or private/draft?</li>\r\n	<li>[Post Deletion] Make sure when a post is deleted, relevant rows in comments and posts_tags table are also removed</li>\r\n	<li>[Tags] Show number of posts of each tag? in tags section... this might be expensive on resource. perhaps need to cache.</li>\r\n	<li>[Scoring] Add scoring feature: user gets points for\r\n	<ul>\r\n		<li>getting upvote on post</li>\r\n		<li>getting upvote on comments</li>\r\n	</ul>\r\n	</li>\r\n	<li>[Usability] make dates relative i.e. 3 hours ago</li>\r\n</ul>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Thoughts</h2>\r\n\r\n<ul>\r\n	<li>[Post] Should users be able to delete post? Allowing deletion is a bit complicated as many tables will be affected</li>\r\n	<li>Make a Thai version of the website?</li>\r\n</ul>\r\n', 1, '2016-06-11 09:21:49', '2016-06-12 06:06:34'),
+(1, 'Learny!', '<h2>To-dos</h2>\r\n\r\n<ul>\r\n	<li><s>Allow post categorization by tag (limit one post to 5 tags?)</s></li>\r\n	<li><s>Make sure tags are retrieve and shown on the edit post page</s></li>\r\n	<li><s>Make sure tags of a post can be modified</s></li>\r\n	<li><s>Make sure page title of each page is correct</s></li>\r\n	<li><s>[View Post Page] Hide comment box if user is not logged in</s></li>\r\n	<li><s>[View Post Page] Make comment html instead of plaintext&nbsp;</s></li>\r\n	<li><s>[Data Structure] make type of a post as table (right now any string is accepted)</s></li>\r\n	<li><strong>[Post] Allow up/downvoting of posts</strong></li>\r\n	<li>[Post] Allow a post to be public or private/draft?</li>\r\n	<li>[Post Deletion] Make sure when a post is deleted, relevant rows in comments and posts_tags table are also removed</li>\r\n	<li>[Tags] Show number of posts of each tag? in tags section... this might be expensive on resource. perhaps need to cache.</li>\r\n	<li>[Scoring] Add scoring feature: user gets points for\r\n	<ul>\r\n		<li>getting upvote on post</li>\r\n		<li>getting upvote on comments</li>\r\n	</ul>\r\n	</li>\r\n	<li>[Usability] make dates relative i.e. 3 hours ago</li>\r\n	<li>[Post creation] suggest current tags from entered characters in tag input field</li>\r\n	<li>Paginate comments</li>\r\n	<li>Allow comments to be edited by the person who wrote the comment</li>\r\n</ul>\r\n\r\n<h2>Thoughts</h2>\r\n\r\n<ul>\r\n	<li>[Post] Should users be able to delete post? Allowing deletion is a bit complicated as many tables will be affected</li>\r\n	<li>Make a Thai version of the website?</li>\r\n</ul>\r\n', 1, '2016-06-11 09:21:49', '2016-06-12 11:16:38'),
 (4, 'Test', '<p>test</p>\r\n', 1, '2016-06-12 07:40:38', '2016-06-12 07:40:38');
 
 -- --------------------------------------------------------
@@ -145,16 +146,22 @@ CREATE TABLE IF NOT EXISTS `types` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `types`
 --
 
 INSERT INTO `types` (`id`, `name`) VALUES
+(5, 'Discussion'),
+(10, 'Experience'),
 (2, 'Fact'),
 (4, 'Idea'),
+(7, 'Link'),
 (1, 'Note'),
+(6, 'Question'),
+(9, 'Story'),
+(8, 'Suggestion'),
 (3, 'Thought');
 
 -- --------------------------------------------------------
