@@ -3,15 +3,17 @@
 	require_once(__DIR__.'/../lib/userClass.php');
 	require_once(__DIR__.'/../lib/postClass.php');
 	require_once(__DIR__.'/../lib/tagClass.php');
+	require_once(__DIR__.'/../lib/typeClass.php');
 
 	$userClass = new userClass();
 	$postClass = new postClass();
 	$tagClass = new tagClass();
+	$typeClass = new typeClass();
 
 	$users = $userClass->fetchAllUsers();
 	$posts = $postClass->fetchPosts(1000, 1);
 	$tags = $tagClass->fetchTags();
-
+	$types = $typeClass->fetchTypes();
 ?>
 <html>
 	<head>
@@ -46,6 +48,13 @@
 			<?php 
 				foreach($tags as $tag){
 					echo $tag->name."<br>";
+				}
+			?>
+
+			<h4>Types</h4>
+			<?php 
+				foreach($types as $type){
+					echo $type->name."<br>";
 				}
 			?>
 		</div>
