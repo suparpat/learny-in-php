@@ -119,8 +119,8 @@ a:hover {
 #tag_input{
 	margin-top: 15px;
 	margin-left: 10px;
-	float:right;
-	width:100%;
+	float:left;
+	width:60%;
 }
 /*#create_editor {
 

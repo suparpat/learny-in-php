@@ -24,7 +24,7 @@
 		<div id="content">
 
 			<header>
-				<h3>Browse</h3>
+				<h3>New Posts</h3>
 				<!-- <h3>Browsing <?php echo "(" . $postsPerPage . " from " . $postCount . ")"; ?></h3> -->
 			</header>
 			<?php

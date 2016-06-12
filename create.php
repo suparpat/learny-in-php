@@ -2,11 +2,13 @@
 	$errorPostMessage='';
 	require("lib/config.php");
 	require('lib/postClass.php');
+	require('lib/typeClass.php');
 	require('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
 
 	$config = HTMLPurifier_Config::createDefault();
 	$purifier = new HTMLPurifier($config);
 	$postClass = new postClass();
+	$typeClass = new typeClass();
 
 	if(!$isLoggedIn){
 		$url=BASE_URL.'error_not_login.php';
