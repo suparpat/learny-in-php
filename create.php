@@ -1,9 +1,9 @@
 <?php
 	$errorPostMessage='';
-	require("lib/config.php");
-	require('lib/postClass.php');
-	require('lib/typeClass.php');
-	require('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
+	require_once("lib/config.php");
+	require_once('lib/postClass.php');
+	require_once('lib/typeClass.php');
+	require_once('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
 
 	$config = HTMLPurifier_Config::createDefault();
 	$purifier = new HTMLPurifier($config);
@@ -21,8 +21,12 @@
 		$content=$_POST['editor'];
 		$type=$_POST['type'];
 		$author=$_SESSION['uid'];
-		$tags = $_POST['tags'];
-
+		if(isset($_POST['tags'])){
+			$tags = $_POST['tags'];
+		}
+		else{
+			$tags = [];
+		}
 		if(strlen(trim($subject))>1 && strlen(trim($content))>1 && strlen(trim($type))){
 			$result=$postClass->createPost($subject, $content, $type, $author, $tags);
 			if($result){
@@ -71,7 +75,7 @@
 							<option value="" disabled selected>Select a type</option>
 							<?php
 								foreach($types as $type){
-									echo "<option value='$type->name'>$type->name</option>";
+									echo "<option value='$type->id'>$type->name</option>";
 								}
 
 							?>

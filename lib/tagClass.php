@@ -34,7 +34,7 @@ class tagClass{
 	public function fetchPostsByTagName($tagName){
 		try{
 			$db = getDB();
-			$stmt = $db->prepare("SELECT posts.id, posts.subject, posts.type, posts.uid, users.username, posts.created_at FROM tags INNER JOIN posts_tags ON tags.id=posts_tags.tag_id JOIN posts ON posts_tags.post_id=posts.id JOIN users ON posts.uid=users.uid WHERE tags.name=:name");
+			$stmt = $db->prepare("SELECT posts.id, posts.subject, posts.uid, users.username, posts.created_at FROM tags INNER JOIN posts_tags ON tags.id=posts_tags.tag_id JOIN posts ON posts_tags.post_id=posts.id JOIN users ON posts.uid=users.uid WHERE tags.name=:name");
 			$stmt->bindParam("name", $tagName, PDO::PARAM_STR);
 			$stmt->execute();
 			$data = $stmt->fetchAll(PDO::FETCH_OBJ);

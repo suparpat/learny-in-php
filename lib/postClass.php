@@ -1,21 +1,24 @@
 <?php
 	require_once(__DIR__.'/tagClass.php');
+	require_once(__DIR__.'/typeClass.php');
 
 	class postClass{
 		/* Create Post */
-		public function createPost($subject, $content, $type, $author, $tags){
+		public function createPost($subject, $content, $typeId, $author, $tags){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("INSERT INTO posts(subject,content,type,uid) VALUES (:subject,:content,:type,:author)");
+				$stmt = $db->prepare("INSERT INTO posts(subject,content,uid) VALUES (:subject,:content,:author)");
 
 				$stmt->bindParam("subject", $subject,PDO::PARAM_STR);
 				$stmt->bindParam("content", $content,PDO::PARAM_STR);
-				$stmt->bindParam("type", $type,PDO::PARAM_STR);
 				$stmt->bindParam("author", $author,PDO::PARAM_STR);
 
 				$stmt->execute();
 				global $lastPostId;
 				$lastPostId=$db->lastInsertId(); // Last inserted row id
+
+				$typeClass = new typeClass();
+				$typeClass->createPostType($lastPostId, $typeId);
 
 				if(count($tags)>0){
 					$tagClass = new tagClass();
@@ -34,20 +37,23 @@
 
 
 
-		public function editPost($postId, $subject, $content, $type, $author, $tags){
+		public function editPost($postId, $subject, $content, $typeId, $author, $tags){
 			try{
 				$checkOwnershipResult = $this->checkOwnership($postId, $author);
 				if($checkOwnershipResult){
 					$db = getDB();
-					$stmt = $db->prepare("UPDATE posts SET subject=:subject, content=:content, type=:type, uid=:author WHERE id=:id");
+					$stmt = $db->prepare("UPDATE posts SET subject=:subject, content=:content, uid=:author WHERE id=:id");
 
 					$stmt->bindParam("subject", $subject, PDO::PARAM_STR);
 					$stmt->bindParam("content", $content, PDO::PARAM_STR);
-					$stmt->bindParam("type", $type, PDO::PARAM_STR);
+					// $stmt->bindParam("type", $type, PDO::PARAM_STR);
 					$stmt->bindParam("author", $author, PDO::PARAM_INT);
 					$stmt->bindParam("id", $postId, PDO::PARAM_INT);
 
 					$stmt->execute();
+
+					$typeClass = new typeClass();
+					$typeClass->updatePostType($postId, $typeId);
 
 					$tagClass = new tagClass();
 					$tagClass->updatePostTags($postId, $tags);
@@ -109,7 +115,7 @@
 		public function fetchPosts($limit, $page){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("SELECT id, subject, type, posts.uid, username, posts.created_at FROM posts INNER JOIN users ON posts.uid=users.uid ORDER BY updated_at DESC LIMIT :limit OFFSET :offset"); 
+				$stmt = $db->prepare("SELECT id, subject, posts.uid, username, posts.created_at FROM posts INNER JOIN users ON posts.uid=users.uid ORDER BY updated_at DESC LIMIT :limit OFFSET :offset"); 
 				$stmt->bindParam("limit", $limit,PDO::PARAM_INT);
 				$offset = ($page-1)*$limit;
 				$stmt->bindParam("offset", $offset,PDO::PARAM_INT);
@@ -129,7 +135,7 @@
 		public function fetchAPost($id){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("SELECT id, subject, content, type, posts.uid, username, posts.created_at, posts.updated_at FROM posts INNER JOIN users ON posts.uid=users.uid WHERE id=:id"); 
+				$stmt = $db->prepare("SELECT posts.id AS id, posts.subject AS subject, posts.content AS content, posts.uid AS uid, users.username AS username, posts.created_at AS created_at, posts.updated_at AS updated_at, types.name AS type FROM posts INNER JOIN users ON posts.uid=users.uid INNER JOIN posts_type ON posts.id=posts_type.post_id INNER JOIN types ON types.id=posts_type.type_id WHERE posts.id=:id"); 
 				$stmt->bindParam("id", $id,PDO::PARAM_STR);
 				$stmt->execute();
 				$data = $stmt->fetch(PDO::FETCH_OBJ); //User data
@@ -144,7 +150,7 @@
 		public function fetchAUsersPosts($uid){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("SELECT id, subject, content, type, uid, posts.created_at FROM posts WHERE uid=:uid"); 
+				$stmt = $db->prepare("SELECT id, subject, content, uid, posts.created_at FROM posts WHERE uid=:uid"); 
 				$stmt->bindParam("uid", $uid,PDO::PARAM_STR) ;
 				$stmt->execute();
 				$data = $stmt->fetchAll(PDO::FETCH_OBJ); //User data

@@ -3,12 +3,15 @@
 	require_once("lib/config.php");
 	require_once('lib/postClass.php');
 	require_once('lib/tagClass.php');
+	require_once('lib/typeClass.php');
 	require_once('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
 
 	$config = HTMLPurifier_Config::createDefault();
 	$purifier = new HTMLPurifier($config);
 	$postClass = new postClass();
 	$tagClass = new tagClass();
+	$typeClass = new typeClass();
+	$types = $typeClass->fetchTypes();
 
 	//redirect to error_not_login.php if user is not logged in
 	if(!$isLoggedIn){
@@ -98,11 +101,12 @@
                     <textarea name="editor" id="create_editor" rows="10" cols="80"><?php if(isset($_POST['editor'])) {echo $purifier->purify($_POST['editor']); } else{echo $purifier->purify($post->content);}?></textarea>
 					<div style="width:100%; overflow:hidden; display:flex;">
 						<select name="type" class="input-default-format" id="post_type_select">
-							<option value="" disabled <?php if($post->type==""){echo "selected";}?>>Select a type</option>
-							<option value="fact" <?php if($post->type=="fact"){echo "selected";}?>>Fact</option>
-							<option value="idea" <?php if($post->type=="idea"){echo "selected";}?>>Idea</option>
-							<option value="insight" <?php if($post->type=="insight"){echo "selected";}?>>Insight</option>
-							<option value="thought" <?php if($post->type=="thought"){echo "selected";}?>>Thought</option>
+							<option value="" disabled>Select a type</option>
+							<?php
+								foreach($types as $type){
+									echo "<option value='$type->id'".(($post->type==$type->name)?"selected":"").">$type->name</option>";
+								}
+							?>
 						</select>
 		                <ul id="tag_input">
 		                	<?php 
