@@ -7,7 +7,7 @@
 
 <html>
 	<head>
-		<title>Learny: About</title>
+		<title>Learny: Tags</title>
 		<?php include 'partials/header.php' ?>
 	</head>
 
@@ -17,7 +17,7 @@
 			<?php include 'partials/top_menu.php' ?>
 
 			<header>
-				<h3>Browse by tag</h3>
+				<h3>Tags</h3>
 			</header>
 
 

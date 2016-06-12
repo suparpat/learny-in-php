@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<title>Admin: PHP Info</title>
 		<?php include 'partials/header.php' ?>
 	</head>
 

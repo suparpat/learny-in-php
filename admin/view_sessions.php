@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<title>Admin: View Sessions</title>
 		<?php include 'partials/header.php' ?>
 	</head>
 

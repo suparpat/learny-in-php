@@ -1,4 +1,3 @@
-<title>Admin</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../css/style.css">
 <!-- http://www.sitepoint.com/10-ways-make-website-mobile-friendly/ -->

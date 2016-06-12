@@ -15,6 +15,7 @@
 ?>
 <html>
 	<head>
+		<title>Admin</title>
 		<?php include 'partials/header.php' ?>
 	</head>
 

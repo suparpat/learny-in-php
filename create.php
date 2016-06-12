@@ -42,7 +42,7 @@
 ?>
 <html>
 	<head>
-		<title>Learny: Create</title>
+		<title>Learny: Create A Post</title>
         <?php include 'partials/header.php' ?>
         <link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="lib/vendor/aehlke-tag-it/css/jquery.tagit.css">
