@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 12, 2016 at 04:17 PM
+-- Generation Time: Jun 13, 2016 at 06:37 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `post_id` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
 --
 
 INSERT INTO `posts` (`id`, `subject`, `content`, `uid`, `created_at`, `updated_at`) VALUES
-(1, 'Learny!', '<h2>To-dos</h2>\r\n\r\n<ul>\r\n	<li><s>Allow post categorization by tag (limit one post to 5 tags?)</s></li>\r\n	<li><s>Make sure tags are retrieve and shown on the edit post page</s></li>\r\n	<li><s>Make sure tags of a post can be modified</s></li>\r\n	<li><s>Make sure page title of each page is correct</s></li>\r\n	<li><s>[View Post Page] Hide comment box if user is not logged in</s></li>\r\n	<li><s>[View Post Page] Make comment html instead of plaintext&nbsp;</s></li>\r\n	<li><s>[Data Structure] make type of a post as table (right now any string is accepted)</s></li>\r\n	<li><strong>[Post] Allow up/downvoting of posts</strong></li>\r\n	<li>[Post] Allow a post to be public or private/draft?</li>\r\n	<li>[Post Deletion] Make sure when a post is deleted, relevant rows in comments and posts_tags table are also removed</li>\r\n	<li>[Tags] Show number of posts of each tag? in tags section... this might be expensive on resource. perhaps need to cache.</li>\r\n	<li>[Scoring] Add scoring feature: user gets points for\r\n	<ul>\r\n		<li>getting upvote on post</li>\r\n		<li>getting upvote on comments</li>\r\n	</ul>\r\n	</li>\r\n	<li>[Usability] make dates relative i.e. 3 hours ago</li>\r\n	<li>[Post creation] suggest current tags from entered characters in tag input field</li>\r\n	<li>Paginate comments</li>\r\n	<li>Allow comments to be edited by the person who wrote the comment</li>\r\n</ul>\r\n\r\n<h2>Thoughts</h2>\r\n\r\n<ul>\r\n	<li>[Post] Should users be able to delete post? Allowing deletion is a bit complicated as many tables will be affected</li>\r\n	<li>Make a Thai version of the website?</li>\r\n</ul>\r\n', 1, '2016-06-11 09:21:49', '2016-06-12 11:16:38'),
+(1, 'Learny!', '<h2>To-dos</h2>\r\n\r\n<ul>\r\n	<li><s>Allow post categorization by tag (limit one post to 5 tags?)</s></li>\r\n	<li><s>Make sure tags are retrieve and shown on the edit post page</s></li>\r\n	<li><s>Make sure tags of a post can be modified</s></li>\r\n	<li><s>Make sure page title of each page is correct</s></li>\r\n	<li><s>[View Post Page] Hide comment box if user is not logged in</s></li>\r\n	<li><s>[View Post Page] Make comment html instead of plaintext&nbsp;</s></li>\r\n	<li><s>[Data Structure] make type of a post as table (right now any string is accepted)</s></li>\r\n	<li><strong>[Post] Allow up/downvoting of posts</strong></li>\r\n	<li>[Post] Allow a post to be public or private/draft?</li>\r\n	<li>[Post Deletion] Make sure when a post is deleted, relevant rows in comments and posts_tags table are also removed</li>\r\n	<li>[Tags] Show number of posts of each tag? in tags section... this might be expensive on resource. perhaps need to cache.</li>\r\n	<li>[Scoring] Add scoring feature: user gets points for\r\n	<ul>\r\n		<li>getting upvote on post</li>\r\n		<li>getting upvote on comments</li>\r\n	</ul>\r\n	</li>\r\n	<li>[Usability] make dates relative i.e. 3 hours ago</li>\r\n	<li>[Post creation] suggest current tags from entered characters in tag input field</li>\r\n	<li>Paginate comments</li>\r\n	<li>Allow comments to be edited by the person who wrote the comment</li>\r\n</ul>\r\n\r\n<h2>Thoughts</h2>\r\n\r\n<ul>\r\n	<li>[Post] Should users be able to delete post? Allowing deletion is a bit complicated as many tables will be affected</li>\r\n	<li>Make a Thai version of the website?</li>\r\n	<li>Allow a post to link to other posts</li>\r\n</ul>\r\n', 1, '2016-06-11 09:21:49', '2016-06-12 14:31:42'),
 (4, 'Test', '<p>test</p>\r\n', 1, '2016-06-12 07:40:38', '2016-06-12 07:40:38');
 
 -- --------------------------------------------------------
@@ -85,14 +85,16 @@ CREATE TABLE IF NOT EXISTS `posts_tags` (
   `post_id` int(11) NOT NULL,
   `tag_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `posts_tags`
 --
 
 INSERT INTO `posts_tags` (`id`, `post_id`, `tag_id`) VALUES
-(3, 1, 3);
+(3, 1, 3),
+(4, 1, 4),
+(5, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -126,13 +128,15 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `tags`
 --
 
 INSERT INTO `tags` (`id`, `name`) VALUES
+(5, 'collaborative website'),
+(4, 'future'),
 (3, 'plan for learny');
 
 -- --------------------------------------------------------
