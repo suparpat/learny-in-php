@@ -164,7 +164,7 @@ class tagClass{
 			$stmt->execute();
 			$data = $stmt->fetchAll(PDO::FETCH_OBJ);
 			$db = null;
-			error_log(count($data));
+			// error_log(count($data));
 			if(count($data)>0){
 				return true;
 			}else{

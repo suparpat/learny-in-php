@@ -12,7 +12,7 @@
 	define("DB_USERNAME", "root");
 	define("DB_PASSWORD", "123456");
 	define("DB_DATABASE", "learny");
-	define("BASE_URL", "http://localhost/learny/"); // Eg. http://yourwebsite.com
+	define("BASE_URL", "/learny/"); // Eg. http://yourwebsite.com
 
 
 	function getDB(){

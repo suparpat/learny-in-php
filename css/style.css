@@ -25,8 +25,20 @@ body{
 	font-family: helvetica, sans-serif;
 	color:#444;
 	padding:0 10px;
+	word-wrap: break-word;
+}
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
+img {
+	max-width: 100% !important;
+	height: auto !important;
+}
 /*make mobile friendly*/
 
 input, textarea {
@@ -201,3 +213,10 @@ hr.style-six {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
+
+
+/*remove text label for source button*/
+.cke_button__source_label
+    {
+        display: none !important; /*without icon*/
+    }

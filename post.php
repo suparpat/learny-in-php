@@ -1,13 +1,16 @@
 <?php
 	$commentMessage = '';
-	require('lib/config.php');
-	require('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
-	require('lib/commentClass.php');
-	require('lib/tagClass.php');
+	require_once('lib/config.php');
+	require_once('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
+	require_once('lib/commentClass.php');
+	require_once('lib/tagClass.php');
 
 	$commentClass = new commentClass();
 	$tagClass = new tagClass();
 	$config = HTMLPurifier_Config::createDefault();
+	//http://stackoverflow.com/questions/18726480/embed-html5-youtube-video-without-iframe
+	$config->set('HTML.SafeIframe', true);
+	$config->set('URI.SafeIframeRegexp', '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%'); //allow YouTube and Vimeo
 	$purifier = new HTMLPurifier($config);
 
 	if(isset($_GET['id'])){
@@ -128,7 +131,7 @@
 			<hr>
 
 			<?php 
-				foreach ($comments as $key=>$comment){
+				foreach (array_reverse($comments) as $key=>$comment){
 					echo "<p>".(count($comments)-($key)).". by $comment->username on $comment->created_at </p>" . $purifier->purify($comment->comment);
 					echo "<hr class='style-six'>";
 				};
@@ -154,9 +157,10 @@
                 CKEDITOR.replace( 'comment' );
                 CKEDITOR.config.toolbar = [
 	                [
-	                'Format','Bold','Italic','Underline','Strike','-','Image','Table','BulletedList',	'Link'
+	                'Format','Bold','Italic','Underline','Strike','-','Image','Table','BulletedList', 'Link', 'Youtube', 'Source'
 					]
                 ] ;
+                CKEDITOR.config.extraPlugins = 'youtube';
                 CKEDITOR.config.height = '35%';
 			});
 

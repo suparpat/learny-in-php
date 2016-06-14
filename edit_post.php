@@ -4,10 +4,7 @@
 	require_once('lib/postClass.php');
 	require_once('lib/tagClass.php');
 	require_once('lib/typeClass.php');
-	require_once('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
 
-	$config = HTMLPurifier_Config::createDefault();
-	$purifier = new HTMLPurifier($config);
 	$postClass = new postClass();
 	$tagClass = new tagClass();
 	$typeClass = new typeClass();
@@ -97,8 +94,8 @@
             <div>
                 <form action="edit_post.php" method="post">
                 	<input name="id" value=<?php echo $postId; ?> hidden>
-                    <input class="input-default-format form-input" type="text" name="subject" placeholder="Type your subject" value=<?php if(isset($_POST['subject'])) {echo htmlentities ($_POST['subject']); } else{echo htmlentities($post->subject);} ?>>
-                    <textarea name="editor" id="create_editor" rows="10" cols="80"><?php if(isset($_POST['editor'])) {echo $purifier->purify($_POST['editor']); } else{echo $purifier->purify($post->content);}?></textarea>
+                    <input class="input-default-format form-input" type="text" name="subject" placeholder="Type your subject" value=<?php if(isset($_POST['subject'])) {echo '"'.htmlentities ($_POST['subject']).'"'; } else{echo '"'.htmlentities($post->subject).'"';} ?>>
+                    <textarea name="editor" id="create_editor" rows="10" cols="80"><?php if(isset($_POST['editor'])) {echo $_POST['editor']; } else{echo $post->content;}?></textarea>
 					<div style="width:100%; overflow:hidden; display:flex;">
 						<select name="type" class="input-default-format" id="post_type_select">
 							<option value="" disabled>Select a type</option>
@@ -142,10 +139,11 @@
                 CKEDITOR.config.toolbar = [
 	                ['Format','Font','Bold','Italic','Underline','Strike','-',
 	                // 'Undo','Redo','-',
-					'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-',
-					'Outdent','Indent','Image','Table','NumberedList','BulletedList',
-					'Link','TextColor','BGColor','-','Maximize']
+					'JustifyLeft','JustifyCenter','JustifyRight','-',
+					'Outdent','Indent','NumberedList','BulletedList','Table',
+					'TextColor','BGColor','Link','Image','Youtube','Source', 'Maximize']
                 ] ;
+                CKEDITOR.config.extraPlugins = 'youtube';
                 CKEDITOR.config.height = '55%';
 
 			    $(document).ready(function() {
