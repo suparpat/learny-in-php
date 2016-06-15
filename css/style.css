@@ -34,7 +34,9 @@ pre {
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
-
+iframe {
+	max-width: 100% !important;
+}
 img {
 	max-width: 100% !important;
 	height: auto !important;

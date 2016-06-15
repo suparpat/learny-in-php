@@ -70,8 +70,8 @@ class typeClass{
 	}
 
 	public function updatePostType($postId, $typeId){
-		error_log($postId);
-		error_log($typeId);
+		// error_log($postId);
+		// error_log($typeId);
 		try{
 			$db = getDB();
 			$stmt = $db->prepare("UPDATE posts_type SET type_id=:typeId WHERE post_id=:postId");
