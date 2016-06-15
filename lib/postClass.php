@@ -113,9 +113,29 @@
 		}
 		/* Fetch Posts */
 		public function fetchPosts($limit, $page){
+			//http://stackoverflow.com/questions/2262923/sql-query-get-tags-associated-with-post
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("SELECT id, subject, posts.uid, username, posts.created_at FROM posts INNER JOIN users ON posts.uid=users.uid ORDER BY updated_at DESC LIMIT :limit OFFSET :offset"); 
+				// $stmt = $db->prepare("SELECT id, subject, posts.uid, username, posts.created_at, FROM posts INNER JOIN users ON posts.uid=users.uid ORDER BY updated_at DESC LIMIT :limit OFFSET :offset"); 
+				$stmt = $db->prepare("
+					SELECT posts.id AS id, 
+					posts.subject AS subject, 
+					posts.content AS content, 
+					posts.uid AS uid, 
+					users.username AS username, 
+					posts.created_at AS created_at, 
+					posts.updated_at AS updated_at, 
+					types.name AS type, 
+					GROUP_CONCAT(tags.name ORDER BY tags.name) AS tags
+					FROM posts 
+					INNER JOIN users ON posts.uid=users.uid 
+					INNER JOIN posts_type ON posts.id=posts_type.post_id 
+					INNER JOIN types ON types.id=posts_type.type_id
+					LEFT JOIN posts_tags ON posts.id=posts_tags.post_id
+					LEFT JOIN tags ON posts_tags.tag_id=tags.id
+					GROUP BY posts.id
+					ORDER BY updated_at DESC 
+					LIMIT :limit OFFSET :offset");
 				$stmt->bindParam("limit", $limit,PDO::PARAM_INT);
 				$offset = ($page-1)*$limit;
 				$stmt->bindParam("offset", $offset,PDO::PARAM_INT);
@@ -135,7 +155,21 @@
 		public function fetchAPost($id){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("SELECT posts.id AS id, posts.subject AS subject, posts.content AS content, posts.uid AS uid, users.username AS username, posts.created_at AS created_at, posts.updated_at AS updated_at, types.name AS type FROM posts INNER JOIN users ON posts.uid=users.uid INNER JOIN posts_type ON posts.id=posts_type.post_id INNER JOIN types ON types.id=posts_type.type_id WHERE posts.id=:id"); 
+				$stmt = $db->prepare("
+					SELECT posts.id AS id, 
+					posts.subject AS subject, 
+					posts.content AS content, 
+					posts.uid AS uid, 
+					users.username AS username, 
+					posts.created_at AS created_at, 
+					posts.updated_at AS updated_at, 
+					types.name AS type 
+					FROM posts 
+					INNER JOIN users ON posts.uid=users.uid 
+					INNER JOIN posts_type ON posts.id=posts_type.post_id 
+					INNER JOIN types ON types.id=posts_type.type_id 
+					WHERE posts.id=:id"); 
+
 				$stmt->bindParam("id", $id,PDO::PARAM_STR);
 				$stmt->execute();
 				$data = $stmt->fetch(PDO::FETCH_OBJ); //User data

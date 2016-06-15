@@ -28,12 +28,33 @@
 				<!-- <h3>Browsing <?php echo "(" . $postsPerPage . " from " . $postCount . ")"; ?></h3> -->
 			</header>
 			<?php
+			// echo "<table>";
+   //                  foreach ($posts as $key => $value) {
+   //                      echo "<tr>";
+   //                      echo "<th>";
+   //                      echo $key;
+   //                      echo "</th>";
+   //                      echo "<td>";
+   //                      echo var_dump($value);
+   //                      echo "</td>";
+   //                      echo "</tr>";
+   //                  }
+			// echo "</table>";
+			echo "<table>";
 				//reddit style list
 				foreach ($posts as $key=>$post){
-					echo ($page-1)*$postsPerPage+($key+1) . ". <a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a> by $post->username on ".date('j F Y\, h:i:s A', strtotime($post->created_at))."<br>";
+					$postNumber = ($page-1)*$postsPerPage+($key+1);
+					echo "<tr>";
+					echo "<td>$postNumber. </td>
+					<td><a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a>
+					<br>$post->username, ".date('j F Y\, h:ia', strtotime($post->created_at))."
+					<br>$post->tags</td>
+					<td>$post->type</td></tr>";
 				}
-
+			echo "</table>";
 			?>
+			
+
 			<?php 
 				$prevPage = $page - 1;
 				$nextPage = $page + 1;
