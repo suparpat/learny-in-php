@@ -126,7 +126,7 @@
 					posts.created_at AS created_at, 
 					posts.updated_at AS updated_at, 
 					types.name AS type, 
-					GROUP_CONCAT(tags.name ORDER BY tags.name) AS tags
+					GROUP_CONCAT(tags.name ORDER BY tags.name SEPARATOR '\t') AS tags
 					FROM posts 
 					INNER JOIN users ON posts.uid=users.uid 
 					INNER JOIN posts_type ON posts.id=posts_type.post_id 

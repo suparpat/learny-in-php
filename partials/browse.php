@@ -44,12 +44,21 @@
 				//reddit style list
 				foreach ($posts as $key=>$post){
 					$postNumber = ($page-1)*$postsPerPage+($key+1);
+					$postTags = preg_split('/\t/', $post->tags);
 					echo "<tr>";
 					echo "<td>$postNumber. </td>
 					<td><a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a>
-					<br>$post->username, ".date('j F Y\, h:ia', strtotime($post->created_at))."
-					<br>$post->tags</td>
-					<td>$post->type</td></tr>";
+					<br>$post->username, ".date('j F Y\, h:ia', strtotime($post->created_at));
+					if(count($postTags)>0){
+						echo "<br><ul class='tags_display'>";
+						foreach($postTags as $postTag){
+							$tag = trim($postTag);
+							echo "<li>".$tag."</li>";
+						}		
+						echo "</ul>";			
+					}
+
+					echo "</td><td>$post->type</td></tr>";
 				}
 			echo "</table>";
 			?>
@@ -69,4 +78,17 @@
 
 
 		</div>
+    	<script src="js/jquery-ui/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+    	<script src="lib/vendor/aehlke-tag-it/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			$(document).ready(function() {
+			    $(".tags_display").tagit({
+			    	readOnly: true,
+			    	onTagClicked: function(event, ui){
+			    		window.location.href="tag.php?name="+ui.tag[0].textContent;
+			    		// console.log(ui.tag);
+			    	}
+			    });
+			});
+		</script>
 	</body>
