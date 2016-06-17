@@ -1,6 +1,7 @@
 <?php
 	require_once(__DIR__.'/tagClass.php');
 	require_once(__DIR__.'/typeClass.php');
+	require_once(__DIR__.'/voteClass.php');
 
 	class postClass{
 		/* Create Post */
@@ -143,7 +144,15 @@
 
 				$stmt->execute();
 				$data = $stmt->fetchAll(PDO::FETCH_OBJ); //User data
-				return $data;
+
+				//get users vote information
+				$voteClass = new voteClass();
+				//http://stackoverflow.com/questions/1118994/php-extracting-a-property-from-an-array-of-objects
+				$postIdsArray = array_map(create_function('$o', 'return $o->id;'), $data);
+
+				$result = $voteClass->checkIfUserVoted($_SESSION['uid'], $postIdsArray);
+
+				return array('postsData'=>$data, 'votesData'=>$result);
 			}
 			catch(PDOException $e) {
 				echo '{"error":{"text":'. $e->getMessage() .'}}';

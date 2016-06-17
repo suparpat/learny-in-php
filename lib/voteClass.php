@@ -31,8 +31,25 @@ class voteClass{
 
 	}
 
-	public function checkIfUserVoted(){
+	public function checkIfUserVoted($userId, $postIds){
+		try{
+			$postIdsString = implode(',', $postIds);
+			$db = getDB();
+			$stmt = $db->prepare("SELECT post_id, user_id, vote FROM users_postvotes WHERE user_id=:userId AND post_id IN (".$postIdsString.")");
+			$stmt->bindParam("userId", $userId, PDO::PARAM_INT);
 
+			// error_log($postIdsString);
+			// $stmt->bindParam("postIds", $postIdsString, PDO::PARAM_STR);
+			$stmt->execute();
+			$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+				// 			error_log(print_r($postIdsString));
+				// die();
+			$db = null;
+			return $result;
+		}
+		catch(Exception $e) {
+			echo '{"error":{"text":'. $e->getMessage() .'}}';
+		}
 	}
 
 	public function updateVote(){

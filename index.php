@@ -12,7 +12,7 @@
 	$voteClass = new voteClass();
 
 	$postsPerPage = 15;
-	$posts = $postClass->fetchPosts($postsPerPage, $page);
+	$data = $postClass->fetchPosts($postsPerPage, $page);
 	$postCount = $postClass->fetchPostsCount();
 
 	if(isset($_POST['votePostId'])){
@@ -59,7 +59,7 @@
 			</header>
 			<?php
 			// echo "<table>";
-   //                  foreach ($posts as $key => $value) {
+   //                  foreach ($data as $key => $value) {
    //                      echo "<tr>";
    //                      echo "<th>";
    //                      echo $key;
@@ -72,17 +72,40 @@
 			// echo "</table>";
 			echo "<table>";
 				//reddit style list
-				foreach ($posts as $key=>$post){
+				foreach ($data['postsData'] as $key=>$post){
 					$postNumber = ($page-1)*$postsPerPage+($key+1);
 					$postTags = preg_split('/\t/', $post->tags);
+					$upvoted = false;
+					$downvoted = false;
+					foreach($data['votesData'] as $v){
+						if($v->post_id==$post->id && $v->user_id==$_SESSION['uid']){
+							if($v->vote==1){
+								$upvoted = true;
+							}
+							if($v->vote==-1){
+								$downvoted = true;
+							}
+						}
+					}
 					// print_r($postTags)."<br>";
 					echo "<tr>";
 					echo "<td>$postNumber. </td>
-					<td style='text-align:center'>
-						<div><a href='#' class='upvote' data-pid=$post->id>▲</a></div>
-						<div class='voteCount'>$post->votes</div>
-						<div><a href='#' class='downvote' data-pid=$post->id>▼</a></div>
-					</td>
+					<td style='text-align:center'><div>";
+						if($upvoted){
+							echo "<a href='#' style='color:grey' data-pid=$post->id>▲</a>";
+						}
+						else{
+							echo "<a href='#' class='upvote' data-pid=$post->id>▲</a>";
+						}
+						echo "</div><div class='voteCount'>$post->votes</div><div>";
+						if($downvoted){
+							echo "<a href='#' style='color:grey' data-pid=$post->id>▼</a>";
+						}
+						else{
+							echo "<a href='#' class='downvote' data-pid=$post->id>▼</a>";
+						}
+						echo "</div></td>
+
 					<td><a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a>
 					<br><span style='font-size:12px'>$post->username, ".date('j F Y\, h:ia', strtotime($post->created_at))."</span>";
 					if($postTags[0]!=""){
@@ -154,7 +177,6 @@
 				}
 
 				var downvote = function(postId, element){
-					var postId = $(this).attr("data-pid");
 					$.post("index.php", {'votePostId':postId, 'vote': -1}, function(){
 						//subtract from total vote
 						var thisVoteElement = $(element).closest('td').find('div.voteCount');
