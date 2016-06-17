@@ -37,6 +37,7 @@
         		margin-top: 0px;
         		margin-bottom: 0px;
         		font-size: 12px;
+        		padding-left: 0px;
         	}
         </style>
 	</head>
@@ -70,6 +71,11 @@
 					// print_r($postTags)."<br>";
 					echo "<tr>";
 					echo "<td>$postNumber. </td>
+					<td style='text-align:center'>
+						<div><a href='#' class='upvote' data-pid=$post->id>▲</a></div>
+						<div>2</div>
+						<div><a href='#' class='downvote' data-pid=$post->id>▼</a></div>
+					</td>
 					<td><a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a>
 					<br><span style='font-size:12px'>$post->username, ".date('j F Y\, h:ia', strtotime($post->created_at))."</span>";
 					if($postTags[0]!=""){
@@ -115,6 +121,14 @@
 			    		// console.log(ui.tag);
 			    	}
 			    });
+
+				$('.upvote').click(function () { 
+					console.log($(this).attr("data-pid"));
+				});
+
+				$('.downvote').click(function () {
+					console.log($(this).attr("data-pid"));
+				});
 			});
 		</script>
 	</body>
