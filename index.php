@@ -1,6 +1,7 @@
 <?php
-	require('lib/config.php');
-	require('lib/postClass.php');
+	require_once('lib/config.php');
+	require_once('lib/postClass.php');
+	require_once('lib/voteClass.php');
 
 	if(isset($_GET['page'])){
 		$page = $_GET['page'];
@@ -8,10 +9,16 @@
 		$page = 1;
 	}
 	$postClass = new postClass();
+	$voteClass = new voteClass();
 
 	$postsPerPage = 15;
 	$posts = $postClass->fetchPosts($postsPerPage, $page);
 	$postCount = $postClass->fetchPostsCount();
+
+	if(isset($_POST['votePostId'])){
+		$result = $voteClass->addVote( $_SESSION['uid'], $_POST['votePostId'], $_POST['vote']);
+	}
+
 ?>
 
 
@@ -73,7 +80,7 @@
 					echo "<td>$postNumber. </td>
 					<td style='text-align:center'>
 						<div><a href='#' class='upvote' data-pid=$post->id>▲</a></div>
-						<div>2</div>
+						<div class='voteCount'>$post->votes</div>
 						<div><a href='#' class='downvote' data-pid=$post->id>▼</a></div>
 					</td>
 					<td><a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a>
@@ -123,12 +130,38 @@
 			    });
 
 				$('.upvote').click(function () { 
-					console.log($(this).attr("data-pid"));
+					$(this).off();
+					$(this).css('color','grey');
+					var postId = $(this).attr("data-pid");
+					upvote(postId, $(this));
 				});
 
 				$('.downvote').click(function () {
-					console.log($(this).attr("data-pid"));
+					$(this).off();
+					$(this).css('color','grey');
+					console.log($(this))
+					var postId = $(this).attr("data-pid");
+					downvote(postId, $(this));
+
 				});
+
+				var upvote = function(postId, element){
+					$.post("index.php", {'votePostId':postId, 'vote': 1}, function(){
+						//add to total vote
+						var thisVoteElement = $(element).closest('td').find('div.voteCount');
+						thisVoteElement.html(parseInt(thisVoteElement.html(), 10)+1);
+					})
+				}
+
+				var downvote = function(postId, element){
+					var postId = $(this).attr("data-pid");
+					$.post("index.php", {'votePostId':postId, 'vote': -1}, function(){
+						//subtract from total vote
+						var thisVoteElement = $(element).closest('td').find('div.voteCount');
+						thisVoteElement.html(parseInt(thisVoteElement.html(), 10)-1);
+
+					})
+				}
 			});
 		</script>
 	</body>

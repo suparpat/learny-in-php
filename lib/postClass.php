@@ -126,6 +126,7 @@
 					posts.created_at AS created_at, 
 					posts.updated_at AS updated_at, 
 					types.name AS type, 
+					posts.votes AS votes,
 					GROUP_CONCAT(tags.name ORDER BY tags.name SEPARATOR '\t') AS tags
 					FROM posts 
 					INNER JOIN users ON posts.uid=users.uid 
@@ -210,7 +211,27 @@
 			}
 		}//end fetchPostsCount()
 
+		public function addPostVoteCount($postId, $vote){
+			try{
+				$db = getDB();
+				if($vote==1){
+					$stmt = $db->prepare("UPDATE posts SET votes=votes+1 WHERE id=:postId");
 
+				}else if($vote==-1){
+					$stmt = $db->prepare("UPDATE posts SET votes=votes-1 WHERE id=:postId");
+				}else{
+					throw new Exception("Vote value is neither 1 nor -1...");
+				}
+				$stmt->bindParam("postId", $postId, PDO::PARAM_INT);
+				$stmt->execute();
+
+				$db = null;
+				return true;
+			}
+			catch(Exception $e) {
+				echo '{"error":{"text":'. $e->getMessage() .'}}';
+			}
+		}
 	}//end postClass
 
 
