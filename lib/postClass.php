@@ -220,7 +220,7 @@
 			}
 		}//end fetchPostsCount()
 
-		public function addPostVoteCount($postId, $vote){
+		public function changePostVoteCount($postId, $vote){
 			try{
 				$db = getDB();
 				if($vote==1){

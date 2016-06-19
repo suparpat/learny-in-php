@@ -75,31 +75,32 @@
 				foreach ($data['postsData'] as $key=>$post){
 					$postNumber = ($page-1)*$postsPerPage+($key+1);
 					$postTags = preg_split('/\t/', $post->tags);
-					$upvoted = false;
-					$downvoted = false;
+					$upvoted = 0;
+					$downvoted = 0;
 					foreach($data['votesData'] as $v){
 						if($v->post_id==$post->id && $v->user_id==$_SESSION['uid']){
 							if($v->vote==1){
-								$upvoted = true;
+								$upvoted = 1;
 							}
 							if($v->vote==-1){
-								$downvoted = true;
+								$downvoted = 1;
 							}
 						}
 					}
 					// print_r($postTags)."<br>";
+					// http://unicode-table.com/en/sets/arrows-symbols/
 					echo "<tr>";
 					echo "<td>$postNumber. </td>
 					<td style='text-align:center'><div>";
 						if($upvoted){
-							echo "<a href='#' style='color:grey' data-pid=$post->id>▲</a>";
+							echo "<a href='#' class='upvoted' style='color:grey' data-pid=$post->id>▲</a>";
 						}
 						else{
 							echo "<a href='#' class='upvote' data-pid=$post->id>▲</a>";
 						}
 						echo "</div><div class='voteCount'>$post->votes</div><div>";
 						if($downvoted){
-							echo "<a href='#' style='color:grey' data-pid=$post->id>▼</a>";
+							echo "<a href='#' class='downvoted' style='color:grey' data-pid=$post->id>▼</a>";
 						}
 						else{
 							echo "<a href='#' class='downvote' data-pid=$post->id>▼</a>";
@@ -154,33 +155,102 @@
 
 				$('.upvote').click(function () { 
 					$(this).off();
-					$(this).css('color','grey');
 					var postId = $(this).attr("data-pid");
-					upvote(postId, $(this));
+					AJAXupvote(postId, $(this));
 				});
 
 				$('.downvote').click(function () {
 					$(this).off();
-					$(this).css('color','grey');
-					console.log($(this))
 					var postId = $(this).attr("data-pid");
-					downvote(postId, $(this));
+					AJAXdownvote(postId, $(this));
 
 				});
 
-				var upvote = function(postId, element){
-					$.post("index.php", {'votePostId':postId, 'vote': 1}, function(){
-						//add to total vote
+				$('.upvoted').click(function () { 
+					$(this).off();
+					var postId = $(this).attr("data-pid");
+					AJAXupvote(postId, $(this));
+				});
+
+				$('.downvoted').click(function () {
+					$(this).off();
+					var postId = $(this).attr("data-pid");
+					AJAXdownvote(postId, $(this));
+				});
+
+				var AJAXupvote = function(postId, element){
+					$.post("index.php", {'votePostId':postId, 'vote':1}, function(){
 						var thisVoteElement = $(element).closest('td').find('div.voteCount');
-						thisVoteElement.html(parseInt(thisVoteElement.html(), 10)+1);
+
+						//Case 1: post upvoted before
+						if($(element).hasClass("upvoted")){
+							thisVoteElement.html(parseInt(thisVoteElement.html(), 10)-1);
+							$(element).removeClass("upvoted").addClass("upvote").css('color','#11a');
+							$(element).click(function () { 
+								$(this).off();
+								$(this).css('color','grey');
+								var postId = $(this).attr("data-pid");
+								AJAXupvote(postId, $(this));
+							});
+						}else{
+							var downVoteArrow = $(element).closest('td').find('a.downvoted');
+
+							//Case 2: post downvoted before
+							if(downVoteArrow.hasClass("downvoted")){
+								downVoteArrow.removeClass("downvoted").addClass("downvote").css('color','#11a');
+
+							}else{
+								//Case 3: post first time upvoted
+								$(element).removeClass("upvote").addClass("upvoted").css('color','grey');
+							}
+							thisVoteElement.html(parseInt(thisVoteElement.html(), 10)+1);
+							$(element).click(function () { 
+								$(this).off();
+								$(this).css('color','#11a');
+								var postId = $(this).attr("data-pid");
+								AJAXupvote(postId, $(this));
+				});
+						}
 					})
 				}
 
-				var downvote = function(postId, element){
+				var AJAXdownvote = function(postId, element){
+
 					$.post("index.php", {'votePostId':postId, 'vote': -1}, function(){
-						//subtract from total vote
 						var thisVoteElement = $(element).closest('td').find('div.voteCount');
-						thisVoteElement.html(parseInt(thisVoteElement.html(), 10)-1);
+
+						//Case 1: post downvoted before
+						if($(element).hasClass("downvoted")){
+							thisVoteElement.html(parseInt(thisVoteElement.html(), 10)+1);
+							$(element).removeClass("downvoted").addClass("downvote").css('color', '#11a');
+							$(element).click(function () {
+								$(this).off();
+								$(this).css('color','grey');
+								var postId = $(this).attr("data-pid");
+								AJAXdownvote(postId, $(this));
+							});
+
+						}else{
+							var upVoteArrow = $(element).closest('td').find('a.upvoted');
+
+							//Case 2: post upvoted before
+							if(upVoteArrow.hasClass("upvoted")){
+								upVoteArrow.removeClass("upvoted").addClass("upvote").css('color','#11a');
+								
+							}else{
+								//Case 3: post first time downvoted
+								$(element).removeClass("downvote").addClass("downvoted").css('color','grey');
+
+							}
+							thisVoteElement.html(parseInt(thisVoteElement.html(), 10)-1);
+							$(element).click(function () {
+								$(this).off();
+								$(this).css('color','#11a');
+								var postId = $(this).attr("data-pid");
+								AJAXdownvote(postId, $(this));
+							});
+						}
+
 
 					})
 				}
