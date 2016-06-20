@@ -138,6 +138,7 @@
     	<script src="js/jquery-ui/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
     	<script src="lib/vendor/aehlke-tag-it/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
 		<script>
+		// http://stackoverflow.com/questions/13137563/jqueryui-tagit-how-can-i-suppress-the-new-entry-text-field-from-appearing
 			$(document).ready(function() {
 			    $(".tags_display").tagit({
 			    	readOnly: true,
@@ -145,7 +146,10 @@
 			    		window.location.href="tag.php?name="+ui.tag[0].textContent;
 			    		// console.log(ui.tag);
 			    	}
-			    });
+			    }).ready(function() {
+				    $(this).find('.tagit-new').css('height', '13px').empty();
+				});
+
 			    var loggedIn = <?php if($isLoggedIn){echo "true";}else{echo "false";} ?>;
 
 			    function notLoggedInAlert(){

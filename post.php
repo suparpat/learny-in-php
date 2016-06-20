@@ -152,16 +152,21 @@
 			    		window.location.href="tag.php?name="+ui.tag[0].textContent;
 			    		// console.log(ui.tag);
 			    	}
-			    });
+			    }).ready(function() {
+				    $(this).find('.tagit-new').css('height', '13px').empty();
+				});
+			    var session = <?php echo json_encode($_SESSION['uid']); ?>;
+			    if(session){
+	                CKEDITOR.replace( 'comment' );
+	                CKEDITOR.config.toolbar = [
+		                [
+		                'Format','Bold','Italic','Underline','Strike','-','Image','Table','BulletedList', 'Link', 'Youtube', 'Source'
+						]
+	                ] ;
+	                CKEDITOR.config.extraPlugins = 'youtube';
+	                CKEDITOR.config.height = '35%';			    	
+			    }
 
-                CKEDITOR.replace( 'comment' );
-                CKEDITOR.config.toolbar = [
-	                [
-	                'Format','Bold','Italic','Underline','Strike','-','Image','Table','BulletedList', 'Link', 'Youtube', 'Source'
-					]
-                ] ;
-                CKEDITOR.config.extraPlugins = 'youtube';
-                CKEDITOR.config.height = '35%';
 			});
 
     	</script>
