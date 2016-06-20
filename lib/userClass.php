@@ -15,7 +15,14 @@
 			$db = null;
 
 			if(isset($data->password)&&password_verify($password, $data->password)){
-				$_SESSION['uid']=$data->uid; // Storing user session value
+				//prevent session fixation
+				if (!isset($_SESSION['uid'])||$_SESSION['uid']=='')
+				{
+				    session_regenerate_id();
+				    $_SESSION['uid'] = $data->uid;
+				}else{
+					$_SESSION['uid']=$data->uid; // Storing user session value
+				}
 				return true;
 			}
 			else{

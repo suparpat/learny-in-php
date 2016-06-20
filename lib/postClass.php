@@ -150,7 +150,10 @@
 				//http://stackoverflow.com/questions/1118994/php-extracting-a-property-from-an-array-of-objects
 				$postIdsArray = array_map(create_function('$o', 'return $o->id;'), $data);
 
-				$result = $voteClass->checkIfUserVoted($_SESSION['uid'], $postIdsArray);
+				$result = [];
+				if(isset($_SESSION['uid'])){
+					$result = $voteClass->checkIfUserVoted($_SESSION['uid'], $postIdsArray);
+				}
 
 				return array('postsData'=>$data, 'votesData'=>$result);
 			}
