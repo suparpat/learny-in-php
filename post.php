@@ -91,7 +91,7 @@
 			</header>
 			<div id="postContent">
 				<?php
-					echo "<p>".$purifier->purify($post->content)."</p>";
+					echo $purifier->purify($post->content);
 				?>
 			</div>
 
@@ -155,7 +155,14 @@
 			    }).ready(function() {
 				    $(this).find('.tagit-new').css('height', '13px').empty();
 				});
-			    var session = <?php echo json_encode($_SESSION['uid']); ?>;
+			    var session = <?php 
+				    if(!empty($_SESSION['uid'])){
+				    	echo json_encode($_SESSION['uid']);
+				    }
+				    else{
+				    	echo "''";
+				    }
+			    ?>;
 			    if(session){
 	                CKEDITOR.replace( 'comment' );
 	                CKEDITOR.config.toolbar = [
