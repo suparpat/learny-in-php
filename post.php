@@ -104,7 +104,7 @@
 
 				if(!empty($_SESSION['uid'])){
 					if($_SESSION['uid']==$post->uid){
-						echo "[<a href='edit_post.php?id=".$post->id."'>edit post</a>]";
+						echo "[<a href='edit_post.php?id=".$post->id."'>".$lang['edit-post']."</a>]";
 					}					
 				}
 
@@ -113,13 +113,13 @@
 			<?php 
 				if(!empty($_SESSION['uid'])):
 			?>
-			<code><b>Comment</b></code>
+			<code><b><?php echo $lang['comment']; ?></b></code>
 			<div id="commentForm">
 				<form action=<?php echo "post.php?id=".$_GET['id']; ?> method="post" style="overflow:hidden;">
 	                <!-- <textarea name="comment" id="comment" rows="6" cols="80"></textarea> -->
                     <textarea name="comment" id="create_editor" rows="6" cols="80"></textarea>
 	                <div>
-			            <input class="input-default-format" id="comment-submit-button" type="submit" name="commentSubmit" value="Submit">
+			            <input class="input-default-format" id="comment-submit-button" type="submit" name="commentSubmit" value="<?php echo $lang['submit']; ?>">
 	                </div>
 				</form>
 			</div>

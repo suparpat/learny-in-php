@@ -32,7 +32,7 @@
 
  <html>
 	<head>
-		<title>Learny: Login</title>
+		<title><?php echo $lang['learny']; ?>: <?php echo $lang['login']; ?></title>
 		<?php include 'partials/header.php' ?>
 	</head>
 
@@ -41,16 +41,16 @@
 			<?php include 'partials/top_menu.php' ?>
 
 			<header>
-				<h3>Login</h3>
+				<h3><?php echo $lang['login']; ?></h3>
 			</header>
             <div>
                 <form id="login_form" action="login.php" method="post">
-	                <input class="input-default-format form-input" type="text" name="username" placeholder="username">
-					<input class="input-default-format form-input" type="password" name="password" placeholder="password">
+	                <input class="input-default-format form-input" type="text" name="username" placeholder="<?php echo $lang['username']; ?>">
+					<input class="input-default-format form-input" type="password" name="password" placeholder="<?php echo $lang['password']; ?>">
                     <?php 
 	                    echo "<p>".$errorMsgLogin."</p>";
 	                ?>
-                    <input class="input-default-format form-submit-button" type="submit" value="Login" name="loginSubmit">
+                    <input class="input-default-format form-submit-button" type="submit" value="<?php echo $lang['submit']; ?>" name="loginSubmit">
                 </form>
             </div>
 			<?php include 'partials/quote_block.php' ?>

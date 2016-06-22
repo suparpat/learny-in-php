@@ -45,7 +45,7 @@
 ?>
 <html>
 	<head>
-		<title>Learny: Create A Post</title>
+		<title><?php echo $lang['learny']; ?>: <?php echo $lang['Create']; ?></title>
         <?php include 'partials/header.php' ?>
         <link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="lib/vendor/aehlke-tag-it/css/jquery.tagit.css">
@@ -58,7 +58,7 @@
 
 			
 			<header>
-				<h3>Create</h3>
+				<h3><?php echo $lang['Create']; ?></h3>
 			</header>
             <?php 
 	            echo "<p>".$errorPostMessage."</p>";
@@ -85,8 +85,8 @@
 						<!-- <input class="input-default-format" id="tag_input" placeholder="Enter tags (comma-separated)"> -->
 					</div>
 	                <div style="text-align:center;">
-		                <input class="input-default-format" id="create-submit-button" type="submit" name="postSubmit" value="Share with the World">
-		                <input class="input-default-format" id="create-submit-button" type="submit" name="postDraftSubmit" value="Keep it to myself" disabled>
+		                <input class="input-default-format" id="create-submit-button" type="submit" name="postSubmit" value="<?php echo $lang['publish']; ?>">
+		                <input class="input-default-format" id="create-submit-button" type="submit" name="postDraftSubmit" value="<?php echo $lang['save-draft']; ?>" disabled>
 					</div>
 				</form>
 

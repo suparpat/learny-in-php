@@ -39,7 +39,7 @@
 
 <html>
 	<head>
-		<title>Learny</title>
+		<title><?php echo $lang['learny']; ?>: <?php echo $lang['register']; ?></title>
 		<?php include 'partials/header.php' ?>
 	</head>
 
@@ -52,13 +52,13 @@
 			</header>
             <div>
                 <form id="login_form" action="register.php" method="post">
-                    <input class="input-default-format form-input" type="email" name="email" placeholder="email">
-	                <input class="input-default-format form-input" type="text" name="username" placeholder="username">
-  					<input class="input-default-format form-input" type="password" name="password" placeholder="password">
+                    <input class="input-default-format form-input" type="email" name="email" placeholder="<?php echo $lang['email']; ?>">
+	                <input class="input-default-format form-input" type="text" name="username" placeholder="<?php echo $lang['username']; ?>">
+  					<input class="input-default-format form-input" type="password" name="password" placeholder="<?php echo $lang['password']; ?>">
                     <?php 
 	                    echo "<p>".$errorMsgReg."</p>";
 	                ?>
-                    <input class="input-default-format form-submit-button" type="submit" name="registerSubmit" value="Register">
+                    <input class="input-default-format form-submit-button" type="submit" name="registerSubmit" value="<?php echo $lang['register']; ?>">
                 </form>
 
             </div>

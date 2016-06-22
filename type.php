@@ -16,7 +16,7 @@
 
 <html>
 	<head>
-		<title>Type: </title>
+		<title><?php echo $lang['types']; ?>: <?php echo $_GET['name']; ?></title>
 		<?php include 'partials/header.php' ?>
 	</head>
 

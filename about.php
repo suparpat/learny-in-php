@@ -4,7 +4,7 @@
 
 <html>
 	<head>
-		<title>Learny: About</title>
+		<title><?php echo $lang['learny']; ?>: <?php echo $lang['about']; ?></title>
 		<?php include 'partials/header.php' ?>
 	</head>
 

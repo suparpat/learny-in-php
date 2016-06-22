@@ -16,7 +16,7 @@
 
 <html>
 	<head>
-		<title>Tag: </title>
+		<title><?php echo $lang['tags']; ?>: <?php echo $_GET['name']; ?></title>
 		<?php include 'partials/header.php' ?>
 	</head>
 
@@ -26,7 +26,7 @@
 			<?php include 'partials/top_menu.php' ?>
 
 			<header>
-				<h3>Tag: <?php echo $_GET['name']; ?></h3>
+				<h3><?php echo $lang['tags']; ?>: <?php echo $_GET['name']; ?></h3>
 			</header>
 
 

@@ -25,7 +25,7 @@
 
 <html>
 	<head>
-		<title>Learny</title>
+		<title><?php echo $lang['learny']; ?></title>
 		<?php include 'partials/header.php' ?>
         <link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="lib/vendor/aehlke-tag-it/css/jquery.tagit.css">
@@ -48,7 +48,7 @@
 			<?php include 'partials/top_menu.php' ?>
 
 			<header>
-				<h3>New Posts</h3>
+				<h3><?php echo $lang['new-posts']; ?></h3>
 				<!-- <h3>Browsing <?php echo "(" . $postsPerPage . " from " . $postCount . ")"; ?></h3> -->
 			</header>
 			<?php
@@ -102,7 +102,7 @@
 						echo "</div></td>
 
 					<td><a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a>
-					<br><span style='font-size:12px'>$post->username, ".date('j F Y\, h:ia', strtotime($post->created_at))."</span>";
+					<br><span style='font-size:12px'><span>($post->type)</span> $post->username, ".date('j F Y\, h:ia', strtotime($post->created_at))."</span>";
 					if($postTags[0]!=""){
 						echo "<br><ul class='tags_display'>";
 						foreach($postTags as $postTag){
@@ -112,7 +112,7 @@
 						echo "</ul>";			
 					}
 
-					echo "</td><td>$post->type</td></tr>";
+					// echo "</td><td>$post->type</td></tr>";
 				}
 			echo "</table>";
 			?>

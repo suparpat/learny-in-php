@@ -7,7 +7,7 @@
 
 <html>
 	<head>
-		<title>Learny: Tags</title>
+		<title><?php echo $lang['learny']; ?>: <?php echo $lang['tags']; ?></title>
 		<?php include 'partials/header.php' ?>
 	</head>
 
@@ -17,7 +17,7 @@
 			<?php include 'partials/top_menu.php' ?>
 
 			<header>
-				<h3>Tags</h3>
+				<h3><?php echo $lang['tags']; ?></h3>
 			</header>
 
 

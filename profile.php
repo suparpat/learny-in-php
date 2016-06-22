@@ -17,7 +17,7 @@
 
 <html>
 	<head>
-		<title>Learny: Profile</title>
+		<title><?php echo $lang['learny']; ?>: <?php echo $lang['profile']; ?></title>
 		<?php include 'partials/header.php' ?>
 	</head>
 
@@ -27,15 +27,15 @@
 			<?php include 'partials/top_menu.php' ?>
 
 			<header>
-				<h3>Profile</h3>
+				<h3><?php echo $lang['profile']; ?></h3>
 			</header>
-			<h4>Username: <?php echo $userDetails->username; ?></h4>
-			<h4>Email: <?php echo $userDetails->email; ?></h4>
-			<h4>Since: <?php echo date('j F Y',strtotime($userDetails->created_at)); ?></h4>
+			<h4><?php echo $lang['username']; ?>: <?php echo $userDetails->username; ?></h4>
+			<h4><?php echo $lang['email']; ?>: <?php echo $userDetails->email; ?></h4>
+			<h4><?php echo $lang['since']; ?>: <?php echo date('j F Y',strtotime($userDetails->created_at)); ?></h4>
 			<hr>
 
 			<header>
-				<h3>Your Posts</h3>
+				<h3><?php echo $lang['your-posts']; ?></h3>
 			</header>
 
 			<?php
@@ -55,20 +55,20 @@
 			<hr>
 
 			<header>
-				<h3>Account</h3>
+				<h3><?php echo $lang['account']; ?></h3>
 			</header>
 			<!-- http://stackoverflow.com/questions/2906582/how-to-create-an-html-button-that-acts-like-a-link -->
 			<p>
 				<form action="change_email.php">
-				    <input type="submit" value="change email">
+				    <input type="submit" value="<?php echo $lang['change-email']; ?>">
 				</form>
 			</p>
 			<p>
-				<button onclick="changePassword()">change password</button>
+				<button onclick="changePassword()"><?php echo $lang['change-password']; ?></button>
 			</p>
 			<p>
 				<form action="logout.php">
-				    <input type="submit" value="logout">
+				    <input type="submit" value="<?php echo $lang['logout']; ?>">
 				</form>
 			</p>
 

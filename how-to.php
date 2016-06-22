@@ -4,7 +4,7 @@
 
 <html>
 	<head>
-		<title>Learny: How to</title>
+		<title><?php echo $lang['learny']; ?>: <?php echo $lang['how-to']; ?></title>
 		<?php include 'partials/header.php' ?>
 	</head>
 
@@ -14,7 +14,7 @@
 			<?php include 'partials/top_menu.php' ?>
 
 			<header>
-				<h3>How to</h3>
+				<h3><?php echo $lang['how-to']; ?></h3>
 			</header>
 			<aside>Use Learny to:</aside>
 			<ol>
