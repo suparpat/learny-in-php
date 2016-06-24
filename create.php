@@ -12,12 +12,17 @@
 		header("Location: $url"); // Page redirecting to home.php 
 	}
 
-	if (!empty($_POST['postSubmit'])&&isset($_POST['subject'])&&isset($_POST['editor'])&&isset($_POST['type'])&&isset($_SESSION['uid'])) 
+	if ((!empty($_POST['postSubmit'])||!empty($_POST['postDraftSubmit']))&&isset($_POST['subject'])&&isset($_POST['editor'])&&isset($_POST['type'])&&isset($_SESSION['uid'])) 
 	{
 		$subject=$_POST['subject'];
 		$content=$_POST['editor'];
 		$type=$_POST['type'];
 		$author=$_SESSION['uid'];
+		if(!empty($_POST['postDraftSubmit'])){
+			$draft = true;
+		}else{
+			$draft = false;
+		}
 		if(isset($_POST['tags'])){
 			$tags = $_POST['tags'];
 		}
@@ -25,7 +30,7 @@
 			$tags = [];
 		}
 		if(strlen(trim($subject))>1 && strlen(trim($content))>1 && strlen(trim($type))){
-			$result=$postClass->createPost($subject, $content, $type, $author, $tags);
+			$result=$postClass->createPost($subject, $content, $type, $author, $tags, $draft);
 			if($result){
 				$url=BASE_URL.'post.php?id='.$lastPostId;
 				header("Location: $url"); // Page redirecting to home.php 
@@ -86,7 +91,7 @@
 					</div>
 	                <div style="text-align:center;">
 		                <input class="input-default-format" id="create-submit-button" type="submit" name="postSubmit" value="<?php echo $lang['publish']; ?>">
-		                <input class="input-default-format" id="create-submit-button" type="submit" name="postDraftSubmit" value="<?php echo $lang['save-draft']; ?>" disabled>
+		                <input class="input-default-format" id="create-submit-button" type="submit" name="postDraftSubmit" value="<?php echo $lang['save-draft']; ?>">
 					</div>
 				</form>
 

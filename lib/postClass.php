@@ -5,14 +5,15 @@
 
 	class postClass{
 		/* Create Post */
-		public function createPost($subject, $content, $typeId, $author, $tags){
+		public function createPost($subject, $content, $typeId, $author, $tags, $draft){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("INSERT INTO posts(subject,content,uid) VALUES (:subject,:content,:author)");
+				$stmt = $db->prepare("INSERT INTO posts(subject,content,uid,draft) VALUES (:subject,:content,:author,:draft)");
 
 				$stmt->bindParam("subject", $subject,PDO::PARAM_STR);
 				$stmt->bindParam("content", $content,PDO::PARAM_STR);
 				$stmt->bindParam("author", $author,PDO::PARAM_STR);
+				$stmt->bindParam("draft", $draft,PDO::PARAM_STR);
 
 				$stmt->execute();
 				global $lastPostId;
@@ -38,18 +39,19 @@
 
 
 
-		public function editPost($postId, $subject, $content, $typeId, $author, $tags){
+		public function editPost($postId, $subject, $content, $typeId, $author, $tags, $draft){
 			try{
 				$checkOwnershipResult = $this->checkOwnership($postId, $author);
 				if($checkOwnershipResult){
 					$db = getDB();
-					$stmt = $db->prepare("UPDATE posts SET subject=:subject, content=:content, uid=:author WHERE id=:id");
+					$stmt = $db->prepare("UPDATE posts SET subject=:subject, content=:content, uid=:author, draft=:draft WHERE id=:id");
 
 					$stmt->bindParam("subject", $subject, PDO::PARAM_STR);
 					$stmt->bindParam("content", $content, PDO::PARAM_STR);
 					// $stmt->bindParam("type", $type, PDO::PARAM_STR);
 					$stmt->bindParam("author", $author, PDO::PARAM_INT);
 					$stmt->bindParam("id", $postId, PDO::PARAM_INT);
+					$stmt->bindParam("draft", $draft, PDO::PARAM_INT);
 
 					$stmt->execute();
 
@@ -135,6 +137,7 @@
 					INNER JOIN types ON types.id=posts_type.type_id
 					LEFT JOIN posts_tags ON posts.id=posts_tags.post_id
 					LEFT JOIN tags ON posts_tags.tag_id=tags.id
+					WHERE posts.draft=0
 					GROUP BY posts.id
 					ORDER BY updated_at DESC 
 					LIMIT :limit OFFSET :offset");
@@ -176,6 +179,7 @@
 					users.username AS username, 
 					posts.created_at AS created_at, 
 					posts.updated_at AS updated_at, 
+					posts.draft AS draft,
 					types.name AS type 
 					FROM posts 
 					INNER JOIN users ON posts.uid=users.uid 
@@ -197,7 +201,7 @@
 		public function fetchAUsersPosts($uid){
 			try{
 				$db = getDB();
-				$stmt = $db->prepare("SELECT id, subject, content, uid, posts.created_at FROM posts WHERE uid=:uid"); 
+				$stmt = $db->prepare("SELECT id, subject, content, uid, draft, posts.created_at FROM posts WHERE uid=:uid"); 
 				$stmt->bindParam("uid", $uid,PDO::PARAM_STR) ;
 				$stmt->execute();
 				$data = $stmt->fetchAll(PDO::FETCH_OBJ); //User data

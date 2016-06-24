@@ -13,6 +13,7 @@
 	$lang['how-to'] = "ยังไง";
 	$lang['about'] = "คือไรเอ่ย";
 	$lang['edit-post'] = "แก้ไข";
+	$lang['delete'] = "ลบ";
 	$lang['comment'] = "แสดงความคิดเห็น";
 	$lang['submit'] = "จัดไป";
 	$lang['new-posts'] = "โพสมาใหม่";
@@ -27,4 +28,6 @@
 	$lang['change-email'] = "เปลี่ยนเมล";
 	$lang['change-password'] = "เปลี่ยนพาสเวิร์ด";
 	$lang['logout'] = "ออกจากระบบ";
+
+	$lang['draft'] = "เก็บไว้ก่อน";
 ?>

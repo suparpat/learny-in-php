@@ -25,13 +25,18 @@
 		}
 
 
-		if (!empty($_POST['postSubmit'])&&isset($_POST['subject'])&&isset($_POST['editor'])&&isset($_POST['type'])&&isset($_SESSION['uid'])) 
+		if ((!empty($_POST['postSubmit'])||!empty($_POST['postDraftSubmit']))&&isset($_POST['subject'])&&isset($_POST['editor'])&&isset($_POST['type'])&&isset($_SESSION['uid'])) 
 		{
 			$subject = $_POST['subject'];
 			$content = $_POST['editor'];
 			$type = $_POST['type'];
 			$author = $_SESSION['uid'];
 			$postId = $_POST['id'];
+			if(!empty($_POST['postDraftSubmit'])){
+				$draft = true;
+			}else{
+				$draft = false;
+			}
 			if(isset($_POST['tags'])){
 				$tags = $_POST['tags'];
 			}
@@ -40,7 +45,7 @@
 			}
 
 			if(strlen(trim($subject)) > 1 && strlen(trim($content)) > 1 && strlen(trim($type))){
-				$result=$postClass->editPost($postId, $subject, $content, $type, $author, $tags, 0);
+				$result=$postClass->editPost($postId, $subject, $content, $type, $author, $tags, $draft);
 				if($result){
 					$url=BASE_URL.'post.php?id='.$postId;
 					header("Location: $url"); // Page redirecting to home.php 
@@ -57,9 +62,9 @@
 			if(isset($_GET['id'])){
 				$postId = $_GET['id'];
 				$post = $postClass->fetchAPost($_GET['id']);
-				if($post->draft==1){
-					$editDraftPostUrl=BASE_URL.'edit_draft_post.php?id='.$post->id;
-					header("Location: $editDraftPostUrl"); // Page redirecting to home.php 
+				if($post->draft!=1){
+					$editPostUrl=BASE_URL.'edit_post.php?id='.$post->id;
+					header("Location: $editPostUrl"); // Page redirecting to home.php 
 				}
 			//Get post's tags
 				$tags = $tagClass->fetchTagsByPostId($_GET['id'], false);
@@ -95,7 +100,7 @@
 	            echo "<p>".$errorEditPostMessage."</p>";
 	        ?>
             <div>
-                <form action="edit_post.php" method="post">
+                <form action="edit_draft_post.php" method="post">
                 	<input name="id" value=<?php echo $postId; ?> hidden>
                     <input class="input-default-format form-input" type="text" name="subject" placeholder="Type your subject" value=<?php if(isset($_POST['subject'])) {echo '"'.htmlentities ($_POST['subject']).'"'; } else{echo '"'.htmlentities($post->subject).'"';} ?>>
                     <textarea name="editor" id="create_editor" rows="10" cols="80"><?php if(isset($_POST['editor'])) {echo $_POST['editor']; } else{echo $post->content;}?></textarea>
@@ -119,7 +124,8 @@
 						<!-- <input class="input-default-format" id="tag_input" placeholder="Enter tags (comma-separated)"> -->
 					</div>
 	                <div style="text-align:center;">
-		                <input class="input-default-format" id="create-submit-button" type="submit" name="postSubmit" value="Submit">
+		                <input class="input-default-format" id="create-submit-button" type="submit" name="postSubmit" value="<?php echo $lang['publish']; ?>">
+		                <input class="input-default-format" id="create-submit-button" type="submit" name="postDraftSubmit" value="<?php echo $lang['save-draft']; ?>">
 					</div>
 				</form>
 

@@ -17,9 +17,13 @@
 		require('lib/postClass.php');
 		$postClass = new postClass();
 		$post = $postClass->fetchAPost($_GET['id']);
+		if($post->draft&&$_SESSION['uid']!=$post->uid){
+			$url=BASE_URL;
+			header("Location: $url"); // Page redirecting to home.php 
+		}
 		$tags = $tagClass -> fetchTagsByPostId($_GET['id'], false);
 	}else{
-		$url=BASE_URL.'browse.php';
+		$url=BASE_URL;
 		header("Location: $url"); // Page redirecting to home.php 
 	}
 
@@ -80,15 +84,23 @@
 				} 
 			?>
 			<header>
-				<h3>
-					<?php
-						echo "<code><a href='post.php?id=$post->id'>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a> by $post->username on ".date('j F Y\, h:i:s A', strtotime($post->created_at))."</code>";
-						if(isset($post->updated_at)){
-							echo "<br><code>last updated: ".date('j F Y\, h:i:s A', strtotime($post->updated_at))."</code>";
-						}
-					?>
-				</h3>
+				<div>
+					<h3>
+						<?php
+							echo "<div style='float:left;width:auto;'><code><a href='post.php?id=$post->id'>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a></code></div>";
+							echo "<div style='font-size:15px; float:right; text-align:right; width:auto;font-weight:normal;'>";
+							if(isset($post->updated_at)){
+								echo date('j F Y\, h:i A', strtotime($post->updated_at));
+							}else{
+								echo date('j F Y\, h:i A', strtotime($post->created_at));
+							}
+							echo "<br>$post->username</div>";
+						?>
+					</h3>
+				</div>
+				<div style="clear:both"></div>
 			</header>
+
 			<div id="postContent">
 				<?php
 					echo $purifier->purify($post->content);

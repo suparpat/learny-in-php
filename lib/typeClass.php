@@ -37,7 +37,7 @@ class typeClass{
 	public function fetchPostsByType($type){
 		try{
 			$db = getDB();
-			$stmt = $db->prepare("SELECT posts.id, posts.subject, types.name, posts.uid, users.username, posts.created_at FROM types INNER JOIN posts_type ON types.id=posts_type.type_id JOIN posts ON posts_type.post_id=posts.id JOIN users ON posts.uid=users.uid WHERE types.name=:name");
+			$stmt = $db->prepare("SELECT posts.id, posts.subject, types.name, posts.uid, users.username, posts.created_at FROM types INNER JOIN posts_type ON types.id=posts_type.type_id JOIN posts ON posts_type.post_id=posts.id JOIN users ON posts.uid=users.uid WHERE types.name=:name AND posts.draft=0");
 
 			$stmt->bindParam("name", $type, PDO::PARAM_STR);
 			$stmt->execute();

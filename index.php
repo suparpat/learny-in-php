@@ -84,7 +84,7 @@
 					// print_r($postTags)."<br>";
 					// http://unicode-table.com/en/sets/arrows-symbols/
 					echo "<tr>";
-					echo "<td>$postNumber. </td>
+					echo "<td>$postNumber</td>
 					<td style='text-align:center'><div>";
 						if($upvoted){
 							echo "<a href='#' class='upvoted' style='color:grey' data-pid=$post->id>▲</a>";
@@ -102,7 +102,7 @@
 						echo "</div></td>
 
 					<td><a style='font-size:18px;' href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8')."</a>
-					<br><span style='font-size:12px'><span>($post->type)</span> $post->username, ".date('j F Y\, h:ia', strtotime($post->created_at))."</span>";
+					<br><span style='font-size:12px'><span>($post->type)</span> $post->username, ".date('j F Y\, h:ia', strtotime($post->updated_at))."</span>";
 					if($postTags[0]!=""){
 						echo "<br><ul class='tags_display'>";
 						foreach($postTags as $postTag){

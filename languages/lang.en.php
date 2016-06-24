@@ -13,6 +13,7 @@
 	$lang['how-to'] = "how to";
 	$lang['about'] = "about";
 	$lang['edit-post'] = "edit post";
+	$lang['delete'] = "delete";
 	$lang['comment'] = "Comment";
 	$lang['submit'] = "Submit";
 	$lang['new-posts'] = "New Posts";
@@ -27,5 +28,7 @@
 	$lang['change-email'] = "change email";
 	$lang['change-password'] = "change password";
 	$lang['logout'] = "Log out";
+
+	$lang['draft'] = "draft";
 
 ?>
