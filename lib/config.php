@@ -57,7 +57,7 @@
 	//http://stackoverflow.com/questions/17369947/multi-language-php-script
 	global $language;
 	$language = 'th';
-	require_once('languages/lang.'.$language.'.php');
+	require_once(__DIR__.'/../languages/lang.'.$language.'.php');
 
 	function debug_to_console( $data ) {
 

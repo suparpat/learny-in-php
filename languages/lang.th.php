@@ -18,7 +18,7 @@
 	$lang['new-posts'] = "โพสมาใหม่";
 
 	$lang['publish'] = "บอกให้โลกรู้";
-	$lang['save-draft'] = "เก็บไว้ก่น";
+	$lang['save-draft'] = "เก็บไว้ก่อน";
 
 	$lang['profile'] = "โพรไฟล์";
 	$lang['your-posts'] = "โพสของคุณ";
