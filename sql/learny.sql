@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2016 at 10:39 AM
+-- Generation Time: Jun 24, 2016 at 06:26 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -72,17 +72,20 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `votes` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `draft` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `author` (`uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `subject`, `content`, `uid`, `votes`, `created_at`, `updated_at`) VALUES
-(8, 'Mindful Self-Acceptance? Bad Idea According to Ancient Chinese Philosophers.', '<div style="position:relative;padding-bottom:56.25%;padding-top:30px;height:0;overflow:hidden;"><iframe allowfullscreen="" frameborder="0" height="360" src="//www.youtube.com/embed/i3-dxHavRe8" width="640"></iframe></div>\r\n', 1, 0, '2016-06-14 17:14:32', '2016-06-19 08:36:13'),
-(9, 'TIL that the BBC regularly rehearses the Queen''s death in order to make sure that their coverage of it goes without a hitch when she does die.', '<p><a href="http://www.mirror.co.uk/news/uk-news/queen-dead-tweet-blunder-journalist-5818203">http://www.mirror.co.uk/news/uk-news/queen-dead-tweet-blunder-journalist-5818203</a></p>\r\n', 1, 0, '2016-06-17 15:27:02', '2016-06-19 08:32:13');
+INSERT INTO `posts` (`id`, `subject`, `content`, `uid`, `votes`, `created_at`, `updated_at`, `draft`) VALUES
+(8, 'Mindful Self-Acceptance? Bad Idea According to Ancient Chinese Philosophers.', '<div style="position:relative;padding-bottom:56.25%;padding-top:30px;height:0;overflow:hidden;"><iframe allowfullscreen="" frameborder="0" height="360" src="//www.youtube.com/embed/i3-dxHavRe8" width="640"></iframe></div>\r\n', 1, 0, '2016-06-14 17:14:32', '2016-06-19 09:14:01', 0),
+(9, 'TIL that the BBC regularly rehearses the Queen''s death in order to make sure that their coverage of it goes without a hitch when she does die.', '<p><a href="http://www.mirror.co.uk/news/uk-news/queen-dead-tweet-blunder-journalist-5818203">http://www.mirror.co.uk/news/uk-news/queen-dead-tweet-blunder-journalist-5818203</a></p>\r\n', 1, 0, '2016-06-17 15:27:02', '2016-06-24 14:32:09', 0),
+(10, 'To do', '<p>- Add collection feature</p>\r\n\r\n<p>- Make title in post page look nicer</p>\r\n\r\n<p>- Add reputation feature</p>\r\n\r\n<p>- Finish Thai translation</p>\r\n\r\n<p>- Allow comments to be edited (and removed?)</p>\r\n\r\n<p>- Finish bits and bobs (reset password, change email)</p>\r\n\r\n<p>- Draft feature: once public can not go back!</p>\r\n', 1, 1, '2016-06-22 15:37:40', '2016-06-24 15:53:10', 0),
+(18, 'secret post ', '<p>abc</p>\r\n', 1, 0, '2016-06-24 16:26:08', '2016-06-24 16:26:08', 1);
 
 -- --------------------------------------------------------
 
@@ -95,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `posts_tags` (
   `post_id` int(11) NOT NULL,
   `tag_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `posts_tags`
@@ -105,7 +108,8 @@ INSERT INTO `posts_tags` (`id`, `post_id`, `tag_id`) VALUES
 (3, 1, 3),
 (4, 1, 4),
 (5, 1, 5),
-(6, 9, 6);
+(6, 9, 6),
+(7, 16, 7);
 
 -- --------------------------------------------------------
 
@@ -118,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `posts_type` (
   `post_id` int(11) NOT NULL,
   `type_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `posts_type`
@@ -132,7 +136,16 @@ INSERT INTO `posts_type` (`id`, `post_id`, `type_id`) VALUES
 (5, 7, 7),
 (6, 8, 3),
 (7, 9, 8),
-(8, 9, 8);
+(8, 9, 8),
+(9, 10, 3),
+(10, 11, 10),
+(11, 12, 9),
+(12, 13, 10),
+(13, 14, 9),
+(14, 15, 9),
+(15, 16, 4),
+(16, 17, 10),
+(17, 18, 3);
 
 -- --------------------------------------------------------
 
@@ -145,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `tags`
@@ -155,7 +168,8 @@ INSERT INTO `tags` (`id`, `name`) VALUES
 (5, 'collaborative website'),
 (4, 'future'),
 (3, 'plan for learny'),
-(6, 'Queen');
+(6, 'Queen'),
+(7, 'tag');
 
 -- --------------------------------------------------------
 
@@ -176,15 +190,15 @@ CREATE TABLE IF NOT EXISTS `types` (
 
 INSERT INTO `types` (`id`, `name`) VALUES
 (5, 'Discussion'),
-(10, 'Experience'),
 (2, 'Fact'),
-(4, 'Idea'),
 (7, 'Link'),
 (1, 'Note'),
-(6, 'Question'),
-(9, 'Story'),
 (8, 'Suggestion'),
-(3, 'Thought');
+(3, 'ความคิด'),
+(6, 'คำถาม'),
+(10, 'ประสบการณ์'),
+(9, 'เรื่องเล่า'),
+(4, 'ไอเดีย');
 
 -- --------------------------------------------------------
 
@@ -201,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`uid`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `users`
@@ -213,7 +227,8 @@ INSERT INTO `users` (`uid`, `username`, `password`, `email`, `created_at`) VALUE
 (3, 'test', '$2y$10$aNgcxtiJ62nhlMBl.oC0o..diM5QrhsO77hcM99p4fUpRu2.JYKQC', 'dfsdfsd@gmail.com', '2016-06-11 09:02:25'),
 (4, '123456', '$2y$10$DDQRZBRzojB77vIwjTlxoO13FGkmU/zDA4P6KHDtS7NWdNa.Vmgoa', 'zzzzz@gmail.com', '2016-06-11 09:02:25'),
 (5, '555555', '$2y$10$8IiUU//852xH/3lZJatH9uKmCCJSXg0e6/DPR5WoaQ48fv5yjBYlW', 'asdasd@gmail.com', '2016-06-11 09:02:25'),
-(6, 'admin', '$2y$10$Qy33cGqXECp0MlzkAxjheudIC7GvYgvYAkPk3BbAJHfXV6gJoAlhS', 'blalbalbla@gmail.com', '2016-06-11 09:02:25');
+(6, 'admin', '$2y$10$Qy33cGqXECp0MlzkAxjheudIC7GvYgvYAkPk3BbAJHfXV6gJoAlhS', 'blalbalbla@gmail.com', '2016-06-11 09:02:25'),
+(7, '111111', '$2y$10$reAw3w3wcYGF8MXj53AhmuM5rSX.Yn3wxHvvgwLTN1M7SulwPmXNS', 'sdsd@abc.com', '2016-06-22 15:15:02');
 
 -- --------------------------------------------------------
 
@@ -228,7 +243,14 @@ CREATE TABLE IF NOT EXISTS `users_postvotes` (
   `vote` tinyint(4) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=128 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `users_postvotes`
+--
+
+INSERT INTO `users_postvotes` (`id`, `user_id`, `post_id`, `vote`, `created_at`) VALUES
+(5, 1, 10, 1, '2016-06-24 14:29:39');
 
 --
 -- Constraints for dumped tables
