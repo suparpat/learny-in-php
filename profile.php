@@ -41,12 +41,6 @@
 				<?php
 					//reddit style list
 					foreach ($posts as $key=>$post){
-						$editPostPage = '';
-						if($post->draft){
-							$editPostPage = 'edit_draft_post.php';
-						}else{
-							$editPostPage = 'edit_post.php';
-						}
 						echo "<tr><td>".($key+1)."</td>";
 						echo "<td>";
 						
@@ -57,7 +51,7 @@
 						echo "<a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8').
 						"</a><br><span style='font-size:15px;'>".date('j F Y\, h:i A', strtotime($post->created_at));
 						echo "</td><td style='text-align:right'>
-						<a href='$editPostPage?id=".$post->id."'>".$lang['edit-post']."</a><br>
+						<a href='edit_post.php?id=".$post->id."'>".$lang['edit-post']."</a><br>
 						<a href='javascript:deletePost($post->id)'>".$lang['delete']."</a> ";
 					    echo "</span></td></tr>";
 					}

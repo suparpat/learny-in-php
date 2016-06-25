@@ -15,7 +15,7 @@
 	$lang['edit-post'] = "แก้ไข";
 	$lang['delete'] = "ลบ";
 	$lang['comment'] = "แสดงความคิดเห็น";
-	$lang['submit'] = "จัดไป";
+	$lang['submit'] = "ส่ง";
 	$lang['new-posts'] = "โพสมาใหม่";
 
 	$lang['publish'] = "บอกให้โลกรู้";
@@ -25,7 +25,7 @@
 	$lang['your-posts'] = "โพสของคุณ";
 	$lang['since'] = "สมัครตอน";
 	$lang['account'] = "บัญชี";
-	$lang['change-email'] = "เปลี่ยนเมล";
+	$lang['change-email'] = "เปลี่ยนอีเมล์";
 	$lang['change-password'] = "เปลี่ยนพาสเวิร์ด";
 	$lang['logout'] = "ออกจากระบบ";
 
