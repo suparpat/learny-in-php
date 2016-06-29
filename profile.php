@@ -87,6 +87,9 @@
 				function changePassword(){
 					var r = confirm("An email will be sent to you with a password reset link. Press to confirm.");
 					if(r){
+						$.post("lib/changePassword.php", { 'email': '<?php echo $userDetails->email; ?>' }, function(){
+						  window.location.href = 'profile.php'
+						} );	
 						console.log("send password reset email.")
 					}
 				}
