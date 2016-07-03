@@ -23,7 +23,7 @@
 
 	$lang['profile'] = "โพรไฟล์";
 	$lang['your-posts'] = "โพสของคุณ";
-	$lang['since'] = "สมัครตอน";
+	$lang['since'] = "สมัครเมื่อ";
 	$lang['account'] = "บัญชี";
 	$lang['change-email'] = "เปลี่ยนอีเมล์";
 	$lang['change-password'] = "เปลี่ยนพาสเวิร์ด";
