@@ -50,7 +50,7 @@
                     <?php 
 	                    echo "<p>".$errorMsgLogin."</p>";
 	                ?>
-                    <input class="input-default-format form-submit-button" type="submit" value="<?php echo $lang['submit']; ?>" name="loginSubmit">
+                    <input class="input-default-format form-submit-button" type="submit" value="<?php echo $lang['login-submit']; ?>" name="loginSubmit">
                 </form>
             </div>
 			<?php include 'partials/quote_block.php' ?>

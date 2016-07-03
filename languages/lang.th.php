@@ -16,6 +16,7 @@
 	$lang['delete'] = "ลบ";
 	$lang['comment'] = "แสดงความคิดเห็น";
 	$lang['submit'] = "ส่ง";
+	$lang['login-submit'] = "เข้าใช้";
 	$lang['new-posts'] = "โพสมาใหม่";
 
 	$lang['publish'] = "บอกให้โลกรู้";

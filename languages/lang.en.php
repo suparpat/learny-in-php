@@ -16,6 +16,7 @@
 	$lang['delete'] = "delete";
 	$lang['comment'] = "Comment";
 	$lang['submit'] = "Submit";
+	$lang['login-submit'] = "Login";
 	$lang['new-posts'] = "New Posts";
 
 	$lang['publish'] = "Share with the World";
