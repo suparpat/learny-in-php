@@ -16,3 +16,4 @@ Suggestions and pull requests welcome.
 
 Should run fine on WAMP, MAMP, LAMP, etc.
 
+To install dependencies, run: composer install
