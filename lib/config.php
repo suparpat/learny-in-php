@@ -18,6 +18,8 @@
 	define("BASE_URL", "/learny/"); // Eg. http://yourwebsite.com
 	define("MAILGUN_SSL", false);
 
+	define("ROOT_PATH", dirname(__DIR__));
+
 	function getDB(){
 		$dbhost=DB_SERVER;
 		$dbuser=DB_USERNAME;

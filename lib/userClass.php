@@ -1,7 +1,7 @@
 <?php
-	require(__DIR__.'/../vendor/autoload.php');
+	require(ROOT_PATH.'/vendor/autoload.php');
 	use Mailgun\Mailgun;
-	require(__DIR__.'/vendor/StoPasswordReset.php');
+	require(ROOT_PATH.'/lib/vendor/StoPasswordReset.php');
 
 //http://www.9lessons.info/2016/04/php-login-system-with-pdo-connection.html
 
