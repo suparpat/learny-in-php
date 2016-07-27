@@ -14,7 +14,7 @@
 	// $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
 	$mail->Port = 25;                                    // TCP port to connect to
 
-	$mail->setFrom('admin@borkhairuu.com', 'Admin');
+	$mail->setFrom('admin@borkhairuu.com', 'บอกให้รู้');
 	$mail->addAddress($userDetails->email, $userDetails->username);     // Add a recipient
 	// $mail->addAddress('ellen@example.com');               // Name is optional
 	// $mail->addReplyTo('info@example.com', 'Information');
@@ -25,7 +25,7 @@
 	// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 	$mail->isHTML(true);                                  // Set email format to HTML
 
-	$mail->Subject = 'Borkhairuu: Reset password';
+	$mail->Subject = 'บอกให้รู้: รีเซ็ตรหัสผ่าน';
 	$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
 	$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 

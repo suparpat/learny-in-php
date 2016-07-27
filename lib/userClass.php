@@ -1,4 +1,8 @@
 <?php
+	require(__DIR__.'/../vendor/autoload.php');
+	use Mailgun\Mailgun;
+	require(__DIR__.'/vendor/StoPasswordReset.php');
+
 //http://www.9lessons.info/2016/04/php-login-system-with-pdo-connection.html
 
 	class userClass{
@@ -51,8 +55,7 @@
 				if($count < 1){
 					$stmt = $db->prepare("INSERT INTO users(username,password,email) VALUES (:username,:hash_password,:email)");
 					$stmt->bindParam("username", $username,PDO::PARAM_STR) ;
-					// $hash_password= hash('sha256', $password); //Password encryption
-					$hash_password = password_hash($password, PASSWORD_DEFAULT);
+					$hash_password = $this->hashPassword($password);
 					$stmt->bindParam("hash_password", $hash_password,PDO::PARAM_STR) ;
 					$stmt->bindParam("email", $email,PDO::PARAM_STR) ;
 					$stmt->execute();
@@ -73,7 +76,11 @@
 		}//end userRegistration()
 
 
-
+		public function hashPassword($rawPassword){
+			// $hash_password= hash('sha256', $password); //Password encryption
+			$hash_password = password_hash($rawPassword, PASSWORD_DEFAULT);
+			return $hash_password;
+		}
 
 
 		/* User Details */
@@ -105,7 +112,119 @@
 			}
 		}
 
+		public function setNewPassword($uid, $password){
+			try{
+				error_log($uid);
+				error_log($password);
+				$db = getDB();
+				$stmt = $db->prepare("UPDATE users SET password=:password WHERE uid=:uid");
+				$hash_password = $this->hashPassword($password);
+				$stmt->bindParam("password", $hash_password, PDO::PARAM_STR);
+				$stmt->bindParam("uid", $uid, PDO::PARAM_INT);
+				$stmt->execute();
 
+				$stmt2 = $db->prepare("DELETE FROM user_reset_password WHERE uid=:uid");
+				$stmt2->bindParam("uid", $uid, PDO::PARAM_INT);
+				$stmt2->execute();
+
+				$db = null;
+
+				return true;
+			}
+			catch(PDOException $e){
+				echo '{"error":{"text":'. $e->getMessage() .'}}';
+			}
+		}
+
+		public function resetPassword($email){
+			try{
+				$db = getDB();
+				$stmt = $db->prepare("SELECT uid,email FROM users WHERE email=:email");
+				$stmt->bindParam("email", $email, PDO::PARAM_STR);
+				$stmt->execute();
+				$count = $stmt->rowCount();
+				$data = $stmt->fetch(PDO::FETCH_OBJ);
+				$db = null;
+
+				if($count>0){
+					//http://www.martinstoeckli.ch/php/php.html#passwordreset
+					// $tokenForLink;
+					// $tokenHashForDatabase;
+					StoPasswordReset::generateToken($tokenForLink, $tokenHashForDatabase);
+					$emailLink = 'https://borkhairuu.com/set_new_password.php?tok=' . $tokenForLink;
+					$creationDate = new DateTime();
+					$this->savePasswordResetToDatabase($tokenHashForDatabase, $data->uid, $creationDate);
+					$thisEmail = $data->email;
+					//https://github.com/mailgun/mailgun-php/issues/130
+					$client = new \GuzzleHttp\Client(['verify'=>MAILGUN_SSL]);
+					$adaptor = new \Http\Adapter\Guzzle6\Client($client);
+
+					$mgClient = new Mailgun(MAILGUN_API, $adaptor);
+					$domain = "mg.borkhairuu.com";
+					$html = '<p>Click this link to reset your password: <a href="'.$emailLink.'">'.$emailLink.'</a></p>';
+					$result = $mgClient->sendMessage($domain, array(
+						'from' => 'Borkhairuu <mailgun@borkhairuu.com>',
+						'to' => $thisEmail,
+						'subject' => 'Borkhairuu: Reset Password',
+						'html' => $html
+						// 'text' => 'Click this link to reset your password: '.$emailLink
+						));
+					return true;
+				}else{
+					return false;
+				}
+			}
+			catch(PDOException $e) {
+				echo '{"error":{"text":'. $e->getMessage() .'}}';
+			}
+		}
+
+		public function savePasswordResetToDatabase($tokenHashForDatabase, $uid, $creationDate){
+			try{
+				$db = getDB();
+				$deleteStmt = $db->prepare("DELETE FROM user_reset_password WHERE uid=:uid");
+				$deleteStmt->bindParam("uid", $uid, PDO::PARAM_INT);
+				$deleteStmt->execute();
+
+				$stmt = $db->prepare("INSERT INTO user_reset_password(uid, token_hash, creation_date) VALUES (:uid, :token_hash, :creation_date)");
+				$stmt->bindParam("uid", $uid, PDO::PARAM_INT);
+				$stmt->bindParam("token_hash", $tokenHashForDatabase, PDO::PARAM_STR);
+				$dateAsString = $creationDate->format('d-m-Y H:i:s');
+				$stmt->bindParam("creation_date", $dateAsString, PDO::PARAM_STR);
+				$stmt->execute();
+				
+				$db = null;
+			}
+			catch(PDOException $e) {
+				echo '{"error":{"text":'. $e->getMessage() .'}}';
+			}
+		}
+
+
+		public function checkTokenHash($tokenHashFromLink){
+			try{
+				$db = getDB();
+				$stmt = $db->prepare("SELECT id, uid, creation_date FROM user_reset_password WHERE token_hash=:token_hash");
+				$stmt->bindParam("token_hash", $tokenHashFromLink, PDO::PARAM_STR);
+				$stmt->execute();
+
+				$count = $stmt->rowCount();
+				$db = null;
+
+				$data = $stmt->fetch(PDO::FETCH_OBJ);
+
+				$stringToDateTime = date_create_from_format('d-m-Y H:i:s', $data->creation_date);
+				$checkIfExpired = StoPasswordReset::isTokenExpired($stringToDateTime);
+				if($count > 0 && !$checkIfExpired){
+					return $data;
+				}else{
+					return false;
+				}
+			}
+			catch(PDOException $e) {
+				echo '{"error":{"text":'. $e->getMessage() .'}}';
+			}
+		}
 	}//end userClass
 
 

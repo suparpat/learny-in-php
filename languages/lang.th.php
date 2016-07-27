@@ -31,4 +31,7 @@
 	$lang['logout'] = "ออกจากระบบ";
 
 	$lang['draft'] = "เก็บไว้ก่อน";
+	$lang['forgot-password'] = "ลืมพาสเวิร์ด";
+	$lang['submit-forgot-password'] = "ส่งอีเมล์รีเซ็ตพาสเวิร์ด";
+	$lang['set-new-password'] = "ตั้งรหัสใหม่";
 ?>

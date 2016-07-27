@@ -1,4 +1,5 @@
 <?php
+	require('credentials.php');
 	//http://www.w3schools.com/php/php_mysql_connect.asp
 	//http://www.9lessons.info/2016/04/php-login-system-with-pdo-connection.html
 
@@ -13,11 +14,9 @@
 
 	/* DATABASE CONFIGURATION */
 	define("DB_SERVER", "localhost");
-	define("DB_USERNAME", "root");
-	define("DB_PASSWORD", "123456");
 	define("DB_DATABASE", "learny");
 	define("BASE_URL", "/learny/"); // Eg. http://yourwebsite.com
-
+	define("MAILGUN_SSL", false);
 
 	function getDB(){
 		$dbhost=DB_SERVER;

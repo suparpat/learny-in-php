@@ -31,5 +31,7 @@
 	$lang['logout'] = "Log out";
 
 	$lang['draft'] = "draft";
-
+	$lang['forgot-password'] = "Fotgot password?";
+	$lang['submit-forgot-password'] = "Send recovery email";
+	$lang['set-new-password'] = "Set new password";
 ?>
