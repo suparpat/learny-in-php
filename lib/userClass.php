@@ -98,6 +98,19 @@
 			}
 		}//end userDetails()
 
+		public function fetchUserPublicProfile($uid){
+			try{
+				$db = getDB();
+				$stmt = $db->prepare("SELECT username FROM users WHERE uid=:uid"); 
+				$stmt->bindParam("uid", $uid,PDO::PARAM_INT);
+				$stmt->execute();
+				$data = $stmt->fetch(PDO::FETCH_OBJ); //User data
+				return $data;
+			}
+			catch(PDOException $e) {
+				echo '{"error":{"text":'. $e->getMessage() .'}}';
+			}
+		}
 
 		public function fetchAllUsers(){
 			try{

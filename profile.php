@@ -29,7 +29,7 @@
 			<header>
 				<h3><?php echo $lang['profile']; ?></h3>
 			</header>
-			<h4><?php echo $lang['username']; ?>: <?php echo $userDetails->username; ?></h4>
+			<h4><?php echo $lang['username']; ?>: <?php echo "<a href='user.php?id=$userDetails->uid'>".$userDetails->username."</a>" ?></h4>
 			<h4><?php echo $lang['email']; ?>: <?php echo $userDetails->email; ?></h4>
 			<h4><?php echo $lang['since']; ?>: <?php echo date('j F Y',strtotime($userDetails->created_at)); ?></h4>
 			<hr>
@@ -50,7 +50,7 @@
 
 						echo "<a href=post.php?id=$post->id>".htmlspecialchars($post->subject, ENT_QUOTES, 'UTF-8').
 						"</a><br><span style='font-size:15px;'>".date('j F Y\, h:i A', strtotime($post->created_at));
-						echo "</td><td style='text-align:right'>
+						echo "</td><td style='text-align:right;white-space: nowrap;'>
 						<a href='edit_post.php?id=".$post->id."'>".$lang['edit-post']."</a><br>
 						<a href='javascript:deletePost($post->id)'>".$lang['delete']."</a> ";
 					    echo "</span></td></tr>";
@@ -87,9 +87,14 @@
 				function changePassword(){
 					var r = confirm("An email will be sent to you with a password reset link. Press to confirm.");
 					if(r){
-						$.post("lib/changePassword.php", { 'email': '<?php echo $userDetails->email; ?>' }, function(){
-						  window.location.href = 'profile.php'
-						} );	
+						$.post("lib/changePassword.php", { 'email': '<?php echo $userDetails->email; ?>' }, function(message){
+							console.log(message);
+							alert('ระบบได้ส่งอีเมล์แล้ว');
+						  // window.location.href = 'profile.php'
+						} ).fail(function(message){
+							console.log(message);
+							alert('มีปัญหาในการส่งอีเมล์...');
+						});	
 						console.log("send password reset email.")
 					}
 				}

@@ -94,7 +94,7 @@
 							}else{
 								echo date('j F Y\, h:i A', strtotime($post->created_at));
 							}
-							echo "<br>$post->username</div>";
+							echo "<br><a href=user.php?id=$post->uid>$post->username</a></div>";
 						?>
 					</h3>
 				</div>

@@ -7,6 +7,8 @@
 		<a id="pinboard_name" href="index.php"><?php echo $lang['learny']; ?></a>
 	</div>
 	<div id="top_menu">
+		<a href="index.php"><?php echo $lang['home']; ?></a>
+		&#8231;
 		<a href="browse_by_tag.php"><?php echo $lang['tags']; ?></a>
 		&#8231;
 		<a href="browse_by_type.php"><?php echo $lang['types']; ?></a>

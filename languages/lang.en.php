@@ -1,6 +1,7 @@
 <?php
 
 	$lang['learny'] = "Learny";
+	$lang['home'] = "Home";
 	$lang['register'] = "register";
 	$lang['login'] = "login";
 	$lang['email'] = "email";

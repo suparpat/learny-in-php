@@ -1,6 +1,7 @@
 <?php
 
 	$lang['learny'] = "บอกให้รู้";
+	$lang['home'] = "หน้าแรก";
 	$lang['register'] = "สมัคร";
 	$lang['login'] = "เข้าใช้";
 	$lang['email'] = "อีเมล์";

@@ -197,7 +197,7 @@
 			}
 		}//end fetchAPost()
 
-		/* Fetch A User's Post */
+		/* Fetch A User's Posts */
 		public function fetchAUsersPosts($uid){
 			try{
 				$db = getDB();
@@ -211,6 +211,31 @@
 				echo '{"error":{"text":'. $e->getMessage() .'}}';
 			}
 		}//end fetchAUsersPosts()
+
+
+		/* Fetch A User's Public Posts */
+		public function fetchAUsersPublicPosts($uid){
+			try{
+				$db = getDB();
+				$stmt = $db->prepare("
+					SELECT id,
+					subject,
+					content,
+				 	uid,
+					draft,
+					posts.created_at
+					FROM posts
+					WHERE uid=:uid AND posts.draft=0"); 
+				$stmt->bindParam("uid", $uid,PDO::PARAM_STR) ;
+				$stmt->execute();
+				$data = $stmt->fetchAll(PDO::FETCH_OBJ); //User data
+				return $data;
+			}
+			catch(PDOException $e) {
+				echo '{"error":{"text":'. $e->getMessage() .'}}';
+			}
+		}//end fetchAUsersPosts()
+
 
 		/* Fetch Number of Posts */
 		// http://stackoverflow.com/questions/883365/row-count-with-pdo
