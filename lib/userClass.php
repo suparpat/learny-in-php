@@ -291,7 +291,12 @@
 
 				// error_log(print_r($comments));
 				$points = ($userPostsCount*5) + $countVotes + $countComment*5;
-				return array('postCount'=>$userPostsCount, 'postVotes'=>$result, 'comments'=>$comments, 'points'=>$points, 'votePoints'=>$countVotes);
+				return array(
+					 'postCount'=>$userPostsCount, 
+					 'postVotes'=>$result,
+					 'comments'=>$comments,
+					 'points'=>$points, 
+					 'votePoints'=>$countVotes);
 			}
 			catch(PDOException $e) {
 				echo '{"error":{"text":'. $e->getMessage() .'}}';

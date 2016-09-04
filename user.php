@@ -45,9 +45,9 @@
 
 			echo $getUserPoints['points']." ".$lang['points'];
 			echo "<ul>".
-			"<li>".$scoreFromCreatingPosts  ." ". $lang['points'] . " " . $lang['from-your-new-posts'] . "</li>" . 
-			"<li>".$scoreFromVotes ." ". $lang['points'] ." ". $lang['from-votes'] . "</li>" .
-			"<li>".$scoreFromComments ." ". $lang['points'] ." ". $lang['from-comments'] . "</li></ul>"; ?>
+			"<li>".$scoreFromCreatingPosts  ." ". $lang['points'] . " " . $lang['from'] ." ". $getUserPoints['postCount'] ." ". $lang['from-your-new-posts'] . "</li>" . 
+			"<li>".$scoreFromVotes ." ". $lang['points'] ." ".$lang['from']." ". count($getUserPoints['postVotes']) ." " . $lang['from-votes'] . "</li>" .
+			"<li>".$scoreFromComments ." ". $lang['points'] ." ".$lang['from'] ." ". count($getUserPoints['comments']) ." ". $lang['from-comments'] . "</li></ul>"; ?>
 
 			<header>
 				<h3><?php echo $lang['your-posts']; ?></h3>
