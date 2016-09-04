@@ -94,7 +94,7 @@
 						$vote = ($postVote->vote)*3;
 						echo "<tr><td>".$vote."</td>";
 					}
-					echo "<td>$postVote->subject</td>";
+					echo "<td><a href='post.php?id=$postVote->pid'>$postVote->subject</a></td>";
 					// echo "<td>$postVote->voteBy</td>";
 					echo "<td>".date('j M Y\, G:i', strtotime($postVote->created_at))."</td>";
 					echo "</tr>";

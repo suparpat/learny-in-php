@@ -144,7 +144,7 @@
 
 			<?php 
 				foreach (array_reverse($comments) as $key=>$comment){
-					echo "<p>".(count($comments)-($key)).". by $comment->username on $comment->created_at </p>" . $purifier->purify($comment->comment);
+					echo "<p>".(count($comments)-($key)).". by <a href='user.php?id=$comment->uid'>$comment->username</a> on $comment->created_at </p>" . $purifier->purify($comment->comment);
 					echo "<hr class='style-six'>";
 				};
 			?>
