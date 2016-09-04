@@ -8,9 +8,9 @@
 
 	//Persistent session? (see http://php.net/manual/en/session.security.php)
 	//http://stackoverflow.com/questions/9797913/how-do-i-create-persistent-sessions-in-php
-	ini_set('session.cookie_lifetime', 60 * 60 * 24 * 31);  // 31 days cookie lifetime
+	// ini_set('session.cookie_lifetime', 60 * 60 * 24 * 31);  // 31 days cookie lifetime
 	ini_set('session.cookie_httponly', 1);
-	session_start();
+	session_start(['cookie_lifetime' => 60 * 60 * 24 * 31]);
 
 	/* DATABASE CONFIGURATION */
 	define("DB_SERVER", "localhost");

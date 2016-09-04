@@ -19,12 +19,19 @@
 	$lang['submit'] = "ส่ง";
 	$lang['login-submit'] = "เข้าใช้";
 	$lang['new-posts'] = "โพสมาใหม่";
+	$lang['and'] = "และ";
 
 	$lang['publish'] = "บอกให้โลกรู้";
 	$lang['save-draft'] = "เก็บไว้ก่อน";
 
 	$lang['profile'] = "โพรไฟล์";
+	$lang['user-profile'] = "โพรไฟล์ของ";
 	$lang['your-posts'] = "โพสของคุณ";
+	$lang['your-experience'] = "ประสบการณ์";
+	$lang['your-votes'] = "โวตที่คุณได้รับ";
+	$lang['from-your-new-posts'] = "จากเรื่องราวที่คุณแบ่งปัน";
+	$lang['from-votes'] = "จากโวตที่คุณได้รับ";
+	$lang['points'] = 'คะแนน';
 	$lang['since'] = "สมัครเมื่อ";
 	$lang['account'] = "บัญชี";
 	$lang['change-email'] = "เปลี่ยนอีเมล์";
@@ -35,4 +42,19 @@
 	$lang['forgot-password'] = "ลืมพาสเวิร์ด";
 	$lang['submit-forgot-password'] = "ส่งอีเมล์รีเซ็ตพาสเวิร์ด";
 	$lang['set-new-password'] = "ตั้งรหัสใหม่";
+
+	$lang['how-to-content'] = "
+				<aside>ใช้บอกให้รู้เพื่อ:</aside>
+			<ol>
+				<li>แบ่งปันและพูดคุย ความคิด ความรู้สึก เรื่องสอน เรื่องราว ฯลฯ</li>
+				<li>อ่านและพูดคุยในหัวข้อที่ผู้อื่นได้แบ่งปันไว้</li>
+			</ol>";
+
+	$lang['how-to-score'] = "
+				<aside>คะแนน</aside>
+				<ol>
+					<li>5 คะแนนเมื่อสร้างเรื่องราวหนึ่งเรื่อง</li>
+					<li>10 คะแนนเมื่อมีคนโวต + กับเรื่องราวที่คุยได้แบ่งปัน</li>
+					<li>-3 คะแนนเมื่อมีคนโวต - กับเรื่องราวที่คุณได้แบ่งปัน</li>
+				</ol>"
 ?>

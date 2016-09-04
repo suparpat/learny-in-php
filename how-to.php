@@ -16,12 +16,9 @@
 			<header>
 				<h3><?php echo $lang['how-to']; ?></h3>
 			</header>
-			<aside>Use Learny to:</aside>
-			<ol>
-				<li>Read and learn from what others have shared</li>
-				<li>Share facts, ideas, thoughts, stories, etc.</li>
-				<li>Make and keep notes in the cloud</li>
-			</ol>
+				<?php echo $lang['how-to-content']; ?>
+				<?php echo $lang['how-to-score']; ?>
+
 			<?php include 'partials/quote_block.php' ?>
 			<?php include 'partials/footer.php' ?>
 			<?php include 'partials/imports.php' ?>

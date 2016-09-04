@@ -1,3 +1,12 @@
+<?php
+	require_once('lib/config.php');
+	require_once('lib/userClass.php');
+	$userClass = new userClass();
+	$getPoints = $userClass->getPoints($_SESSION['uid']);
+	// error_log($countPosts);
+	// print_r($getPoints);
+?>
+
 <!-- credit: https://pinboard.in/ -->
 <div id="banner">
 	<div id="logo">
@@ -21,7 +30,7 @@
 		    }else{
 		    	echo "<a href='create.php'>".$lang['create']."</a>";
 		    	echo "\n&#8231;\n";
-		    	echo "<a href='profile.php'>$userDetails->username</a>";
+		    	echo "<a href='profile.php'>$userDetails->username</a>(<a href='user.php?id=".$_SESSION['uid']."'>".strval($getPoints['points'])."</a>)";
 
 		    } 
 		?>

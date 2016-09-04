@@ -238,6 +238,57 @@
 				echo '{"error":{"text":'. $e->getMessage() .'}}';
 			}
 		}
+
+
+
+		public function getPoints($uid){
+			try{
+				// Count number of posts by this user
+				$db = getDB();
+				$stmt = $db->prepare("SELECT COUNT(*) FROM posts WHERE uid=:uid AND posts.draft=0");
+				$stmt->bindParam("uid", $uid, PDO::PARAM_INT);
+				$stmt->execute();
+				$userPostsCount = $stmt->fetchColumn();
+
+				// Get votes on user's posts
+				$stmt2 = $db->prepare("
+					SELECT users_postvotes.vote AS vote,
+					posts.id AS pid, 
+					users.username AS voteBy, 
+					posts.subject AS subject,
+					users_postvotes.created_at AS created_at
+					FROM users_postvotes
+					LEFT JOIN posts ON users_postvotes.user_id=posts.uid
+					LEFT JOIN users ON users.uid=users_postvotes.user_id
+					WHERE users_postvotes.post_id=posts.id AND posts.uid=:uid
+					");
+				$stmt2->bindParam("uid", $uid, PDO::PARAM_INT);
+				$stmt2->execute();
+				$result = $stmt2->fetchAll(PDO::FETCH_OBJ);
+				$db = null;
+
+
+				$countVotes = 0;
+				foreach($result as $key=>$res){
+					if($res->vote == 1){
+						$countVotes = $countVotes + 10;
+					}
+					else if($res->vote == -1){
+						$countVotes = $countVotes - 3;
+					}
+				}
+
+				$points = ($userPostsCount*5) + $countVotes;
+				return array('postCount'=>$userPostsCount, 'postVotes'=>$result, 'points'=>$points);
+				// error_log(strval($countVotes));
+				// return $result;
+				// $points = $userPostsCount*5;
+				// return $points;
+			}
+			catch(PDOException $e) {
+				echo '{"error":{"text":'. $e->getMessage() .'}}';
+			}
+		}
 	}//end userClass
 
 

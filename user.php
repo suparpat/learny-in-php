@@ -9,6 +9,7 @@
 
 		$user = $userClass->fetchUserPublicProfile($_GET['id']);
 		$posts = $postClass->fetchAUsersPublicPosts($_GET['id']);
+		$getUserPoints = $userClass->getPoints($_GET['id']);
 
 	}else{
 		$url=BASE_URL.'browse.php';
@@ -19,7 +20,7 @@
 
 <html>
 	<head>
-		<title><?php echo $lang['tags']; ?>: <?php echo $_GET['name']; ?></title>
+		<title><?php echo $lang['learny']; ?>: <?php echo $lang['user-profile'] ." ". $user->username ?></title>
 		<?php include 'partials/header.php' ?>
 	</head>
 
@@ -27,6 +28,19 @@
 		<!-- credit: https://pinboard.in/ -->
 		<div id="content">
 			<?php include 'partials/top_menu.php' ?>
+
+			<header>
+				<h3><?php echo $lang['your-experience']; ?></h3>
+			</header>
+
+			<?php 
+			$scoreFromCreatingPosts = $getUserPoints['postCount']*5;
+			$scoreFromVotes = $getUserPoints['points'] - $getUserPoints['postCount']*5;
+
+			echo $getUserPoints['points']." ".$lang['points'];
+			echo "<ul>".
+			"<li>".$scoreFromCreatingPosts  ." ". $lang['points'] . " " . $lang['from-your-new-posts'] . "</li>" . 
+			"<li>".$scoreFromVotes ." ". $lang['points'] ." ". $lang['from-votes'] . "</li></ul>"; ?>
 
 			<header>
 				<h3><?php echo $lang['your-posts'] . " $user->username"; ?></h3>
@@ -51,7 +65,46 @@
 				?>
 			</table>
 
+			<?php
+				if($getUserPoints['postVotes']):
+			?>
+		
+			<header>
+				<h3><?php echo $lang['your-votes']; ?></h3>
+			</header>
 
+
+			<table>
+			<thead>
+				<tr>
+					<td>Score</td>
+					<td>Post</td>
+					<!-- <td>By</td> -->
+					<td>On</td>
+				</tr>
+			</thead>
+			<?php
+				foreach($getUserPoints['postVotes'] as $key=>$postVote){
+					$vote = 0;
+					if($postVote->vote == 1){
+						$vote = ($postVote->vote)*10;
+						echo "<tr><td>+".$vote."</td>";
+					}
+					else if($postVote->vote == -1){
+						$vote = ($postVote->vote)*3;
+						echo "<tr><td>".$vote."</td>";
+					}
+					echo "<td>$postVote->subject</td>";
+					// echo "<td>$postVote->voteBy</td>";
+					echo "<td>".date('j M Y\, G:i', strtotime($postVote->created_at))."</td>";
+					echo "</tr>";
+				}
+			?>
+			</table>
+
+			<?php 
+				endif;
+			?>
 
 			<?php include 'partials/quote_block.php' ?>
 			<?php include 'partials/footer.php' ?>
