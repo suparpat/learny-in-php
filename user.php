@@ -28,7 +28,9 @@
 		<!-- credit: https://pinboard.in/ -->
 		<div id="content">
 			<?php include 'partials/top_menu.php' ?>
-
+			<h2>
+				<?php echo $lang['user-profile'] ." ". $user->username;?>
+			</h2>
 			<header>
 				<h3><?php echo $lang['your-experience']; ?></h3>
 			</header>
@@ -43,7 +45,7 @@
 			"<li>".$scoreFromVotes ." ". $lang['points'] ." ". $lang['from-votes'] . "</li></ul>"; ?>
 
 			<header>
-				<h3><?php echo $lang['your-posts'] . " $user->username"; ?></h3>
+				<h3><?php echo $lang['your-posts']; ?></h3>
 			</header>
 
 			<table>

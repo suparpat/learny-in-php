@@ -26,9 +26,9 @@
 
 	$lang['profile'] = "โพรไฟล์";
 	$lang['user-profile'] = "โพรไฟล์ของ";
-	$lang['your-posts'] = "โพสของคุณ";
+	$lang['your-posts'] = "โพส";
 	$lang['your-experience'] = "ประสบการณ์";
-	$lang['your-votes'] = "โวตที่คุณได้รับ";
+	$lang['your-votes'] = "โวตที่ได้รับ";
 	$lang['from-your-new-posts'] = "จากเรื่องราวที่คุณแบ่งปัน";
 	$lang['from-votes'] = "จากโวตที่คุณได้รับ";
 	$lang['points'] = 'คะแนน';
