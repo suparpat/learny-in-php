@@ -1,7 +1,11 @@
 <?php
 	require_once('lib/config.php');
+	require_once('lib/vendor/htmlpurifier/library/HTMLPurifier.auto.php');
 	require_once('lib/postClass.php');
 	require_once('lib/userClass.php');
+
+	$config = HTMLPurifier_Config::createDefault();
+	$purifier = new HTMLPurifier($config);
 
 	if(isset($_GET['id'])){
 		$userClass = new userClass();
@@ -134,7 +138,7 @@
 			<?php
 				foreach($getUserPoints['comments'] as $key=>$comment){
 					echo "<tr><td>+5</td>";
-					echo "<td><a href='post.php?id=$comment->post_id'>$comment->comment</a></td>";
+					echo "<td><a href='post.php?id=$comment->post_id'>".$purifier->purify($comment->comment)."</a></td>";
 					// echo "<td>$postVote->voteBy</td>";
 					echo "<td>".date('j M Y\, G:i', strtotime($comment->created_at))."</td>";
 					echo "</tr>";
