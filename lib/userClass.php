@@ -127,8 +127,6 @@
 
 		public function setNewPassword($uid, $password){
 			try{
-				error_log($uid);
-				error_log($password);
 				$db = getDB();
 				$stmt = $db->prepare("UPDATE users SET password=:password WHERE uid=:uid");
 				$hash_password = $this->hashPassword($password);
@@ -280,10 +278,6 @@
 
 				$points = ($userPostsCount*5) + $countVotes;
 				return array('postCount'=>$userPostsCount, 'postVotes'=>$result, 'points'=>$points);
-				// error_log(strval($countVotes));
-				// return $result;
-				// $points = $userPostsCount*5;
-				// return $points;
 			}
 			catch(PDOException $e) {
 				echo '{"error":{"text":'. $e->getMessage() .'}}';
