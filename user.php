@@ -28,6 +28,9 @@
 		<!-- credit: https://pinboard.in/ -->
 		<div id="content">
 			<?php include 'partials/top_menu.php' ?>
+			<?php 
+				// print_r($getUserPoints['comments']);
+			?>
 			<h2>
 				<?php echo $lang['user-profile'] ." ". $user->username;?>
 			</h2>
@@ -37,12 +40,14 @@
 
 			<?php 
 			$scoreFromCreatingPosts = $getUserPoints['postCount']*5;
-			$scoreFromVotes = $getUserPoints['points'] - $getUserPoints['postCount']*5;
+			$scoreFromVotes = $getUserPoints['votePoints'];
+			$scoreFromComments = $getUserPoints['points'] - $scoreFromCreatingPosts - $scoreFromVotes;
 
 			echo $getUserPoints['points']." ".$lang['points'];
 			echo "<ul>".
 			"<li>".$scoreFromCreatingPosts  ." ". $lang['points'] . " " . $lang['from-your-new-posts'] . "</li>" . 
-			"<li>".$scoreFromVotes ." ". $lang['points'] ." ". $lang['from-votes'] . "</li></ul>"; ?>
+			"<li>".$scoreFromVotes ." ". $lang['points'] ." ". $lang['from-votes'] . "</li>" .
+			"<li>".$scoreFromComments ." ". $lang['points'] ." ". $lang['from-comments'] . "</li></ul>"; ?>
 
 			<header>
 				<h3><?php echo $lang['your-posts']; ?></h3>
@@ -107,6 +112,41 @@
 			<?php 
 				endif;
 			?>
+
+			<?php
+				if($getUserPoints['comments']):
+			?>
+
+			<header>
+				<h3><?php echo $lang['your-comments']; ?></h3>
+			</header>
+
+
+			<table>
+			<thead>
+				<tr>
+					<td>Score</td>
+					<td>Comment</td>
+					<!-- <td>By</td> -->
+					<td>On</td>
+				</tr>
+			</thead>
+			<?php
+				foreach($getUserPoints['comments'] as $key=>$comment){
+					echo "<tr><td>+5</td>";
+					echo "<td><a href='post.php?id=$comment->post_id'>$comment->comment</a></td>";
+					// echo "<td>$postVote->voteBy</td>";
+					echo "<td>".date('j M Y\, G:i', strtotime($comment->created_at))."</td>";
+					echo "</tr>";
+				}
+			?>
+			</table>
+
+			<?php 
+				endif;
+			?>
+
+
 
 			<?php include 'partials/quote_block.php' ?>
 			<?php include 'partials/footer.php' ?>

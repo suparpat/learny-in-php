@@ -263,7 +263,6 @@
 				$stmt2->bindParam("uid", $uid, PDO::PARAM_INT);
 				$stmt2->execute();
 				$result = $stmt2->fetchAll(PDO::FETCH_OBJ);
-				$db = null;
 
 
 				$countVotes = 0;
@@ -276,8 +275,23 @@
 					}
 				}
 
-				$points = ($userPostsCount*5) + $countVotes;
-				return array('postCount'=>$userPostsCount, 'postVotes'=>$result, 'points'=>$points);
+				// Get comments by this user
+				$stmt3 = $db->prepare("
+					SELECT comments.comment, comments.post_id, comments.created_at 
+					FROM comments 
+					LEFT JOIN posts ON comments.post_id=posts.id 
+					WHERE posts.id=comments.post_id AND comments.uid=:uid AND posts.draft=0
+					");
+
+				$stmt3->bindParam("uid", $uid, PDO::PARAM_INT);
+				$stmt3->execute();
+				$countComment=$stmt3->rowCount();
+				$comments = $stmt3->fetchAll(PDO::FETCH_OBJ);
+				$db = null;
+
+				// error_log(print_r($comments));
+				$points = ($userPostsCount*5) + $countVotes + $countComment*5;
+				return array('postCount'=>$userPostsCount, 'postVotes'=>$result, 'comments'=>$comments, 'points'=>$points, 'votePoints'=>$countVotes);
 			}
 			catch(PDOException $e) {
 				echo '{"error":{"text":'. $e->getMessage() .'}}';

@@ -29,6 +29,8 @@
 	$lang['your-posts'] = "Your Posts";
 	$lang['your-experience'] = "Your Experience";
 	$lang['your-votes'] = "Your Votes";
+	$lang['your-comments'] = "Your Comments";
+	$lang['from-comments'] = "from comments you made";
 	$lang['from-your-new-posts'] = "from posts you created";
 	$lang['from-votes'] = "from votes you received";
 	$lang['points'] = 'points';
@@ -54,5 +56,6 @@
 					<li>5 points for creating a post</li>
 					<li>10 points for each up vote</li>
 					<li>-3 points for each down vote</li>
+					<li>3 points when you comment</li>
 				</ol>"
 ?>
