@@ -5,6 +5,7 @@
 	require_once('lib/userClass.php');
 
 	$config = HTMLPurifier_Config::createDefault();
+	// $config->set('URI.Disable', true);
 	$purifier = new HTMLPurifier($config);
 
 	if(isset($_GET['id'])){
@@ -137,8 +138,9 @@
 			</thead>
 			<?php
 				foreach($getUserPoints['comments'] as $key=>$comment){
+					$purifiedComment = $purifier->purify($comment->comment);
 					echo "<tr><td>+5</td>";
-					echo "<td><a href='post.php?id=$comment->post_id'>".$purifier->purify($comment->comment)."</a></td>";
+					echo "<td><a href='post.php?id=$comment->post_id'>$purifiedComment</a></td>";
 					// echo "<td>$postVote->voteBy</td>";
 					echo "<td>".date('j M Y\, G:i', strtotime($comment->created_at))."</td>";
 					echo "</tr>";

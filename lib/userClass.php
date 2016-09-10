@@ -256,7 +256,7 @@
 					posts.subject AS subject,
 					users_postvotes.created_at AS created_at
 					FROM users_postvotes
-					LEFT JOIN posts ON users_postvotes.user_id=posts.uid
+					LEFT JOIN posts ON users_postvotes.post_id=posts.id
 					LEFT JOIN users ON users.uid=users_postvotes.user_id
 					WHERE users_postvotes.post_id=posts.id AND posts.uid=:uid
 					");
