@@ -259,6 +259,7 @@
 					LEFT JOIN posts ON users_postvotes.post_id=posts.id
 					LEFT JOIN users ON users.uid=users_postvotes.user_id
 					WHERE users_postvotes.post_id=posts.id AND posts.uid=:uid
+					ORDER BY users_postvotes.created_at DESC
 					");
 				$stmt2->bindParam("uid", $uid, PDO::PARAM_INT);
 				$stmt2->execute();
@@ -281,6 +282,7 @@
 					FROM comments 
 					LEFT JOIN posts ON comments.post_id=posts.id 
 					WHERE posts.id=comments.post_id AND comments.uid=:uid AND posts.draft=0
+					ORDER BY comments.created_at DESC
 					");
 
 				$stmt3->bindParam("uid", $uid, PDO::PARAM_INT);
