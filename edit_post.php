@@ -51,6 +51,7 @@
 				if($result){
 					$url=BASE_URL.'post.php?id='.$postId;
 					header("Location: $url"); // Page redirecting to home.php 
+					exit();
 				}
 				else{
 					$errorEditPostMessage="Problem editing post...";
