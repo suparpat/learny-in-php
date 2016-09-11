@@ -14,6 +14,8 @@
 	$lang['how-to'] = "how to";
 	$lang['about'] = "about";
 	$lang['edit-post'] = "edit post";
+	$lang['edit-comment'] = "Edit comment";
+	$lang['edit'] = "edit";
 	$lang['delete'] = "delete";
 	$lang['comment'] = "Comment";
 	$lang['submit'] = "Submit";

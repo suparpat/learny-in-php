@@ -145,7 +145,14 @@
 			<?php 
 				foreach (array_reverse($comments) as $key=>$comment){
 					echo "<p>".(count($comments)-($key)).". by <a href='user.php?id=$comment->uid'>$comment->username</a> on $comment->created_at </p>" . $purifier->purify($comment->comment);
+					if($comment->uid == $_SESSION['uid']){
+						echo "<span style='float:right;'>";
+						echo "[<a href='edit_comment.php?id=".$comment->id."'>".$lang['edit']."</a>]";
+						echo "</span>";
+						echo "<div style='clear:both'></div>";
+					}
 					echo "<hr class='style-six'>";
+
 				};
 			?>
 			<?php include 'partials/quote_block.php' ?>

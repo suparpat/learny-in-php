@@ -14,6 +14,8 @@
 	$lang['how-to'] = "ยังไง";
 	$lang['about'] = "คือไรเอ่ย";
 	$lang['edit-post'] = "แก้ไข";
+	$lang['edit-comment'] = "แก้ไขความคิดเห็น";
+	$lang['edit'] = "แก้ไข";
 	$lang['delete'] = "ลบ";
 	$lang['comment'] = "แสดงความคิดเห็น";
 	$lang['submit'] = "ส่ง";

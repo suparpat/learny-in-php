@@ -15,13 +15,15 @@
 		$url=BASE_URL.'error_not_login.php';
 		header("Location: $url"); // Page redirecting to home.php 
 	}else{
-
-		//redirect to index.php if user is not the owner of this post
+		//redirect to index.php if user is not the owner of this post or id not specified
 		if(isset($_GET['id'])){
 			if($_SESSION['uid']!=$postClass->checkOwnership($_GET['id'], $_SESSION['uid'])){
 				$url=BASE_URL.'index.php';
 				header("Location: $url");
 			}		
+		}else{
+			$url=BASE_URL.'index.php';
+			header("Location: $url");
 		}
 
 
