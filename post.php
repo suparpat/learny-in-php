@@ -144,7 +144,8 @@
 
 			<?php 
 				foreach (array_reverse($comments) as $key=>$comment){
-					echo "<p>".(count($comments)-($key)).". by <a href='user.php?id=$comment->uid'>$comment->username</a> on $comment->created_at </p>" . $purifier->purify($comment->comment);
+					$formattedDate = date('j F Y\, h:i A', strtotime($comment->created_at));
+					echo "<p>".(count($comments)-($key)).". <a href='user.php?id=$comment->uid'>$comment->username</a> $formattedDate </p>" . $purifier->purify($comment->comment);
 					if($comment->uid == $_SESSION['uid']){
 						echo "<span style='float:right;'>";
 						echo "[<a href='edit_comment.php?id=".$comment->id."'>".$lang['edit']."</a>]";

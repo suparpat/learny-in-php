@@ -78,9 +78,21 @@
 				$checkOwnershipResult = $this->checkOwnership($postId, $uid);
 				if($checkOwnershipResult){
 					$db = getDB();
-					$stmt = $db->prepare("DELETE FROM posts WHERE id=:id");
+					$stmt = $db->prepare("
+						DELETE FROM posts 
+						WHERE id=:id
+						");
+
 					$stmt->bindParam("id", $postId, PDO::PARAM_STR);
 					$stmt->execute();
+
+					//Delete related votes
+					$stmt2 = $db->prepare("
+						DELETE FROM users_postvotes
+						WHERE post_id=:id
+						");
+					$stmt2->bindParam("id", $postId, PDO::PARAM_INT);
+					$stmt2->execute();
 
 					$db = null;
 
