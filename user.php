@@ -91,7 +91,7 @@
 				<tr>
 					<td>Score</td>
 					<td>Post</td>
-					<!-- <td>By</td> -->
+					<td>By</td>
 					<td>On</td>
 				</tr>
 			</thead>
@@ -107,7 +107,7 @@
 						echo "<tr><td>".$vote."</td>";
 					}
 					echo "<td><a href='post.php?id=$postVote->pid'>$postVote->subject</a></td>";
-					// echo "<td>$postVote->voteBy</td>";
+					echo "<td><a style='word-break:normal;' href='user.php?id=$postVote->uid'>$postVote->voteBy</a></td>";
 					echo "<td>".date('j M Y\, G:i', strtotime($postVote->created_at))."</td>";
 					echo "</tr>";
 				}

@@ -253,6 +253,7 @@
 					SELECT users_postvotes.vote AS vote,
 					posts.id AS pid, 
 					users.username AS voteBy, 
+					users.uid AS uid,
 					posts.subject AS subject,
 					users_postvotes.created_at AS created_at
 					FROM users_postvotes
