@@ -22,18 +22,6 @@
 			header("Location: $url");
 		}
 
-		//Delete Comment
-		if(!empty($_POST['deleteComment'])){
-			$commentId = $_POST['id'];
-			$author = $_SESSION['uid'];
-			$postId = $_POST['post_id'];
-			$result = $commentClass->deleteComment($commentId, $author);
-			if($result){
-				$url=BASE_URL.'post.php?id='.$postId;
-				header("Location: $url"); // Page redirecting to home.php 
-			}
-		}
-
 		//Update Comment
 		if (!empty($_POST['updateComment'])&&isset($_POST['editor'])&&isset($_SESSION['uid'])) 
 		{
@@ -54,20 +42,31 @@
 			}else{
 				$errorEditPostMessage="Please make sure there are no empty fields.";
 			}
-			exit();
-		}else{
-			//Get comment
-			if(isset($_GET['id'])){
-				$commentId = $_GET['id'];
-				$comment = $commentClass->fetchAComment($_GET['id']);
-				$postId = $comment->post_id;
-			}
-
-			if(!empty($_POST['updateComment'])){
-				$errorEditPostMessage = "Please make sure there are no empty fields.";
-			}
-
 		}
+
+		//Delete Comment
+		else if(!empty($_POST['deleteComment'])){
+				$commentId = $_POST['id'];
+				$author = $_SESSION['uid'];
+				$postId = $_POST['post_id'];
+				$result = $commentClass->deleteComment($commentId, $author);
+				if($result){
+					$url=BASE_URL.'post.php?id='.$postId;
+					header("Location: $url"); // Page redirecting to home.php 
+				}
+			}
+			else{
+				//Get comment
+				if(isset($_GET['id'])){
+					$commentId = $_GET['id'];
+					$comment = $commentClass->fetchAComment($_GET['id']);
+					$postId = $comment->post_id;
+				}
+
+				if(!empty($_POST['updateComment'])){
+					$errorEditPostMessage = "Please make sure there are no empty fields.";
+				}
+			}
 
 	}
 
@@ -93,13 +92,13 @@
 	            echo "<p>".$errorEditPostMessage."</p>";
 	        ?>
             <div>
-                <form action="edit_comment.php" method="post">
+                <form action=<?php echo 'edit_comment.php?id='.$commentId; ?> method="post">
                 	<input name="id" value=<?php echo $commentId; ?> hidden>
                 	<input name="post_id" value=<?php echo $postId; ?> hidden>
                     <textarea name="editor" id="create_editor" rows="10" cols="80"><?php if(isset($_POST['editor'])) {echo $_POST['editor']; } else{echo $comment->comment;}?></textarea>
 	                <div style="text-align:center;">
 		                <input class="input-default-format" id="create-submit-button" type="submit" name="updateComment" value="<?php echo $lang['edit']; ?>">
-		                <input class="input-default-format" id="create-submit-button" type="submit" name="deleteComment" value="<?php echo $lang['delete']; ?>" onclick="return confirm('Sure you want to delete this comment?');">
+		                <input class="input-default-format" id="create-submit-button" type="submit" name="deleteComment" value="<?php echo $lang['delete']; ?>" onclick="return confirm('<?php echo $lang['confirm-delete-comment']; ?>');">
 					</div>
 				</form>
 

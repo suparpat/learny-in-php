@@ -21,11 +21,11 @@
 				$url=BASE_URL.'index.php';
 				header("Location: $url");
 			}		
-		}else{
+		}
+		else{
 			$url=BASE_URL.'index.php';
 			header("Location: $url");
 		}
-
 
 		if ((!empty($_POST['postSubmit'])||!empty($_POST['postDraftSubmit']))&&isset($_POST['subject'])&&isset($_POST['editor'])&&isset($_POST['type'])&&isset($_SESSION['uid'])) 
 		{
@@ -58,7 +58,6 @@
 			}else{
 				$errorEditPostMessage="Please make sure there are no empty fields.";
 			}
-			exit();
 		}else{
 			//Get post
 			if(isset($_GET['id'])){
@@ -99,7 +98,7 @@
 	            echo "<p>".$errorEditPostMessage."</p>";
 	        ?>
             <div>
-                <form action="edit_post.php" method="post">
+                <form action=<?php echo 'edit_post.php?id='.$postId; ?> method="post">
                 	<input name="id" value=<?php echo $postId; ?> hidden>
                     <input class="input-default-format form-input" type="text" name="subject" placeholder="Type your subject" value=<?php if(isset($_POST['subject'])) {echo '"'.htmlentities ($_POST['subject']).'"'; } else{echo '"'.htmlentities($post->subject).'"';} ?>>
                     <textarea name="editor" id="create_editor" rows="10" cols="80"><?php if(isset($_POST['editor'])) {echo $_POST['editor']; } else{echo $post->content;}?></textarea>

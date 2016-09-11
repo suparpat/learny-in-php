@@ -36,6 +36,7 @@
 	$lang['from-comments'] = "comments you made";
 	$lang['from-your-new-posts'] = "posts you created";
 	$lang['from-votes'] = "votes you received";
+	$lang['confirm-delete-comment'] = "Sure you want to delete this comment?";
 	$lang['points'] = 'points';
 	$lang['since'] = "Since";
 	$lang['account'] = "Account";

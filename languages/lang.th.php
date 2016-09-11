@@ -36,6 +36,7 @@
 	$lang['from-your-new-posts'] = "เรื่องราวที่คุณแบ่งปัน";
 	$lang['from-votes'] = "โวตที่คุณได้รับ";
 	$lang['from-comments'] = "ความคิดเห็นที่คุณได้แสดง";
+	$lang['confirm-delete-comment'] = "ลบคอมเม้นนี้จริงๆนะ?";
 	$lang['points'] = 'คะแนน';
 	$lang['since'] = "สมัครเมื่อ";
 	$lang['account'] = "บัญชี";
